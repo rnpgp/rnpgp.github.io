@@ -7,10 +7,6 @@ The site is implemented as a https://jekyllrb.com[Jekyll] site.
 It has a `_config.yml` for specifying the directory structure, metadata, build
 defaults, etc.
 
-And since it's also a
-https://github.com/asciidoctor/jekyll-asciidoc[Jekyll-AsciiDoc] site, the
-syntax used for writing posts is AsciiDoc, instead of the default Markdown.
-
 === Inputs
 
 All source files are inside the `_jekyll/` directory, as specified in
