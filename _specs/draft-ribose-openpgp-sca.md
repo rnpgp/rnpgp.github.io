@@ -4,6 +4,7 @@ description: >-
   Enables OpenPGP to be used while complying
   with SCA regulations within China
 ietf_datatracker_id: draft-ribose-openpgp-sca
+source_url: https://github.com/riboseinc/rfc-openpgp-sca
 ---
 
 ```
