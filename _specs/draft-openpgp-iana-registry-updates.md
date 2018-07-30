@@ -4,6 +4,7 @@ description: Changes motivated by recently proposed extensions to OpenPGP.
 ietf_datatracker_id: draft-openpgp-iana-registry-updates
 ietf_datatracker_ver: "01"
 source_url: https://github.com/riboseinc/rfc-openpgp-registry
+tags: [Draft]
 ---
 
 ```
