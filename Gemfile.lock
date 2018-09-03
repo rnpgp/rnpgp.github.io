@@ -55,7 +55,7 @@ GEM
       sass (~> 3.4)
     jekyll-seo-tag (2.5.0)
       jekyll (~> 3.3)
-    jekyll-theme-open-project (1.0.9)
+    jekyll-theme-open-project (1.1.1)
       git (~> 1.4)
       jekyll (~> 3.8)
       jekyll-data (~> 1.0)
@@ -109,7 +109,7 @@ DEPENDENCIES
   jekyll-asciidoc
   jekyll-data
   jekyll-seo-tag
-  jekyll-theme-open-project (~> 1.0.9)
+  jekyll-theme-open-project (~> 1.1.1)
   jekyll-theme-open-project-helpers (~> 1.0.3)
   tzinfo-data
 
