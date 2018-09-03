@@ -6,4 +6,6 @@ tags: ["C++"]
 docs:
   git_repo_url: https://github.com/strogonoff/rnp
   git_repo_subtree: docs
+
+feature_with_priority: 1
 ---
