@@ -23,7 +23,7 @@ improved performance and added cutting-edge features.
 Feel free to use RNP in your software!
 
 
-=== Getting started with RNP
+== Getting started with RNP
 
 If you’re deploying OpenPGP in a Ruby-based application,
 there are bindings
@@ -37,14 +37,14 @@ with Debian packages coming next.
 You can use the binaries similarly to GnuPG’s command-line tools
 (see supported flags and use cases in RNP’s README footnote:[https://github.com/riboseinc/rnp/blob/master/README.md#usage]).
 
-=== Why RNP?
+== Why RNP?
 
 * It’s a proper library, in contrast to GnuPG/GPGME footnote:[See https://news.ycombinator.com/item?id=5180217[GnuPG is not a library (2013)]]. Ruby bindings are available with Python & Go bindings in the works, and you can use it wherever you can call C++ code.
 * It’s implemented in C++ and offers constant memory footprint with large amounts of data.
 * It offers comprehensive cipher support, including (uniquely) the SM algorithm family—a desirable feature if you deploy cryptography in mainland Chinese market.
 * Its development is active (with the help of Ribose) and focused on adding cutting-edge features.
 
-=== Which algorithms does RNP support?
+== Which algorithms does RNP support?
 
 The following ciphers, encryption modes and hash functions are supported:
 
