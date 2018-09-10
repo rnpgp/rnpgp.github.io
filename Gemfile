@@ -23,7 +23,7 @@ group :jekyll_plugins do
   gem "jekyll-data"
   gem "jekyll-asciidoc"
   gem "git"
-  gem "jekyll-theme-open-project-helpers", "~> 1.0.3"
+  gem "jekyll-theme-open-project-helpers", "~> 1.0.4"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
