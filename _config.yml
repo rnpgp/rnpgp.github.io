@@ -6,7 +6,7 @@ description: C library approach to OpenPGP; GnuPG alternative.
 tagline: High performance C++ OpenPGP library
 
 pitch: >-
-  GnuPG alternative, fully compliant to RFC 4880.
+  Compatible GnuPG alternative, fully compliant to RFC 4880.
 
 author: "Ribose Inc."
 
