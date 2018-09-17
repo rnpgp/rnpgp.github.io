@@ -3,7 +3,8 @@ description: C library approach to OpenPGP; GnuPG alternative.
 # The above two are used by jekyll-seo-tag for things such as
 # `<title>` and `<meta>` tags, as well as elsewhere by the theme.
 
-tagline: High performance C++ OpenPGP library
+tagline: >-
+  High performance C++ OpenPGP library
 
 pitch: >-
   Compatible GnuPG alternative, fully compliant to RFC 4880.
