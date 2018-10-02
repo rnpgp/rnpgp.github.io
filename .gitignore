@@ -1,6 +1,7 @@
 _software/*/.git
 _specs/*/.git
 _software/*/docs
+_software/_*_repo
 _specs/*/docs
 parent-hub/*
 _site/
