@@ -1,8 +1,8 @@
 ---
 ---
 
-$primary-color: #1A7BEC;
-$primary-dark-color: darken(#1A7BEC, 18);
+$primary-color: #00dfb7;
+$primary-dark-color: #1A7BEC;
 
 $header-background: linear-gradient(135deg, $primary-dark-color 0%, $primary-color 100%);
 $hero-background: linear-gradient(135deg, $primary-dark-color 0%, $primary-color 100%);
@@ -38,9 +38,11 @@ body {
           padding-right: 18px;
           margin-right: 2px;
         }
-        span {
-          background-color: white;
-          color: $primary-color;
+        .active {
+          &:link, &:visited, &:hover {
+            background-color: white;
+            color: $primary-color;
+          }
         }
       }
     }
