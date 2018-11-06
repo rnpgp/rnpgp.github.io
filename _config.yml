@@ -37,3 +37,5 @@ home_calls_to_action:
   - { url: "/software/rnp/docs/README/", title: "Get Started" }
 
 permalink: /blog/:month-:day-:year/:title/
+
+url: https://rnpgp.com/
