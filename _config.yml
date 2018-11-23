@@ -3,6 +3,10 @@ description: C library approach to OpenPGP; GnuPG alternative.
 # The above two are used by jekyll-seo-tag for things such as
 # `<title>` and `<meta>` tags, as well as elsewhere by the theme.
 
+algolia_search:
+  api_key: '0193b06d928ee52f653c6e5ea95d9f97'
+  index_name: 'rnpgp'
+
 tagline: >-
   High performance<br>C++ OpenPGP library
 
