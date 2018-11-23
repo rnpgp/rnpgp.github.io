@@ -2,7 +2,7 @@
 title: Ruby-RNP
 repo_url: https://github.com/riboseinc/ruby-rnp
 description: RNP bindings for Ruby.
-tags: [Ruby, bindings]
+tags: ["bindingsfor:Ruby"]
 docs_url: https://www.rubydoc.info/github/riboseinc/ruby-rnp/
 docs:
   git_repo_url: https://github.com/strogonoff/ruby-rnp
