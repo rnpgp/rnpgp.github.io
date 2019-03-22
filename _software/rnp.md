@@ -1,7 +1,7 @@
 ---
 title: RNP
 repo_url: https://github.com/riboseinc/rnp
-description: RNP, a C library approach to OpenPGP; GnuPG alternative.
+description: C library approach to OpenPGP. A GnuPG alternative.
 tags: ["writtenin:C++"]
 docs:
   git_repo_url: https://github.com/riboseinc/rnp
