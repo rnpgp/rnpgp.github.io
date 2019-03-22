@@ -1,6 +1,7 @@
 ---
 title: IANA Registry Updates for OpenPGP
 description: Changes motivated by recently proposed extensions to OpenPGP.
+feature_with_priority: 1
 ietf_datatracker_id: draft-openpgp-iana-registry-updates
 ietf_datatracker_ver: "01"
 source_url: https://github.com/riboseinc/rfc-openpgp-registry

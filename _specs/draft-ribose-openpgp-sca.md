@@ -3,6 +3,7 @@ title: SCA Extensions For OpenPGP
 description: >-
   Enables OpenPGP to be used while complying
   with SCA regulations within China
+feature_with_priority: 2
 ietf_datatracker_id: draft-ribose-openpgp-sca
 source_url: https://github.com/riboseinc/rfc-openpgp-sca
 tags: [Draft]
