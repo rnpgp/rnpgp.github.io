@@ -1,12 +1,9 @@
 ---
 ---
 
-$primary-color: #00dfb7;
-$primary-dark-color: #1A7BEC;
-
-$header-background: linear-gradient(135deg, $primary-dark-color 0%, $primary-color 100%);
-$hero-background: linear-gradient(135deg, $primary-dark-color 0%, $primary-color 100%);
-$superhero-background: linear-gradient(135deg, $primary-dark-color 0%, $primary-color 100%);
+$primary-color: #1A7BEC;
+$accent-color: #00dfb7;
+$main-background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
 
 @import 'jekyll-theme-open-project';
 
@@ -33,15 +30,16 @@ body {
         font-size: 16px;
         > * {
           font-weight: 700;
-          border-radius: 16px;
-          padding-left: 18px;
-          padding-right: 18px;
           margin-right: 2px;
+          text-transform: lowercase;
         }
         .active {
           &:link, &:visited, &:hover {
+            border-radius: 16px;
+            padding-left: 1em;
+            padding-right: 1em;
             background-color: white;
-            color: $primary-color;
+            color: $primary-dark-color;
           }
         }
       }
@@ -52,18 +50,12 @@ body {
 body.site--project.layout--home {
   > .underlay.header {
     > .hero > .text {
-      > .title {
-        font-weight: 500;
-      }
       > .cta .button {
         border-radius: 25px;
         padding-left: 32px;
         padding-right: 32px;
       }
     }
-  }
-  > main > .specs > .items .item header > .title {
-    font-weight: 500;
   }
 }
 

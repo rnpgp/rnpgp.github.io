@@ -5,8 +5,11 @@ description: >-
   with SCA regulations within China.
 
 feature_with_priority: 2
-ietf_datatracker_id: draft-ribose-openpgp-sca
-source_url: https://github.com/riboseinc/rfc-openpgp-sca
+
+external_links:
+  - url: https://datatracker.ietf.org/doc/draft-ribose-openpgp-sca
+  - url: https://github.com/riboseinc/rfc-openpgp-sca
+
 tags: [Draft]
 ---
 
