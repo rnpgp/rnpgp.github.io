@@ -8,10 +8,10 @@ algolia_search:
   index_name: 'rnpgp'
 
 tagline: >-
-  High performance<br>C++ OpenPGP library
+  High-performance OpenPGP&nbsp;library in&nbsp;C++
 
 pitch: >-
-  Compatible GnuPG alternative, fully compliant to RFC 4880.
+  Compatible GnuPG&nbsp;alternative, fully&nbsp;compliant to&nbsp;RFC&nbsp;4880.
 
 author: "Ribose Inc."
 
