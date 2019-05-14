@@ -42,7 +42,7 @@ home_calls_to_action:
 
 permalink: /blog/:month-:day-:year/:title/
 
-url: https://rnpgp.com/
+url: https://rnpgp.com
 
 tag_namespaces:
   software:
