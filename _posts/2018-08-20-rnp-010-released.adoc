@@ -8,6 +8,8 @@ excerpt: >-
     shares little code in common with its ancestor.
     Enjoy new features, better performance, and better
     compatibility with other implementations.
+redirect_from:
+  - /blog/08-20-2018/rnp-010-released/
 ---
 
 :cpp: C++
