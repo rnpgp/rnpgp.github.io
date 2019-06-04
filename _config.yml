@@ -42,7 +42,7 @@ home_calls_to_action:
 
 permalink: /blog/:month-:day-:year/:title/
 
-url: https://rnpgp.com
+url: https://www.rnpgp.com
 github_repo_url: https://github.com/riboseinc/rnpgp.com
 
 tag_namespaces:
