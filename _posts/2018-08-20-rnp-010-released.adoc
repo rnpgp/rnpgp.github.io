@@ -4,10 +4,10 @@ title:  "RNP 0.10.0 has been released"
 date:   2018-08-20 20:37:38 +0700
 categories: release
 excerpt: >-
-    After a year since it stemmed off NetPGP, the OpenPGP library
-    shares little code in common with its ancestor.
-    Enjoy new features, better performance, and better
-    compatibility with other implementations.
+  After a year since it stemmed off NetPGP, the OpenPGP library
+  shares little code in common with its ancestor.
+  Enjoy new features, better performance, and better
+  compatibility with other implementations.
 redirect_from:
   - /blog/08-20-2018/rnp-010-released/
 ---
