@@ -1,11 +1,11 @@
 ---
 title: RNP
-repo_url: "https://github.com/riboseinc/rnp"
+repo_url: "https://github.com/rnpgp/rnp"
 description: C library approach to OpenPGP. A GnuPG alternative.
 
 external_links:
-  - { url: "https://github.com/riboseinc/rnp/releases", title: Download }
-  - { url: "https://github.com/riboseinc/rnp", title: Source }
+  - { url: "https://github.com/rnpgp/rnp/releases", title: Download }
+  - { url: "https://github.com/rnpgp/rnp", title: Source }
 
 tags: ["writtenin:C++"]
 docs:

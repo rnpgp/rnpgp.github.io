@@ -24,13 +24,13 @@ contact_email: open.source@ribose.com
 theme: jekyll-theme-open-project
 
 parent_hub:
-  git_repo_url: https://github.com/riboseinc/open.ribose.com
+  git_repo_url: https://github.com/rnpgp/open.ribose.com
   home_url: https://open.ribose.com/
 
 social:
   links:
     - https://twitter.com/RiboseUS
-    - https://github.com/riboseinc
+    - https://github.com/rnpgp
 
 legal:
   name: Ribose Group Inc.
@@ -43,7 +43,7 @@ home_calls_to_action:
 permalink: /blog/:year-:month-:day-:title/
 
 url: https://www.rnpgp.com
-github_repo_url: https://github.com/riboseinc/rnpgp.com
+github_repo_url: https://github.com/rnpgp/rnpgp.com
 
 tag_namespaces:
   software:
