@@ -54,3 +54,6 @@ tag_namespaces:
   specs:
     audience: "Audience"
     completion_status: "Status"
+
+exclude:
+  - vendor
