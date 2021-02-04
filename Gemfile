@@ -18,6 +18,9 @@ gem "jekyll", "~> 3"
 gem "jekyll-theme-open-project", "~> 2.0.22"
 # gem "jekyll-theme-open-project", path: "~/src/jekyll-theme-open-project"
 
+# Kramdown parser
+gem "kramdown-parser-gfm"
+
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-seo-tag"
