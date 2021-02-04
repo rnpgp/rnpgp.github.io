@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "RNP 0.11.0 has been released"
+date:   2018-09-17 19:05:38 +0700
+categories: release
+excerpt: >-
+  This update improves key import/merge operations and support for automating S2K iterations calculation.
+redirect_from:
+  - /blog/17-09-2018/rnp-011-released/
+---
+
+== General
+
+* Remove some old SSH key support.
+* Add support for dynamically calculating the S2K iterations.
+* Add support for extracting the public key from the secret key.
+* Add support for merging information between keys.
+
+== CLI
+
+* Add options for custom S2K iterations/times (dynamic by default).
