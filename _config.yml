@@ -3,6 +3,8 @@ description: Email encryption with unrivaled performance, RFC&nbsp;4880 complian
 # The above two are used by jekyll-seo-tag for things such as
 # `<title>` and `<meta>` tags, as well as elsewhere by the theme.
 
+permalink: /blog/:year-:month-:day-:title/
+
 algolia_search:
   api_key: '0193b06d928ee52f653c6e5ea95d9f97'
   index_name: 'rnpgp'
@@ -30,7 +32,7 @@ parent_hub:
 social:
   links:
     - https://twitter.com/RiboseUS
-    - https://github.com/rnpgp
+    - https://github.com/rnpgp/rnp
 
 legal:
   name: Ribose Group Inc.
@@ -40,9 +42,12 @@ legal:
 home_calls_to_action:
   - { url: "/software/rnp/docs/README/", title: "Get Started" }
 
-permalink: /blog/:year-:month-:day-:title/
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
 url: https://www.rnpgp.com
+
 github_repo_url: https://github.com/rnpgp/rnpgp.com
 
 tag_namespaces:
@@ -56,4 +61,10 @@ tag_namespaces:
     completion_status: "Status"
 
 exclude:
-  - vendor
+  - .git
+  - "*/.git"
+  - Gemfile*
+  - Makefile
+  - Rakefile
+  - README.adoc
+  - vendor # for deployment
