@@ -29,6 +29,8 @@ parent_hub:
   git_repo_url: https://github.com/riboseinc/open.ribose.com
   home_url: https://open.ribose.com/
 
+includes_dir: '.'
+
 social:
   links:
     - https://twitter.com/RiboseUS
@@ -41,6 +43,46 @@ legal:
 
 home_calls_to_action:
   - { url: "/software/rnp/docs/README/", title: "Get Started" }
+
+collections:
+  projects:
+    output: false
+  software:
+    output: true
+    permalink: /software/:path/
+  specs:
+    output: true
+    permalink: /specs/:path/
+  posts:
+    output: true
+    permalink: /blog/:month-:day-:year/:title/
+  pages:
+    output: true
+    permalink: /:name/
+
+defaults:
+  # Theme defaults.
+  # MUST be duplicated from theme’s _config.yml
+  # (does not get inherited, unlike the collections hash)
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: _posts
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: _software
+      type: software
+    values:
+      layout: product
+  - scope:
+      path: _specs
+      type: specs
+    values:
+      layout: spec
 
 plugins:
   - jekyll-seo-tag
