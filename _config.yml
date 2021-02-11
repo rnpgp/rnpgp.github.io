@@ -1,5 +1,5 @@
 title: RNP
-description: C library approach to OpenPGP; GnuPG alternative.
+description: Email encryption with unrivaled performance, RFC&nbsp;4880 compliant.
 # The above two are used by jekyll-seo-tag for things such as
 # `<title>` and `<meta>` tags, as well as elsewhere by the theme.
 
@@ -8,10 +8,10 @@ algolia_search:
   index_name: 'rnpgp'
 
 tagline: >-
-  High-performance OpenPGP library in&nbsp;C++
+  Powering end-to-end email encryption in Mozilla Thunderbird.
 
 pitch: >-
-  Compatible GnuPG&nbsp;alternative, fully&nbsp;compliant to&nbsp;RFC&nbsp;4880.
+  Secure email with unrivaled performance. RFC&nbsp;4880 compliant.
 
 author: "Ribose Inc."
 

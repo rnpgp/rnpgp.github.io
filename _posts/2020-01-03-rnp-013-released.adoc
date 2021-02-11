@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "RNP 0.13.0 has been released"
+title:  "RNP 0.13.0 released"
 date:   2020-01-03 20:05:38 +0700
 categories: release
 excerpt: >-
@@ -10,6 +10,8 @@ redirect_from:
 ---
 
 == General
+
+Next version of the RNP library extends FFI and CLI interfaces, giving more flexibility and control to the user.
 
 * Fixed a double-free on invalid armor headers.
 * Fixed broken versioning when used as a git submodule.
@@ -22,8 +24,8 @@ redirect_from:
 
 == CLI
 
-* rnpkeys: Removed a few redundant commands (--get-key, --print-sigs, --trusted-keys, ...).
-* rnpkeys: Added --secret option.
+* rnpkeys: Removed a few redundant commands (`--get-key`, `--print-sigs`, `--trusted-keys`, ...).
+* rnpkeys: Added `--secret` option.
 * rnpkeys: Display 'ssb' for secret subkeys.
 * rnp: Added `--list-packets` parameters (`--json`, etc.).
 * rnp: Removed `--show-keys`.
@@ -61,5 +63,5 @@ redirect_from:
 
 == Packaging
 
-* RPM: Split packages into librnp0, librnp0-devel, and rnp0.
+* RPM: Split packages into `librnp0`, `librnp0-devel`, and `rnp0`.
 

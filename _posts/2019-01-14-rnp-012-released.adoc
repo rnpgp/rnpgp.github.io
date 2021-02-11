@@ -1,31 +1,37 @@
 ---
 layout: post
-title:  "RNP 0.12.0 has been released"
+title:  "RNP 0.12.0 released"
 date:   2019-01-14 19:35:38 +0700
 categories: release
 excerpt: >-
-  Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1, x25519). Extended FFI with AEAD support and a bunch of examples. CLI functionality extended with -f command, allowing to use the key loaded from a file.
+  Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1, x25519). Extended FFI with AEAD support and a bunch of examples. CLI functionality extended with `-f` command, allowing to use the key loaded from a file.
 redirect_from:
   - /blog/14-01-2019/rnp-012-released/
 ---
 
 == General
 
+Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1, x25519).
+
+Extended FFI with AEAD support and a bunch of examples.
+
+CLI functionality extended with `-f` command, allowing to use the key loaded from a file.
+
 * We now require Botan 2.8+.
 * Fixed key grip calculations for various key types.
-* Fixed SM2 signatures hashing the hash of the message. See comment in issue #436.
+* Fixed SM2 signatures hashing the hash of the message. See comment in https://github.com/rnpgp/rnp/issues/436[issue #436].
 * Added support for G10 ECC keys.
 * Fixed dumping of partial-length packets.
 * Added support for extra ECC curves:
-  * Brainpool p256, p384, p512 ECDSA/ECDH
-  * secp256k1 ECDSA/ECDH
-  * x25519
+** Brainpool p256, p384, p512 ECDSA/ECDH
+** secp256k1 ECDSA/ECDH
+** x25519
 * Fixed AEAD with newer versions of Botan.
 * Removed a lot of legacy code.
 
 == CLI
 
-* rnp: Added -f/--keyfile option to load keys directly from a file.
+* rnp: Added `-f`/`--keyfile` option to load keys directly from a file.
 * rnp: Fixed issue with selecting G10 secret keys via userid.
 * rnpkeys: Added support for SM2 with arbitrary hashes.
 * redumper: Added -g option to dump fingerprints and grips.

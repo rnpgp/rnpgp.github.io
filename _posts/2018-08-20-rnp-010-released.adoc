@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "RNP 0.10.0 has been released"
+title:  "RNP 0.10.0 released"
 date:   2018-08-20 20:37:38 +0700
 categories: release
 excerpt: >-
@@ -16,7 +16,8 @@ redirect_from:
 
 Meet RNP, an  RFC4880-compliant OpenPGP library written in {cpp}.
 
-RNP was born at Hong Kong-based Ribose and is maintained under its initiative.
+RNP was born at Ribose and is continuously maintained under its initiative.
+
 Originally stemmed from NetPGP, it has little in common with its ancestor now
 after a year of development—after a clean-up of legacy code,
 corrected compatibility issues with GnuPG and other implementations,

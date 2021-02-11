@@ -1,15 +1,17 @@
 ---
 layout: post
-title:  "RNP 0.14.0 has been released"
+title:  "RNP 0.14.0 released"
 date:   2021-01-21 21:05:38 +0700
 categories: release
 excerpt: >-
-  After a long delay the next version of the library and CLI was released. It a lot of major FFI, CLI and security improvements and compatibility fixes. Also now it can be built for Windows via MSVC and MinGW/MSYS2.
+  After a long delay the next version of the library and CLI was released. Major FFI, CLI and security improvements and compatibility fixes. Also now it can be built for Windows via MSVC and MinGW/MSYS2.
 redirect_from:
   - /blog/21-01-2021/rnp-014-released/
 ---
 
 == General
+
+After a long delay the next version of the library and CLI was released. Major FFI, CLI and security improvements and compatibility fixes. Also now it can be built for Windows via MSVC and MinGW/MSYS2.
 
 * Improved key validation: require to have at least one valid, non-expiring self signature.
 * Added support for 'stripped' keys without userids and certifications but with valid subkey binding signature.
