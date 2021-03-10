@@ -88,7 +88,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-url: https://www.rnpgp.com
+url: https://www.rnpgp.org
 
 github_repo_url: https://github.com/rnpgp/rnpgp.com
 
