@@ -1,0 +1,35 @@
+---
+layout: default
+title: Feedback and security reports
+permalink: /feedback/
+bodyClass: page
+---
+== Feedback and security reports
+
+We love to hear from you!
+
+=== Reporting bugs and general feedback and bugs
+
+For general issues or bugs, please enter them at the
+_RNP_ GitHub public issue tracker:
+
+* https://github.com/rnpgp/rnp/issues
+
+NOTE: The RNP GitHub issue tracker is publicly viewable. Please report
+security issues via other dedicated channels.
+
+=== Security reporting
+
+For reporting security vulnerabilities or security bugs, or
+bugs with sensitive content,
+please report them via the below form.
+
+We will respond to your report within 1 working day.
+Your response will be kept confidential unless instructed otherwise.
+
+++++
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdyvElDhJcsU2ejV9z7VsdAVHMaVxqEugxeNALLBGOZl98s4g/viewform?embedded=true" width="640" height="1357" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+++++
+
+NOTE: We may have to contact you via separate channels
+in order to verify the report.
