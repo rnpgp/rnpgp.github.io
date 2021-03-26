@@ -1,9 +1,9 @@
 ---
 title: Contributing to RNP
 description: Ways to contribute to RNP!
-layout: default
 permalink: /contribute/
-bodyClass: page
+layout: docs-base
+html-class: docs-page
 ---
 
 RNP is a community effort for a more secure Internet --
