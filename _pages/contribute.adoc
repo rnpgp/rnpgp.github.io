@@ -1,0 +1,36 @@
+---
+title: Contributing to RNP
+description: Ways to contribute to RNP!
+layout: default
+permalink: /contribute/
+bodyClass: page
+---
+
+RNP is a community effort for a more secure Internet --
+thanks to our committed partners and fellow contributors!
+
+== For developers
+
+RNP core code and related projects are all hosted
+at the https://github.com/rnpgp[RNP GitHub organization]
+as open-source software.
+
+Any contribution (bugfixes, enhancements) are much appreciated.
+
+
+== For technical writers
+
+RNP has applied for support from the
+https://developers.google.com/season-of-docs[Google Seasons of Docs]
+program.
+
+We are committed to making the application process and participation
+accessible to everyone -- please feel free to reach out and we will
+do our best to accommodate your needs.
+
+If you are interested in participating in the GSoD program for RNP,
+please apply at the https://github.com/rnpgp/rnp/discussions[Discussions page]
+or directly contact open.source@ribose.com.
+
+The Metanorma GSoD 2021 proposal is available
+link:/blog/2021-03-26-rnp-gsod-2021[here].
