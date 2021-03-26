@@ -20,32 +20,106 @@ helping improve RNP documentation!
 .Google Season of Docs 2021 logo
 image::/assets/blog/2021-03-26-gsod-2021.png[Google Season of Docs 2021 logo,width=100%]
 
+This is the proposal for Google's Season of Docs 2021.
 
 == About RNP
 
-...
+RNP (https://www.rnpgp.org) is an open-source, openly-licensed RNP
+cryptography suite, which aims to facilitate usable end-to-end
+encryption based on zero-trust. Its high-performance C++ library
+provides a set of cryptographic primitives compliant with the
+OpenPGP (RFC 4880) standard.
 
-* Daniel Wyatt, Lead Developer of the RNP OpenPGP library, IETF contributor, previously at FEMA, Google Summer of Code participant
+RNP is used by Mozilla’s Thunderbird to enable end-to-end encryption across
+its 35+ million users, enabling Thunderbird to be the world’s most
+popular mail client that supports end-to-end encryption. RNP has
+undergone heavy security testing by Mozilla and Cure53, with public
+security reports provided on the Internet.
 
-* Dr. Wai Kit Wong, Head of Research at Ribose, formerly Associate Professor in Computer Science and Head of the Department of Computing at Hang Seng University of Hong Kong
+The RNP suite is officially supported and funded by the
+Mozilla Open Source Support (MOSS)
+https://www.mozilla.org/en-US/moss/foundational-technology/[Foundational Technology] and
+https://www.mozilla.org/en-US/moss/secure-open-source/[Secure Open Source] funds,
+and the https://ec.europa.eu/programmes/horizon2020/[EU Horizons 2020] program
+through NLNet's NGI Privacy Enhancing Technology Fund.
+
+
+== Volunteer Mentors
+
+The following individuals of the project community have offered to act as volunteer mentors for this project:
+
+* Daniel Wyatt, Lead Developer of the RNP OpenPGP library. IETF standards participant, previously at FEMA. Contributor to multiple cryptographic tools including OpenSSL, LibreSSL, Botan. 3 times Google Summer of Code participant.
+
+* Dr. Wai Kit Wong, Head of Research at Ribose. Published heavily in cryptographic cloud systems. Former Associate Professor in Computer Science and Head of the Department of Computing at Hang Seng University of Hong Kong.
 
 
 == Project description
 
 === Current status
 
-...
+RNP currently provides minimal API documentation as an integrated
+library, which is insufficient for most developers who need to
+perform native integration, and inadequate for those who utilize RNP
+from the command line. Better documentation will aid more pairs of
+eyes to review and improve adoption of the RNP library, which will
+help expose problems not yet discovered in RNP. This category of
+work aims to provide a reference guide for both the library and CLI,
+and provide a set of guides for easier adoption of the RNP
+components.
 
+Documentation of code with on-going development is a headache for
+development teams.
+
+It is very often that existing documentation is outdated and thus not helpful.
+
+The development team needs to spare additional efforts to develop documentation for Doxygen is a more
+scalable way to update the documentation.
+
+It parses the sources and
+generates the documentation automatically.
+
+Documentation can be made
+up-to-date easily and reduces efforts from the development team.
+This project shall use Doxygen for developing the documentation to
+achieve a more efficient documentation routine in the long run.
+
+////
 === Identified issues
 
 ...
+////
 
 === Project scope
 
-...
+This project aims to achieve the two following goals:
+
+. Develop up-to-date and more detailed documentation of the project, and
+. use an automated code documentation tool like Doxygen.
+
+Specifically, the tasks of the technical writer in this project
+would include the following:
+
+* Audit the existing documentation and codes to identify gaps between them
+* Work with the project team to develop missing documentation
+* Develop/Update the documentation to use Doxygen
+* Perform a usability test on the documentation and identify parts that are the most difficult to follow
+* Use the result from the usability test to develop more comprehensive documentation for the top prioritized use cases
+
 
 == Potential impacts of the project
 
+Two objectives are sought of the project:
+
+. provide detailed and updated documentation to aid more users to join the project community; and
+. adopt Doxygen to keep the documentation up-to-date.
+
+* The first objective can be reflected by the number of (new) users of project documentation.
+* The second objective is straight-forward to realize.
+
+The project would be considered successful if, after the project:
+
+* Unique traffic to project documentation increases by 10%; and
+* Documentation can be generated automatically from annotated code.
 
 == Project schedule
 
@@ -80,5 +154,5 @@ image::/assets/blog/2021-03-26-gsod-2021.png[Google Season of Docs 2021 logo,wid
 
 == Additional Information
 
-The RNP project has mainly been documented by its technical contributors. One of our mentors, Daniel Wyatt, has participated in the Google Summer of Code program as a participant twice.
+The RNP project has mainly been documented by its technical contributors. One of our mentors, Daniel Wyatt, has participated in the Google Summer of Code program as a participant three times!
 

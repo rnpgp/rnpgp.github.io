@@ -33,4 +33,4 @@ please apply at the https://github.com/rnpgp/rnp/discussions[Discussions page]
 or directly contact open.source@ribose.com.
 
 The Metanorma GSoD 2021 proposal is available
-link:/blog/2021-03-26-rnp-gsod-2021[here].
+link:/blog/2021-03-26/rnp-gsod-2021[here].
