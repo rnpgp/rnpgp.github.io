@@ -145,7 +145,7 @@ Work considered out-of-scope:
 We are seeking a competent open-source technical writer who has an interest in information security and willing to learn about the topic.
 
 
-== Potential impacts of the project
+== Potential impact of the project
 
 RNP powers 35+ million installs of Mozilla Thunderbird, and its adoption
 as an open alternative to existing OpenPGP tools is going strong, especially
