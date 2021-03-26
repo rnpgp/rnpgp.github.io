@@ -24,16 +24,18 @@ This is the proposal for Google's Season of Docs 2021.
 
 == About RNP
 
-RNP (https://www.rnpgp.org) is an open-source, openly-licensed RNP
+RNP (https://www.rnpgp.org) is an open-source, openly-licensed (BSD-3) RNP
 cryptography suite, which aims to facilitate usable end-to-end
 encryption based on zero-trust. Its high-performance C++ library
-provides a set of cryptographic primitives compliant with the
-OpenPGP (RFC 4880) standard.
+provides a set of cryptographic primitives fully compliant with the
+https://tools.ietf.org/html/rfc4880[OpenPGP standard (IETF RFC 4880)].
 
-RNP is used by Mozilla’s Thunderbird to enable end-to-end encryption across
+First created in 2017, RNP is now used by Mozilla's Thunderbird to
+enable end-to-end encryption across
 its 35+ million users, enabling Thunderbird to be the world’s most
 popular mail client that supports end-to-end encryption. RNP has
-undergone heavy security testing by Mozilla and Cure53, with public
+undergone heavy security testing by https://www.mozilla.org[Mozilla] and
+https://cure53.de[Cure53], with public
 security reports provided on the Internet.
 
 The RNP suite is officially supported and funded by the
@@ -41,10 +43,7 @@ Mozilla Open Source Support (MOSS)
 https://www.mozilla.org/en-US/moss/foundational-technology/[Foundational Technology] and
 https://www.mozilla.org/en-US/moss/secure-open-source/[Secure Open Source] funds,
 and the https://ec.europa.eu/programmes/horizon2020/[EU Horizons 2020] program
-through NLNet's NGI Privacy Enhancing Technology Fund.
-
-
-== Volunteer Mentors
+through NLNet's Next Generation Internet initiative.
 
 The following individuals of the project community have offered to act as volunteer mentors for this project:
 
@@ -57,69 +56,134 @@ The following individuals of the project community have offered to act as volunt
 
 === Current status
 
-RNP currently provides minimal API documentation as an integrated
+Due to rising popularity of the RNP project, the speedy growth of its
+userbase (and the need to address user needs) has caused development
+at RNP to outpace documentation efforts.
+
+There are two aspects in RNP that need better documentation:
+the CLI and the API.
+
+Currently, RNP provides minimal API documentation as an integrated
 library, which is insufficient for most developers who need to
 perform native integration, and inadequate for those who utilize RNP
-from the command line. Better documentation will aid more pairs of
-eyes to review and improve adoption of the RNP library, which will
-help expose problems not yet discovered in RNP. This category of
-work aims to provide a reference guide for both the library and CLI,
-and provide a set of guides for easier adoption of the RNP
+from the command line.
+
+Better documentation will aid more pairs of eyes to review and
+improve adoption of the RNP library, which will help expose
+undiscovered problems in RNP.
+
+This category of work aims to provide a reference guide for both the
+library and CLI, and provide a set of guides for easier adoption of the RNP
 components.
 
-Documentation of code with on-going development is a headache for
-development teams.
-
-It is very often that existing documentation is outdated and thus not helpful.
-
-The development team needs to spare additional efforts to develop documentation for Doxygen is a more
-scalable way to update the documentation.
-
-It parses the sources and
-generates the documentation automatically.
-
-Documentation can be made
-up-to-date easily and reduces efforts from the development team.
-This project shall use Doxygen for developing the documentation to
-achieve a more efficient documentation routine in the long run.
-
-////
 === Identified issues
 
-...
-////
+. Documentation of code with on-going development is an ongoing challenge
+  for developers.
+
+** This issue becomes especially pronounced when the development team
+   is paced by user needs, where time constraints generally leave code
+   documentation at a dismal and outdated state. Developers are known
+   not to be best at technical writing and it is important that the
+   right skill set is applied for this problem.
+
+. Existing documentation is outpaced by development efforts.
+
+** Outdated documentation causes problems ranging from minor
+  inconveniences (e.g. users need to search for code changes) to
+  potential security risks (e.g. users utilize outdated cryptographic code).
+
+. Streamlining automated documentation for code documentation.
+
+** Maintaining documentation separate from the codebase requires
+  context-switching and creates friction between the programming
+  and documenting processes.
+
 
 === Project scope
 
-This project aims to achieve the two following goals:
+Deliverable: Audit report of the current state of documentation
 
-. Develop up-to-date and more detailed documentation of the project, and
-. use an automated code documentation tool like Doxygen.
+* Familiarize and audit existing documentation and software
+* Develop an understanding of existing community needs
+* Strengths and weaknesses of current documentation
+* Perform usability test on existing documentation and identify parts most difficult to follow
 
-Specifically, the tasks of the technical writer in this project
-would include the following:
+Deliverable: Information architecture and use case prioritization
 
-* Audit the existing documentation and codes to identify gaps between them
-* Work with the project team to develop missing documentation
-* Develop/Update the documentation to use Doxygen
-* Perform a usability test on the documentation and identify parts that are the most difficult to follow
-* Use the result from the usability test to develop more comprehensive documentation for the top prioritized use cases
+* Prioritize use case focus by using the usability test results to develop more comprehensive documentation
+* The desired information architecture should:
+** Allow the audience to discover the information they need;
+** Use a layered approach, where the audience can learn more detailed information step-by-step, allowing the novice to progress in knowledge without being overwhelmed; and
+** Be understandable to the suitable audience. Documentation for CLI is geared towards the normal user, while documentation for API is geared towards the software developer. We need to ensure that these audiences can find what they need.
+
+Deliverable: Library API documentation
+
+* Author a detailed library API reference guide for each component to allow users the ability to find details of library API usage
+* Documentation should be built in an automated way through code annotations
+
+Deliverable: CLI documentation
+
+* Author a detailed CLI reference guide to allow users the ability to utilize the CLI
+* Documentation should be built in an automated way through code annotations
+
+Deliverable: How-to guides
+
+* Author how-to guide to allow users to easily adopt RNP on a personal computer or for an organization
+* Documentation should be built in a code-centric manner for better automation
+
+Deliverable: GSoD project case study
+
+* Authored by the technical writer and interested project mentors
+* Describes the success and challenges faced during the GSoD project for future reference
+
+Work considered out-of-scope:
+
+* This project is of a pilot nature due to the budget amount - we do not expect every available API signature to be documented to the brim.
+* This project will not address documentation on how RNP can be used with other systems (e.g. software that rely on RNP)
+
+We are seeking a competent open-source technical writer who has an interest in information security and willing to learn about the topic.
 
 
 == Potential impacts of the project
 
-Two objectives are sought of the project:
+RNP powers 35+ million installs of Mozilla Thunderbird, and its adoption
+as an open alternative to existing OpenPGP tools is going strong, especially
+for civil society and for those that depend on privacy for safety.
 
-. provide detailed and updated documentation to aid more users to join the project community; and
-. adopt Doxygen to keep the documentation up-to-date.
+Improved documentation for RNP will enable both typical Internet users
+and power users to better protect their privacy through adopting RNP.
 
-* The first objective can be reflected by the number of (new) users of project documentation.
-* The second objective is straight-forward to realize.
+
+== Measuring project's success
+
+=== Expected results
+
+The developed documentation will be published on the RNP project website at https://www.rnpgp.org.
+
+* Goal: A layman user can read the CLI user guide to install, setup, generate keys, and utilize RNP to protect information and send signed/encrypted emails; a developer can read the API guide to compile, setup and utilize RNP in the developer's application.
+** Indication metric: Amount of people referring to the user guides.
+
+* Goal: Allow code annotations to be developed into documentation in an automated fashion
+** Indication metric: Number of times that developers have to switch from code annotations to document content on the official website
+
+=== Measurable project metrics
+
+Two goals are sought of the project:
+
+. provide detailed and updated documentation to bring more users into the community.
+** This can be reflected by the number of new users of project documentation.
+
+. make updating documentation as automated and as easy as possible.
+** This can be reflected by the number of PRs on rnpgp.org for contributing documentation
+  that did not originate from code annotations.
 
 The project would be considered successful if, after the project:
 
 * Unique traffic to project documentation increases by 10%; and
-* Documentation can be generated automatically from annotated code.
+
+* Number of code-documentation PRs to rnpgp.org decreases by 20%.
+
 
 == Project schedule
 
