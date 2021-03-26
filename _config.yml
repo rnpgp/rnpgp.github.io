@@ -43,6 +43,7 @@ legal:
 
 home_calls_to_action:
   - { url: "/software/rnp/docs/README/", title: "Get Started" }
+  - { url: "/contribute/", title: "Contribute" }
 
 collections:
   projects:
@@ -55,7 +56,7 @@ collections:
     permalink: /specs/:path/
   posts:
     output: true
-    permalink: /blog/:month-:day-:year/:title/
+    permalink: /blog/:year-:month-:day/:title/
   pages:
     output: true
     permalink: /:name/
