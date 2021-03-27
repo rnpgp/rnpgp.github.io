@@ -4,6 +4,8 @@ all: _site
 
 clean:
 	rm -rf _site
+	rm -rf _software/*/.git _software/*/docs _software/_*_repo parent-hub/*
+	rm -rf .sass-cache .jekyll-cache .jekyll-metadata
 
 bundle:
 	bundle
