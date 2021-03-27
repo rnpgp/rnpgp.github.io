@@ -12,6 +12,12 @@ algolia_search:
 tagline: >-
   Powering end-to-end email encryption in Mozilla Thunderbird.
 
+landing_priority:
+  - software
+  - custom_intro
+  - specs
+  - blog
+
 pitch: >-
   Secure email with unrivaled performance. RFC&nbsp;4880 compliant.
 
