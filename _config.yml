@@ -17,6 +17,7 @@ landing_priority:
   - custom_intro
   - specs
   - blog
+  - advisories
 
 pitch: >-
   Secure email with unrivaled performance. RFC&nbsp;4880 compliant.
@@ -60,6 +61,9 @@ collections:
   specs:
     output: true
     permalink: /specs/:path/
+  advisories:
+    output: true
+    permalink: /advisories/:slug/
   posts:
     output: true
     permalink: /blog/:year-:month-:day/:title/
@@ -78,6 +82,11 @@ defaults:
   - scope:
       path: _posts
       type: posts
+    values:
+      layout: post
+  - scope:
+      path: _advisories
+      type: advisories
     values:
       layout: post
   - scope:
