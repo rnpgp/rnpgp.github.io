@@ -3,6 +3,11 @@ layout: post
 title:  "RNP 0.10.0 released"
 date:   2018-08-20 20:37:38 +0700
 categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
 excerpt: >-
   After a year since it stemmed off NetPGP, the OpenPGP library
   shares little code in common with its ancestor.

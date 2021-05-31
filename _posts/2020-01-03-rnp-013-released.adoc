@@ -3,6 +3,11 @@ layout: post
 title:  "RNP 0.13.0 released"
 date:   2020-01-03 20:05:38 +0700
 categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
 excerpt: >-
   Next version of the RNP library extends FFI and CLI interfaces, giving more flexibility and control to the user.
 redirect_from:

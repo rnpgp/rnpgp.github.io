@@ -3,6 +3,11 @@ layout: post
 title:  "RNP 0.11.0 released"
 date:   2018-09-17 19:05:38 +0700
 categories: release
+authors:
+  - name: Ronald Tse
+    email: ronald.tse@ribose.com
+    social_links:
+      - https://github.com/ronaldtse
 excerpt: >-
   This update improves key import/merge operations and support for automating S2K iterations calculation.
 redirect_from:

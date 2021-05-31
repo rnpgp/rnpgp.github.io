@@ -1,0 +1,33 @@
+---
+layout: post
+title: "RNP version 0.15.1 released"
+categories: release
+authors:
+  - name: Ronald Tse
+    email: ronald.tse@ribose.com
+    social_links:
+      - https://github.com/ronaldtse
+excerpt: >-
+  API and security enhancements
+---
+
+The latest release of RNP v0.15.1 on 2021-05-28 provides API and security enhancements.
+
+
+== General
+
+* Make man pages building optional.
+* Fixed updating of expiration time for a key with multiple user ids.
+* Fixed key expiry check for keys valid after the year 2038.
+* Pick up key expiration time from direct-key signature or primary userid certification if available.
+
+== FFI
+
+* Added function `rnp_key_valid_till64()` to correctly handle keys which expire after the year 2038.
+* Added `RNP_FEATURE_*` defines to be used instead of raw strings.
+
+== Security
+
+* Fixed issue with cleartext key data after `rnp_key_unprotect()`/`rnp_key_protect()` calls
+(link:/advisories/ri-2021-001[RI 2021-001/CVE-2021-33589 advisory]).
+

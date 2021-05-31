@@ -3,6 +3,11 @@ layout: post
 title:  "RNP 0.12.0 released"
 date:   2019-01-14 19:35:38 +0700
 categories: release
+authors:
+  - name: Ronald Tse
+    email: ronald.tse@ribose.com
+    social_links:
+      - https://github.com/ronaldtse
 excerpt: >-
   Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1, x25519). Extended FFI with AEAD support and a bunch of examples. CLI functionality extended with `-f` command, allowing to use the key loaded from a file.
 redirect_from:

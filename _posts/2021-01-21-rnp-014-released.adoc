@@ -3,6 +3,11 @@ layout: post
 title:  "RNP 0.14.0 released"
 date:   2021-01-21 21:05:38 +0700
 categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
 excerpt: >-
   After a long delay the next version of the library and CLI was released. Major FFI, CLI and security improvements and compatibility fixes. Also now it can be built for Windows via MSVC and MinGW/MSYS2.
 redirect_from:
