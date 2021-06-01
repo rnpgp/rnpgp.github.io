@@ -4,7 +4,7 @@ title:  "RNP 0.10.0 released"
 date:   2018-08-20 20:37:38 +0700
 categories: release
 authors:
-  - name: Nickolay Olshevsky
+  - name: Ronald Tse
     email: o.nickolay@gmail.com
     social_links:
       - https://github.com/ni4
@@ -19,44 +19,62 @@ redirect_from:
 
 :cpp: C++
 
-Meet RNP, an  RFC4880-compliant OpenPGP library written in {cpp}.
+Meet RNP, an https://datatracker.ietf.org/doc/html/rfc4880[RFC 4880]-compliant
+OpenPGP library written in {cpp}.
 
 RNP was born at Ribose and is continuously maintained under its initiative.
 
-Originally stemmed from NetPGP, it has little in common with its ancestor now
-after a year of development—after a clean-up of legacy code,
-corrected compatibility issues with GnuPG and other implementations,
-improved performance and added cutting-edge features.
+Originally stemmed from NetPGP, it now shares little in common with its
+ancestor after a year of active development. A thorough rewrite of legacy code,
+resolving compatibility issues with GnuPG and other implementations,
+with improved performance and added cutting-edge features.
+
+RNP also differs from other implementations -- it is offered under a
+http://opensource.org/licenses/BSD-3-Clause[BSD 3-clause license],
+which means it is compatible for embedded distribution within GPL,
+MPL, MIT and most other open-source licenses, as well as being
+included in commercial binary distributions.
 
 Feel free to use RNP in your software!
 
 
 == Getting started with RNP
 
-If you’re deploying OpenPGP in a Ruby-based application,
+If you are deploying OpenPGP in a Ruby-based application,
 there are bindings
-(see RubyDoc footnote:[https://www.rubydoc.info/github/rnpgp/ruby-rnp/]).
+(see https://www.rubydoc.info/github/rnpgp/ruby-rnp[ruby-rnp RubyDocs]).
 
-Since it’s written in C++, you can call RNP from Objective-C code,
-or with ctypes under Python.
+Since RNP written in {cpp}, you can call it from Objective-C code,
+or with `ctypes` under Python.
 
-RNP’s binaries `rnp` and `rnpkeys` can be installed via Homebrew or YUM,
+The RNP binaries `rnp` and `rnpkeys` can be installed via https://brew.sh[Homebrew]
+or YUM,
 with Debian packages coming next.
-You can use the binaries similarly to GnuPG’s command-line tools
-(see supported flags and use cases in RNP’s README footnote:[https://github.com/rnpgp/rnp/blob/master/README.md#usage]).
+You can use the binaries similarly to GnuPG's command-line tools
+(see supported flags and use cases in the https://github.com/rnpgp/rnp[README]).
+
 
 == Why RNP?
 
-* It’s a proper library, in contrast to GnuPG/GPGME footnote:[See https://news.ycombinator.com/item?id=5180217[GnuPG is not a library (2013)]]. Ruby bindings are available with Python & Go bindings in the works, and you can use it wherever you can call C++ code.
-* It’s implemented in C++ and offers constant memory footprint with large amounts of data.
-* It offers comprehensive cipher support, including (uniquely) the SM algorithm family—a desirable feature if you deploy cryptography in mainland Chinese market.
-* Its development is active (with the help of Ribose) and focused on adding cutting-edge features.
+* It is a proper library, in contrast to GnuPG/GPGME (see https://news.ycombinator.com/item?id=5180217[GnuPG is not a library (2013)]).
+
+* Ruby bindings are available with Python & Go bindings in the works, and you can use it wherever you can call {cpp} code.
+
+* Implemented in {cpp} and offers constant memory footprint with large amounts of data.
+
+* It offers comprehensive cipher support, including (uniquely) the SM algorithm family -- a desirable feature if you deploy cryptography in mainland Chinese market.
+
+* Active development and focused on adding cutting-edge features.
+
 
 == Which algorithms does RNP support?
 
 The following ciphers, encryption modes and hash functions are supported:
 
 * Symmetric: IDEA, Triple DES, CAST5, Blowfish, AES-128, AES-192, AES-256, Twofish, Camellia-128, Camellia-192, Camellia-256, SM4
+
 * Symmetric encryption modes: CFB, AEAD-EAX, AEAD-OCB
+
 * Hash: MD5, SHA1, RIPEMD160, SHA-256, SHA-384, SHA-512, SHA-224, SM3
+
 * Asymmetric: RSA, ElGamal, DSA, so-called DSA2 (i.e. DSA with keys larger then 1024 bits), ECDSA/ECDH (with some subset of curves which later on will be expanded), EdDSA, SM2.
