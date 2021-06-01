@@ -24,7 +24,7 @@ This is the proposal for Google's Season of Docs 2021.
 
 == About RNP
 
-RNP (https://www.rnpgp.org) is an open-source, openly-licensed (BSD-3) RNP
+RNP (https://www.rnpgp.org) is an open-source, openly-licensed (BSD-3)
 cryptography suite, which aims to facilitate usable end-to-end
 encryption based on zero-trust. Its high-performance C++ library
 provides a set of cryptographic primitives fully compliant with the
