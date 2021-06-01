@@ -4,15 +4,16 @@
 </span>
 
 {% if site.legal.privacy_policy_link or site.legal.tos_link %}
-  <nav aria-label="legal links">
+  <nav aria-label="legal links"
     {% if site.legal.tos_link %}
       <a href="{{ site.legal.tos_link }}">Terms of service</a>
     {% endif %}
     {% if site.legal.privacy_policy_link %}
       <a href="{{ site.legal.privacy_policy_link }}">Privacy policy</a>
     {% endif %}
-    <strong><a href="/feedback/">Feedback and bug reports</a></strong>
-    <strong><a href="/advisories/">Security advisories</a></strong>
+    <strong><a href="/docs/">Manual</a></strong>
+    <a href="/feedback/">Feedback/bug reports</a>
+    <a href="/advisories/">Security advisories</a>
     <strong><a href="/contribute/">Contribute</a></strong>
   </nav>
 {% endif %}

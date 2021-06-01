@@ -18,6 +18,7 @@ landing_priority:
   - specs
   - blog
   - advisories
+  - man_pages
 
 pitch: >-
   Secure email with unrivaled performance. RFC&nbsp;4880 compliant.
@@ -70,6 +71,9 @@ collections:
   pages:
     output: true
     permalink: /:name/
+  man_pages:
+    output: true
+    permalink: /docs/:name/
 
 defaults:
   # Theme defaults.
@@ -87,6 +91,11 @@ defaults:
   - scope:
       path: _advisories
       type: advisories
+    values:
+      layout: post
+  - scope:
+      path: _man_pages
+      type: man_pages
     values:
       layout: post
   - scope:
