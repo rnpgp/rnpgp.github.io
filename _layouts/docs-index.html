@@ -1,0 +1,31 @@
+---
+layout: default
+---
+{% assign man_pages = site.man_pages %}
+
+<section class="items">
+  {% if site.is_hub %}
+    {% include assets/symbol.svg %}
+  {% endif %}
+
+  {% for item in man_pages %}
+  {% capture href %}{{ item.url }}{% endcapture %}
+
+  <a class="item" href="{{ item.url }}" role="article">
+
+  <div class="card-body">
+    <header>
+      <h3 class="title">{{ item.title }}</h3>
+    </header>
+
+    <p class="body">
+      {{ item.excerpt | remove: '<p>' | remove: '</p>' | remove: '<div class="presentation">' | remove: '<div class="paragraph">' | remove: '</div>' }}
+    </p>
+
+    <footer class="meta">
+    </footer>
+  </div>
+</a>
+
+  {% endfor %}
+</section>
