@@ -1,6 +1,7 @@
 ---
 title: RNP
 repo_url: "https://github.com/rnpgp/rnp"
+repo_branch: master
 description: C++ OpenPGP library and tools
 
 external_links:
