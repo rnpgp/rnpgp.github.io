@@ -1,6 +1,7 @@
 ---
 title: RNP Tools
 repo_url: https://github.com/rnpgp/rnp-tools
+repo_branch: master
 external_links:
   - url: https://github.com/rnpgp/rnp-tools
 description: >-
