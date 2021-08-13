@@ -1,0 +1,48 @@
+---
+layout: default
+title: OpenPGP keys
+permalink: /openpgp_keys/
+bodyClass: page
+fingerprint: BEDBA05C1E6EE2DFB4BA72E1EC5D520AD90A7262
+keyfile: BEDBA05C1E6EE2DFB4BA72E1EC5D520AD90A7262-A845A5BD622556E89D7763B5EB06D1696BEC4C90.asc
+userid: RNPGP Release Signing Key <rnpgp@ribose.com>
+---
+:page-liquid:
+
+
+== OpenPGP keys
+
+The following key is used to sign source code packages of
+https://github.com/rnpgp/rnp/releases[RNP releases^].
+
+=== Direct download link
+
+link:{{ page.keyfile }}[Click here.^]
+
+=== Public key
+
+[source,openpgp]
+----
+include::openpgp_keys/{{ page.keyfile }}[]
+----
+
+
+=== Key ID
+
+[source]
+----
+{{ page.fingerprint | slice: -16, 16 }}
+----
+
+
+=== Fingerprint
+
+[source]
+----
+{{ page.fingerprint }}
+----
+
+
+=== User ID
+
+  {{ page.userid }}
