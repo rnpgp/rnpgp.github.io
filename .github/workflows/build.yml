@@ -5,8 +5,8 @@ on:
     branches:
       - '*'         # matches every branch
       - '*/*'       # matches every branch containing a single '/'
-      - '!master'   # excludes master
-      - '!staging'   # excludes master
+      - '!main'     # excludes main
+      - '!staging'  # excludes staging
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
         with:
           ruby-version: '2.6'
           architecture: 'x64'
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: Update gems
         run: |
           gem install bundler -v "~> 2"

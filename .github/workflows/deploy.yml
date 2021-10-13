@@ -3,7 +3,7 @@ name: deploy
 on:
   push:
     branches:
-      - master
+      - main
       - staging
   repository_dispatch:
   workflow_dispatch:
@@ -13,8 +13,8 @@ jobs:
     name: Build site
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref == 'refs/heads/master' && 'production' || 'staging' }}
-      url: ${{ github.ref == 'refs/heads/master' && 'https://www.rnpgp.org' || 'https://test.rnpgp.org' }}
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+      url: ${{ github.ref == 'refs/heads/main' && 'https://www.rnpgp.org' || 'https://test.rnpgp.org' }}
 
     steps:
       - name: Setup prerequisites
