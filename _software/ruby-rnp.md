@@ -1,7 +1,6 @@
 ---
 title: Ruby-RNP
 repo_url: https://github.com/rnpgp/ruby-rnp
-repo_branch: master
 description: Bindings for RNP in Ruby
 tags: ["bindingsfor:Ruby"]
 
