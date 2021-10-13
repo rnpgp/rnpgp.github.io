@@ -9,7 +9,8 @@ tags: [Homebrew_formula]
 
 Makes installing RNP on macOS as easy as:
 
-```console
+[source,console]
+----
 $ brew tap rnpgp/rnp
 $ brew install rnp
-```
+----
