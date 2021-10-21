@@ -67,7 +67,7 @@ collections:
     permalink: /advisories/:slug/
   posts:
     output: true
-    permalink: /blog/:year-:month-:day/:title/
+    permalink: /blog/:year-:month-:day-:title/
   pages:
     output: true
     permalink: /:name/
