@@ -1,0 +1,27 @@
+---
+layout: post
+title: "RNP version 0.16.0 released"
+categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  OpenSSL backend and security profiles support
+---
+
+The latest release of RNP v0.16.0 adds support for OpenSSL backend and security profiles, as well as improved security and compatibility with other implementations.
+
+== Other fixes and improvements:
+
+* Ability to disable certain features via compile-time switches (`ENABLE_AEAD`, `ENABLE_SM2`, etc.)
+* Mark signatures with SHA1/MD5 hash, produced after the specific date (2019-01-19 and 2012-01-01) as invalid
+* Fixed possible incompatibility with GnuPG on x25519 secret key export
+* Fixed export of non-FFI symbols from rnp.so/rnp.dylib
+* Fixed key expiration time calculation in some edge cases
+* Added security profile manipulation functions to the FFI
+* Improved CLI tools help messages
+* Improved CLI: stdin/stdout/env input/output specifiers, `--notty` for batch processing, etc.
+
+Full changelog is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.0[RNP v0.16.0 release page]
