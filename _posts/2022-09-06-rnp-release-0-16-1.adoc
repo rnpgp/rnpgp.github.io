@@ -1,0 +1,26 @@
+---
+layout: post
+title: "RNP version 0.16.1 released"
+categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  Support for OpenSSL 3.0 backend and RHEL 9/Fedora 36
+---
+
+Major new feature of RNP v0.16.1 is support for OpenSSL 3.0, allowing to build and use it on RHEL 9/Fedora 36 out of the box.
+
+== Other fixes and improvements:
+
+* More flexible SHA1 signature handling, allowing to distinguish between key and data signatures. By default support for SHA1 key signatures is extended till 2024-01-19.
+* Optional raw encryption, allowing to encrypt already signed data
+* Option to override current timestamp
+* Do not fail completely on packets with unknown versions
+* Automatic backend's feature detection during the build
+* Optional import/export of base64-encoded keys (for Autocrypt headers)
+* Default 2-year key expiration time
+
+Full changelog is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.1[RNP v0.16.1 release page]
