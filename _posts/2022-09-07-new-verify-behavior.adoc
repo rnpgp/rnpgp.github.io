@@ -1,0 +1,18 @@
+---
+layout: post
+title: "New signature verification behaviour"
+categories: information
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  Require only single valid signature for successfull verification.
+---
+
+Within v0.16.1 release we decided to update signature verification behaviour (via the FFI API `rnp_op_verify_execute()` call) to better match user expectations.
+Since the release by default it would require one valid signature to succeed (or zero, if data was just encrypted). Previously it required all signature to be valid.
+In case you need to change the default behaviour the new function `rnp_op_verify_set_flags()` may be used.
+
+For more details please see the documentation for function `rnp_op_verify_execute()`.
