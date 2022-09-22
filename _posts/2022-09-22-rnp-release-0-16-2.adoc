@@ -1,0 +1,16 @@
+---
+layout: post
+title: "RNP version 0.16.2 released"
+categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  Fix for CMake issues introduced in v0.16.2
+---
+
+This update fixes CMake configuration issues, causing incorrect behaviour of `ENABLE_IDEA` and `ENABLE_BRAINPOOL` options.
+
+Release is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.2[RNP v0.16.2 release page]
