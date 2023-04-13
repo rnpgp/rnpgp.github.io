@@ -129,7 +129,11 @@ tag_namespaces:
 
 exclude:
   - .git
-  - "*/.git"
+  - _software/homebrew-rnp/.git
+  - _software/py-rnp/.git
+  - _software/rnp/.git
+  - _software/ruby-rnp/.git
+  - parent-hub/.git
   - Gemfile*
   - Makefile
   - Rakefile
