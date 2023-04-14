@@ -17,4 +17,4 @@ This update fixes the following security issues:
 - In some cases, secret keys remain unlocked after use (CVE-2023-29480)
 
 
-The release is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.3[release page]
+The release is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.3[release page].
