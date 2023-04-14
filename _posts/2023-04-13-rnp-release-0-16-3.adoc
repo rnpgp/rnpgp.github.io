@@ -1,0 +1,20 @@
+---
+layout: post
+title: "RNP version 0.16.3 released"
+categories: release
+authors:
+  - name: Jeffrey Lau
+    email: jeffrey.lau@ribose.com
+    social_links:
+      - https://github.com/ribose-jeffreylau
+excerpt: >-
+  Security fixes (CVE-2023-29479, CVE-2023-29480)
+---
+
+This update fixes the following security issues:
+
+- Possible hang on malformed inputs (CVE-2023-29479)
+- In some cases, secret keys remain unlocked after use (CVE-2023-29480)
+
+
+The release is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.3[release page]
