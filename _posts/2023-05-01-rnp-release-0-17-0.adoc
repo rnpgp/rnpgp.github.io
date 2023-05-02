@@ -1,0 +1,26 @@
+---
+layout: post
+title: "RNP version 0.17.0 released"
+categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  AEAD-OCB support for OpenSSL backend and other features
+---
+
+This release adds support for AEAD OCB encryption mode for OpenSSL backend.
+
+== Other fixes and improvements:
+
+* support for hidden recipients
+* support for GnuPG 2.3+ key storage format
+* FFI function to export key's signature
+* improvements in key-related checks
+* compile-time options to disable support of Blowfish, CAST5 and RIPEMD160
+* CLI improvements
+Since this release, SExp parsing code (required for GnuPG key storage parsing) has been moved to the separate https://github.com/rnpgp/sexp[SExp] library.
+
+The release and full changelog are available at the https://github.com/rnpgp/rnp/releases/tag/v0.17.0[release page].
