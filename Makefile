@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-RNP_ZIP_VERSION := 0.16.3
+RNP_ZIP_VERSION := 0.17.0
 CLEAN_TARGETS := _site _man_pages rnp.zip
 
 all: _site
