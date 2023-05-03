@@ -21,6 +21,7 @@ This release adds support for AEAD OCB encryption mode for OpenSSL backend.
 * improvements in key-related checks
 * compile-time options to disable support of Blowfish, CAST5 and RIPEMD160
 * CLI improvements
+
 Since this release, SExp parsing code (required for GnuPG key storage parsing) has been moved to the separate https://github.com/rnpgp/sexp[SExp] library.
 
 The release and full changelog are available at the https://github.com/rnpgp/rnp/releases/tag/v0.17.0[release page].
