@@ -1,0 +1,22 @@
+---
+layout: post
+title: "RNP version 0.17.1 released"
+categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  Support for Botan 3 and OpenSSL 3 improvements.
+---
+
+This release adds support for Botan 3 and improves OpenSSL 3 support.
+
+== Other fixes and improvements:
+
+* Added support for mimemode in literal data packet.
+* Relaxed Base64 decoding to allow spaces after the checksum.
+* Added function `rnp_signature_get_features()`.
+
+The release and full changelog are available at the https://github.com/rnpgp/rnp/releases/tag/v0.17.1[release page].
