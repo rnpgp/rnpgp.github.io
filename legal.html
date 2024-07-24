@@ -4,17 +4,18 @@
 </span>
 
 {% if site.legal.privacy_policy_link or site.legal.tos_link %}
-  <nav aria-label="legal links"
+  <nav aria-label="legal links">
+    <strong><a href="/docs/">Manual</a></strong>
+    <strong><a href="/contribute/">Contribute</a></strong>
     {% if site.legal.tos_link %}
-      <a href="{{ site.legal.tos_link }}">Terms of service</a>
+      <a href="{{ site.legal.tos_link }}">Terms&nbsp;of&nbsp;service</a>
     {% endif %}
     {% if site.legal.privacy_policy_link %}
-      <a href="{{ site.legal.privacy_policy_link }}">Privacy policy</a>
+      <a href="{{ site.legal.privacy_policy_link }}">Privacy&nbsp;policy</a>
     {% endif %}
-    <strong><a href="/docs/">Manual</a></strong>
-    <a href="/feedback/">Feedback/bug reports</a>
-    <a href="/advisories/">Security advisories</a>
-    <strong><a href="/contribute/">Contribute</a></strong>
-    <a href="/openpgp_keys/">OpenPGP keys</a>
+    <a href="/feedback/">Feedback/bug&nbsp;reports</a>
+    <a href="/advisories/">Security&nbsp;advisories</a>
+    <a href="/openpgp_keys/">OpenPGP&nbsp;keys</a>
+    <a href="/about/">About</a>
   </nav>
 {% endif %}
