@@ -1,0 +1,76 @@
+---
+title: About RNP
+permalink: /about/
+layout: docs-base
+html-class: docs-page
+---
+
+= About RNP
+
+== General
+
+RNP is a powerful open-source software library for working with LibrePGP and
+OpenPGP messages.
+
+It provides a high-level API for encryption, decryption, signing, verification,
+key management, and more.
+
+== Mission
+
+Our mission is to empower individuals and organizations with secure
+communication solutions. We believe in the importance of privacy and strive to
+make encryption accessible to everyone.
+
+
+== Developers
+
+RNP is developed by Ribose, an organization specializing in secure collaboration
+and communication solutions.
+
+Ribose is committed to promoting privacy and security in the digital world, and
+supports RNP as part of its mission to empower individuals and organizations
+with secure communication solutions.
+
+With its expertise in encryption and secure messaging, Ribose actively
+contributes to the development and enhancement of RNP, ensuring that it remains
+a powerful and reliable open-source software library for working with LibrePGP
+and OpenPGP messages.
+
+
+== Partners and supporters
+
+RNP collaborates closely with these organizations:
+
+* Mozilla
+* g10 Code
+* Intevation
+
+RNP is also supported by a dedicated community of developers who contribute to
+its ongoing development and improvement.
+
+RNP is funded by Ribose and the following organizations:
+
+* Mozilla, through the Mozilla Open Source Support (MOSS) program
+* NLnet Foundation
+
+
+== What's in the name?
+
+RNP is widely recognized in the biological sciences as an acronym for
+"ribonucleoprotein."
+
+The name was selected due to its strong association with the company name,
+Ribose, which refers to a type of sugar, and its significance to life on Earth.
+The human ribosome, a molecular machine that translates RNA into proteins,
+consists of two ribonucleoprotein (RNP) particles. The RNP logo itself
+represents an abstract structure of the ribosome.
+
+Although the acronym RNP was not intended to be back-fitted with specific words,
+it originated from "R" representing Ribose and "P" for OpenPGP, aligning it with
+the biological acronym "RNP."
+
+
+== Contact Us
+
+For any inquiries or feedback, please reach out to us at
+mailto:open.source@ribose.com[].
