@@ -1,0 +1,113 @@
+---
+layout: post
+title: "RNP proudly supports LibrePGP"
+categories: news
+authors:
+  - name: Ronald Tse
+    email: ronald.tse@ribose.com
+    social_links:
+      - https://github.com/ronaldtse
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  RNP is excited to announce our support for LibrePGP, a new specification of
+  the OpenPGP encryption standard that builds on the lessons learned from 20
+  years of experience with GnuPG, the most widely used and adopted
+  implementation of OpenPGP.
+---
+= RNP proudly supports LibrePGP
+
+At RNP, we are excited to announce our support for
+https://www.librepgp.org[LibrePGP], a new specification of the OpenPGP
+encryption standard that builds on the lessons learned from the 20 years of
+experience with OpenPGP.
+
+== What is LibrePGP?
+
+LibrePGP is a new specification of the OpenPGP secure email standard that is
+designed to ensure the long-term stability, compatibility and security of
+protection communication.
+
+LibrePGP is conceived and backed by https://g10code.com[g10 Code],
+https://www.ribose.com[Ribose], and https://intevation.de[Intevation], and is
+maintained by a study group consisting of the founding group with other
+interested implementers.
+
+== Why is RNP Supporting LibrePGP?
+
+We believe that LibrePGP is an essential step forward in preserving the core
+principles of openness and compatibility in secure communication.
+
+We share the concerns that sparked the LibrePGP initiative: changes made to the
+OpenPGP specification by a subgroup within the IETF OpenPGP working group were
+perceived as potentially disrupting existing implementations, raising concerns
+about interoperability and security.
+
+As a developer of OpenPGP tools, we believe that LibrePGP is a vital effort to
+ensure the long-term stability and compatibility of secure communication
+protocols. Our involvement in LibrePGP reflects our commitment to preserving the
+security, reliability, and flexibility of the OpenPGP standard.
+
+https://www.gnupg.org[GnuPG] (GNU Privacy Guard) has been the de-facto reference
+implementation of OpenPGP for over two decades. Its widespread adoption and use
+have provided valuable insights into the needs and requirements of secure
+communication protocols. LibrePGP builds on these lessons learned, providing a
+robust and flexible specification that is designed to meet the evolving needs of
+secure communication.
+
+== Long-term collaboration with g10 Code and Intevation
+
+As the developer of RNP, Ribose works closely with g10 Code, the developer of
+GnuPG, and Intevation, the developer of Gpg4win, the most prevalent OpenPGP
+implementation available on Windows. Our teams perform a significant amount of
+interoperability testing to ensure that our implementations are compatible and
+secure.
+
+Together, we defend internet mail and sensitive information internationally in a
+trusted manner, all through a commitment to open-source. Our shared goal is to
+ensure that secure communication is accessible to everyone, regardless of
+platform or system.
+
+In fact, RNP and GnuPG were the first two implementations that supported
+https://web.cs.ucdavis.edu/~rogaway/ocb/[OCB (Offset Codebook) encryption], a
+high-performance and secure encryption algorithm designed by Prof. Phillip
+Rogaway.
+
+We successfully interoperated with OCB encryption since 2018, demonstrating our
+commitment to implementing and testing new encryption algorithms. OCB encryption
+is now a mandatory part of the LibrePGP specification, and we are proud to have
+played a key role in its adoption.
+
+== What does this mean for RNP users?
+
+As a user of RNP, you can rest assured that our commitment to LibrePGP will
+ensure that our software remains compatible with existing OpenPGP
+implementations. This includes the https://www.gnupg.org[GnuPG] and
+https://www.gpg4win.org[Gpg4win] projects, which are also supporters of
+LibrePGP.
+
+== What's next?
+
+We will continue to work closely with the LibrePGP community to ensure that the
+RNP implementation meets the evolving needs of secure communication.
+
+== About RNP
+
+RNP is a set of openly-licensed LibrePGP / OpenPGP tools that work on all major
+platforms. RNP provides end-to-end encryption for secure communication,
+including email and file encryption.
+
+Learn more about our projects and how we are committed to preserving the
+security and compatibility of OpenPGP standards.
+
+== About LibrePGP
+
+LibrePGP is a new specification of the OpenPGP encryption standard that builds
+on the lessons learned from global deployment of OpenPGP technology backed with
+over 20 years of experience.
+
+It is designed to ensure the long-term stability and compatibility of secure
+communication protocols. Visit the https://www.librepgp.org[LibrePGP] website to
+learn more about the initiative.
