@@ -39,6 +39,44 @@ https://www.ribose.com[Ribose], and https://intevation.de[Intevation], and is
 maintained by a study group consisting of the founding group with other
 interested implementers.
 
+
+== What is the vision of LibrePGP?
+
+"Libre" is derived from the Latin word for "free". It emphasizes freedom,
+openness, and unrestricted use.
+
+"PGP" stands for Pretty Good Privacy, the original encryption program developed
+by Phil Zimmermann in 1991 that became the basis for the OpenPGP standard.
+
+LibrePGP represents the next step for the future of OpenPGP:
+
+Free and open::
+LibrePGP aims to keep encryption technology accessible to all, free from
+proprietary restrictions or government interference.
+
+Stable and compatible::
+It builds on 20+ years of OpenPGP experience, ensuring long-term stability and
+compatibility with existing systems.
+
+Security-focused::
+LibrePGP prioritizes real-world security concerns over purely academic
+interests, making it suitable for deployments in critical sectors.
+
+Forward-looking::
+LibrePGP represents a future for encrypted communication that supports rapid
+evolution, incorporating new algorithms like OCB when beneficial.
+
+Trusted::
+With its commitment to open-source and collaboration among respected developers,
+LibrePGP aims to be a globally trusted standard for secure communication.
+
+The vision for LibrePGP is to ensure that strong, reliable encryption remains
+freely available to defend privacy and secure communication worldwide. It seeks
+to balance innovation with stability, ensuring that the technology evolves to
+meet new challenges while maintaining the interoperability and reliability that
+have made PGP a cornerstone of digital security for decades.
+
+
 == Why is RNP Supporting LibrePGP?
 
 We believe that LibrePGP is an essential step forward in preserving the core
@@ -60,6 +98,18 @@ have provided valuable insights into the needs and requirements of secure
 communication protocols. LibrePGP builds on these lessons learned, providing a
 robust and flexible specification that is designed to meet the evolving needs of
 secure communication.
+
+LibrePGP is not just a specification. It is a movement -- a collaborative effort
+to protect digital rights, support freedom of speech, and provide a robust
+foundation for secure communication in an increasingly digital world.
+
+LibrePGP is our bulwark against attempts to weaken encryption standards,
+ensuring that individuals, journalists, activists, and organizations always have
+access to strong, trustworthy encryption tools.
+
+This is exactly why we are proud to support LibrePGP and contribute to its
+contributions to its development and adoption.
+
 
 == Long-term collaboration with g10 Code and Intevation
 
