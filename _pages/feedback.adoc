@@ -4,11 +4,11 @@ title: Feedback and security reports
 permalink: /feedback/
 bodyClass: page
 ---
-== Feedback and security reports
+= Feedback and security reports
 
 We love to hear from you!
 
-=== Reporting bugs and general feedback and bugs
+== Reporting bugs and general feedback and bugs
 
 For general issues or bugs, please enter them at the
 _RNP_ GitHub public issue tracker:
@@ -18,7 +18,7 @@ _RNP_ GitHub public issue tracker:
 NOTE: The RNP GitHub issue tracker is publicly viewable. Please report
 security issues via dedicated channels.
 
-=== Security reporting
+== Security reporting
 
 For reporting security vulnerabilities or security bugs, or
 bugs with sensitive content,

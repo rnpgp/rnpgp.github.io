@@ -1,5 +1,5 @@
 title: RNP
-description: Email encryption with unrivaled performance, RFC&nbsp;4880 compliant.
+description: Secure email with unrivaled performance. LibrePGP and RFC&nbsp;4880 compliant.
 # The above two are used by jekyll-seo-tag for things such as
 # `<title>` and `<meta>` tags, as well as elsewhere by the theme.
 
@@ -10,7 +10,7 @@ algolia_search:
   index_name: 'rnpgp'
 
 tagline: >-
-  Powering end-to-end email encryption in Mozilla Thunderbird.
+  Powering end-to-end email encryption in Mozilla Thunderbird. LibrePGP secure.
 
 landing_priority:
   - software
@@ -21,7 +21,9 @@ landing_priority:
   - man_pages
 
 pitch: >-
-  Secure email with unrivaled performance. RFC&nbsp;4880 compliant.
+  <a href="https://www.librepgp.org"><img title="LibrePGP" src="/assets/librepgp-button.svg"/></a>
+  Secure email with unrivaled performance.
+  <a href="https://www.librepgp.org">LibrePGP</a> and RFC&nbsp;4880 compliant.
 
 author: "Ribose Inc."
 
