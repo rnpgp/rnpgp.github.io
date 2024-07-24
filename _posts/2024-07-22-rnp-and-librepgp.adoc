@@ -22,9 +22,13 @@ excerpt: >-
 At RNP, we are excited to announce our support for
 https://www.librepgp.org[LibrePGP], a new specification of the OpenPGP
 encryption standard that builds on the lessons learned from the 20 years of
-experience with OpenPGP.
+experience with OpenPGP, allowing secure messages in the past to remain secure
+in the future.
+
 
 == What is LibrePGP?
+
+image::/assets/librepgp-button.svg[LibrePGP Logo, width=400]
 
 LibrePGP is a new specification of the OpenPGP secure email standard that is
 designed to ensure the long-term stability, compatibility and security of
