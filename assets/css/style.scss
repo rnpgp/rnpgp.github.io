@@ -52,11 +52,22 @@ body.site--project.layout--home {
     background: rgba(0, 0, 0, 0.4);
   }
   > .underlay.header {
-    > .hero > .text {
-      > .cta .button {
-        border-radius: 25px;
-        padding-left: 32px;
-        padding-right: 32px;
+    > .hero {
+      a {
+        color: #ffffff;
+        text-decoration: underline;
+      }
+      img {
+        float: left;
+        height: 30px;
+        margin-right: 10px;
+      }
+      > .text {
+        > .cta .button {
+          border-radius: 25px;
+          padding-left: 32px;
+          padding-right: 32px;
+        }
       }
     }
   }
