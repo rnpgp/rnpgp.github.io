@@ -190,7 +190,7 @@ RNP supports a comprehensive set of public-key algorithms:
 * https://en.wikipedia.org/wiki/Digital_Signature_Algorithm[DSA] - The Digital Signature Algorithm, including support for key sizes beyond 1024 bits (DSA2)
 * https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm[ECDSA]/ECDH - Elliptic curve cryptography offering strong security with shorter key lengths
 * https://en.wikipedia.org/wiki/EdDSA[EdDSA] - Modern elliptic curve signatures providing high security and performance
-* https://en.wikipedia.org/wiki/SM2_(cryptography)[SM2] - The Chinese national standard for public-key cryptography, essential for Chinese market compliance
+* https://datatracker.ietf.org/doc/html/draft-openpgp-oscca-02[SM2] - The Chinese national standard for public-key cryptography, essential for Chinese market compliance
 
 
 == Summary

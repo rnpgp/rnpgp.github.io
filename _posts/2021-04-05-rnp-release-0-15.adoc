@@ -51,7 +51,7 @@ A major enhancement to the build system enables offline builds:
 
 * New https://cmake.org[CMake] options for building without external downloads:
 ** https://github.com/google/googletest[Googletest] can be skipped during build
-** https://github.com/rnpgg/ruby-rnp[ruby-rnp] can be skipped during build
+** https://github.com/rnpgp/ruby-rnp[ruby-rnp] can be skipped during build
 * Better support for air-gapped environments
 * Improved build reproducibility
 

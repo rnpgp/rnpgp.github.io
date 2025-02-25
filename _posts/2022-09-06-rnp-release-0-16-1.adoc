@@ -18,9 +18,9 @@ flexibility, and platform support.
 == Introduction
 
 The release marks a major milestone in RNP's evolution with comprehensive
-support for https://www.openssl.org/blog/blog/2021/09/07/OpenSSL3.Final/[OpenSSL
-3.0], enabling seamless integration with the latest enterprise Linux
-distributions.
+support for
+https://openssl-library.org/news/openssl-3.0-notes/[OpenSSL 3.0], enabling
+seamless integration with the latest enterprise Linux distributions.
 
 Additionally, it introduces more nuanced security policies and several
 user-requested features that improve flexibility and ease of use.
@@ -44,7 +44,7 @@ Other highlights:
 
 === OpenSSL 3.0 compatibility
 
-https://www.openssl.org/blog/blog/2021/09/07/OpenSSL3.Final/[OpenSSL 3.0] has
+https://openssl-library.org/news/openssl-3.0-notes/[OpenSSL 3.0] has
 been recently released and RNP 0.16.1 is the only OpenPGP implementation that
 fully supports it.
 
