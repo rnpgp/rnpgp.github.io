@@ -30,16 +30,16 @@ jobs:
         JEKYLL_ENV: production
 
     - name: Link Checker
-      uses: lycheeverse/lychee-action@v1.2.0
+      id: lychee
+      uses: lycheeverse/lychee-action@v2
       with:
-        args: --verbose --no-progress --exclude-file .lycheeignore -- _site/**/*.html
+        args: --base _site/ --verbose --no-progress --exclude-file .lycheeignore -- _site/**/*.html
         fail: true
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      # - name: Create Issue From File
-      #   uses: peter-evans/create-issue-from-file@v2
-      #   with:
-      #     title: Link Checker Report
-      #     content-filepath: ./lychee/out.md
-      #     labels: report, automated issue
+    # - name: Create Issue From File
+    #   if: steps.lychee.outputs.exit_code != 0
+    #   uses: peter-evans/create-issue-from-file@v5
+    #   with:
+    #     title: Link Checker Report
+    #     content-filepath: ./lychee/out.md
+    #     labels: report, automated issue
