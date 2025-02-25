@@ -8,15 +8,147 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  Support for Botan 3 and OpenSSL 3 improvements.
+  Enhanced SHA-1 signature handling, raw encryption support, and improved backend
+  features detection, along with Botan 3 and OpenSSL 3 improvements.
 ---
 
-This release adds support for Botan 3 and improves OpenSSL 3 support.
+The RNP 0.17.1 release marks a significant step forward in cryptographic backend
+support, introducing compatibility with Botan 3 while enhancing OpenSSL 3
+integration.
 
-== Other fixes and improvements:
+This release strengthens RNP's position as a flexible OpenPGP implementation by
+expanding its cryptographic backend options and improving interoperability.
 
-* Added support for mimemode in literal data packet.
-* Relaxed Base64 decoding to allow spaces after the checksum.
-* Added function `rnp_signature_get_features()`.
+== Introduction
 
-The release and full changelog are available at the https://github.com/rnpgp/rnp/releases/tag/v0.17.1[release page].
+RNP continues to evolve as a modern OpenPGP implementation, and this release
+focuses on ensuring broad compatibility with major cryptographic libraries.
+
+The addition of Botan 3 support alongside enhanced OpenSSL 3 capabilities gives
+users and developers more flexibility in choosing their preferred cryptographic
+backend while maintaining RNP's high security standards.
+
+== Cryptographic backend enhancements
+
+=== Botan 3 support
+
+The introduction of https://botan.randombit.net/[Botan 3] support represents a
+major advancement for RNP.
+
+Botan 3 brings several improvements over its predecessor:
+
+* Modern https://en.wikipedia.org/wiki/C%2B%2B17[C++17] codebase for better type
+safety and performance
+
+* Improved side-channel resistance
+
+* Enhanced platform support
+
+* Updated cryptographic algorithms and implementations
+
+This addition ensures that RNP users can leverage the latest features and
+security improvements from the Botan cryptographic library while maintaining
+backward compatibility.
+
+=== OpenSSL 3 improvements
+
+The enhanced https://www.openssl.org/[OpenSSL 3] support builds upon RNP's
+existing OpenSSL backend integration. OpenSSL 3 introduced significant changes
+in its architecture and API, including:
+
+* https://docs.openssl.org/3.4/man7/provider/[Provider-based architecture] for better modularity
+
+* https://docs.openssl.org/3.0/man7/fips_module/[FIPS 140-3 support]
+(https://github.com/openssl/openssl/blob/master/README-FIPS.md[OpenSSL FIPS statement])
+
+* Improved algorithm policy management
+
+* Enhanced performance for various cryptographic operations
+
+Our improvements ensure smooth operation with OpenSSL 3, taking advantage of its
+modern features while maintaining compatibility with existing systems.
+
+== Format and encoding enhancements
+
+=== MIME mode support
+
+RNP now includes comprehensive support for
+https://datatracker.ietf.org/doc/html/rfc2045[MIME] mode in literal data
+packets, addressing a key aspect of email-based OpenPGP implementations. This
+enhancement aligns with the
+https://datatracker.ietf.org/doc/html/rfc4880[RFC 4880] specification for
+literal data packet handling.
+
+MIME mode support is particularly crucial for email applications where OpenPGP
+is commonly used. It ensures proper handling of different text encodings and
+line endings, which is essential for maintaining message integrity across
+various email clients and systems.
+
+The implementation focuses on:
+
+* Correct interpretation of `Content-Type` headers
+* Proper handling of multipart messages
+* Preservation of original message formatting
+* Improved compatibility with popular email clients like Thunderbird and Outlook
+
+This addition strengthens RNP's position as a versatile OpenPGP implementation,
+particularly for email-centric applications and systems requiring robust MIME
+handling capabilities.
+
+
+=== Base64 improvements
+
+The release includes a more flexible
+https://en.wikipedia.org/wiki/Base64[Base64] decoding implementation that now
+allows spaces after the checksum. This enhancement improves compatibility with
+various OpenPGP implementations and makes the decoder more robust when handling
+different formatting styles.
+
+== API enhancements
+
+The FFI (Foreign Function Interface) has been expanded with the addition of the
+`rnp_signature_get_features()` function.
+
+This new API allows developers to:
+
+* Query signature features programmatically
+
+* Better integrate RNP into their applications
+
+* Make informed decisions based on signature capabilities
+
+== Additional features and improvements
+
+=== Enhanced signature handling and encryption
+
+* More flexible SHA-1 signature handling has been implemented, allowing clear
+distinction between key and data signatures. Support for SHA-1 key signatures has
+been extended until 2024-01-19 by default.
+
+* Optional raw encryption capability has been added, enabling encryption of
+already signed data.
+
+* A new option to override the current timestamp provides more flexibility in
+signature creation and validation.
+
+* Improved packet handling ensures the system doesn't fail completely when
+encountering packets with unknown versions.
+
+=== Backend and key management improvements
+
+* Automatic backend feature detection during the build process enhances system compatibility and setup.
+
+* Added support for importing and exporting base64-encoded keys, particularly
+useful for https://autocrypt.org/[Autocrypt] headers.
+
+* Implemented a default 2-year key expiration time for better key lifecycle management.
+
+== Looking ahead
+
+This release continues RNP's commitment to providing a robust, flexible, and
+modern OpenPGP implementation. The expanded backend support, enhanced signature handling,
+and improved format handling lay the groundwork for future enhancements while maintaining
+strong compatibility with existing systems.
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.17.1[release page].

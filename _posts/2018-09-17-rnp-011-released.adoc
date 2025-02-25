@@ -14,15 +14,157 @@ redirect_from:
   - /blog/17-09-2018/rnp-011-released/
 ---
 
-== General
+RNP 0.11.0 introduces significant improvements to key management and security
+features, particularly in the areas of key protection and key operations. This
+release focuses on enhancing usability while maintaining strong security
+practices.
 
-This update improves key import/merge operations and support for automating S2K iterations calculation.
+== Introduction
 
-* Remove some old SSH key support.
-* Add support for dynamically calculating the S2K iterations.
-* Add support for extracting the public key from the secret key.
-* Add support for merging information between keys.
+This release brings important enhancements to how RNP handles key operations and
+protection mechanisms. The improvements to String-to-Key (S2K) calculations and
+key management make RNP more user-friendly while ensuring robust security.
 
-== CLI
+Key highlights:
 
-* Add options for custom S2K iterations/times (dynamic by default).
+* <<s2k-iterations,Dynamic S2K iteration calculation>> for optimal key protection
+* <<key-operations,Enhanced key import and merge operations>> for better management
+* <<key-protection,Improved key protection mechanisms>> for stronger security
+
+Other highlights:
+
+* Configurable S2K iteration settings
+* Time-based iteration calculation options
+* Better key distribution workflows
+* Simplified key management processes
+* Modernized key format support
+* Enhanced CLI configuration options
+
+
+[[s2k-iterations]]
+== Security improvements
+
+=== Dynamic S2K iteration calculation
+
+String-to-Key (S2K) is a critical security mechanism in OpenPGP that converts
+passphrases into cryptographic keys. With version 0.11.0, RNP introduces dynamic
+S2K iteration calculation that automatically determines the optimal number of
+iterations based on the system's capabilities.
+
+This feature significantly improves both security and usability by:
+
+* Automatically adjusting iteration counts to match system performance
+* Ensuring consistent protection levels across different hardware
+* Balancing security needs with practical usability
+* Adapting to varying computational resources
+
+Users benefit from enhanced protection against offline attacks without manually
+tuning parameters. The system continuously provides optimal security by:
+
+* Maintaining strong protection against brute-force attempts
+* Delivering consistent performance across platforms
+* Automatically scaling with hardware improvements
+* Reducing configuration complexity
+
+For technical details on S2K implementation, refer to
+https://tools.ietf.org/html/rfc4880[RFC 4880].
+
+The new dynamic calculation system also integrates with RNP's
+<<key-protection,key protection mechanisms>> to provide a comprehensive security
+solution that stays current with evolving hardware capabilities.
+
+[[key-protection]]
+=== Key protection enhancements
+
+The release includes several key protection improvements:
+
+* More sophisticated key derivation mechanisms
+* Better adaptation to system capabilities
+* Improved resistance to offline attacks
+* Configurable protection levels
+
+[[key-operations]]
+== Key management improvements
+
+=== Public key extraction from secret keys
+
+RNP 0.11.0 introduces a streamlined process for extracting public keys from secret
+keys, addressing a common need in OpenPGP key management. This feature simplifies
+the distribution of public keys while keeping secret keys secure.
+
+The improved extraction mechanism provides several benefits:
+
+* Automated public key generation from existing secret keys
+* Simplified key sharing workflows that reduce manual steps
+* Built-in safeguards to prevent accidental secret key exposure
+* Better integration with key servers and distribution systems
+
+This enhancement is particularly useful for users who need to:
+
+* Share their public keys with collaborators
+* Upload keys to keyservers
+* Maintain separate public and private key rings
+* Implement key rotation policies
+
+The feature aligns with OpenPGP best practices as defined in
+https://tools.ietf.org/html/rfc4880[RFC 4880],
+ensuring compatibility while improving the user experience.
+
+=== Support for merging information between keys
+
+Key merging is a critical operation in OpenPGP implementations, especially when
+dealing with key management across multiple systems or synchronizing with
+keyservers. RNP 0.11.0 significantly enhances its key merging capabilities,
+making the process more reliable and efficient while adhering to
+https://tools.ietf.org/html/rfc4880[RFC 4880].
+
+The improved merge operation intelligently combines key information from multiple sources, ensuring that:
+
+* Existing valid signatures are preserved while new signatures are properly added
+* User ID certifications are maintained according to the OpenPGP trust model
+* Subkey relationships and bindings remain intact during merges
+* Key metadata is combined without conflicts or data loss
+* Revocation certificates and updates are properly handled
+
+These improvements are particularly valuable for:
+
+* Organizations managing keys across multiple systems
+* Users synchronizing their keyring with public keyservers
+* Collaborative environments where keys are shared among team members
+* Automated key management systems and PKI implementations
+
+The enhanced merging capabilities align with modern OpenPGP implementations
+while providing better reliability and consistency in key management operations.
+Users can expect smoother key synchronization processes and reduced manual
+intervention when managing distributed keys.
+
+=== Discontinuation of old SSH key support
+
+Discontinued old SSH key support in RNP 0.11.0 includes the removal of legacy
+methods and interfaces to ensure better security and maintainability.
+
+== Command-line interface improvements
+
+=== S2K configuration options
+
+New CLI options provide better control over key protection:
+
+* Custom S2K iteration count settings
+* Time-based iteration calculation
+* Dynamic defaults for optimal security
+* Better user control over protection levels
+
+== Looking ahead
+
+RNP 0.11.0 establishes better foundations for:
+
+* Robust key protection
+* Simplified key management
+* Improved usability
+* Modern security practices
+
+These improvements demonstrate RNP's commitment to providing secure and
+user-friendly OpenPGP implementations.
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.11.0[release page].

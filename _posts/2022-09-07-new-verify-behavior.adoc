@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "New signature verification behaviour"
+title: "RNP now with updated approach to OpenPGP signature verification"
 categories: information
 authors:
   - name: Nickolay Olshevsky
@@ -8,11 +8,337 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  Require only single valid signature for successfull verification.
+  A comprehensive look at RNP's new signature verification approach: simplifying
+  security without compromising integrity.
 ---
 
-Within v0.16.1 release we decided to update signature verification behaviour (via the FFI API `rnp_op_verify_execute()` call) to better match user expectations.
-Since the release by default it would require one valid signature to succeed (or zero, if data was just encrypted). Previously it required all signature to be valid.
-In case you need to change the default behaviour the new function `rnp_op_verify_set_flags()` may be used.
+RNP version 0.16.1 introduces a fundamental change to OpenPGP signature
+verification behavior, making it better aligned with real-world use cases and
+user expectations while maintaining robust security guarantees.
 
-For more details please see the documentation for function `rnp_op_verify_execute()`.
+This change significantly impacts how RNP validates OpenPGP signatures through
+its Foreign Function Interface (FFI).
+
+RNP now requires only one valid signature to succeed (or zero, if data was just
+encrypted). Previously, it required all signatures to be valid. To change the
+default behaviour, the new function `rnp_op_verify_set_flags()` may be used.
+
+
+== Understanding OpenPGP signature verification
+
+=== What is OpenPGP signature verification?
+
+OpenPGP signature verification is a fundamental cryptographic process in secure
+communications. It serves as a cornerstone of the
+https://datatracker.ietf.org/doc/html/rfc4880[RFC 4880] standard, providing
+essential security guarantees for digital communications and document
+authenticity.
+
+At its core, signature verification ensures three critical aspects of secure
+communication:
+
+* *Authentication*: Verifies the identity of the sender by confirming that the
+message was created by someone with access to a specific private key
+
+* *Integrity*: Guarantees that the message content hasn't been modified since it
+was signed
+
+* *Non-repudiation*: Provides cryptographic proof that the sender cannot later
+deny creating the message
+
+The verification process works through public-key cryptography. When sending a
+message, the sender creates a digital signature using their private key. This
+signature is a unique cryptographic hash that combines the message content with
+the sender's private key. The recipient then uses the sender's public key to
+verify this signature, confirming both the sender's identity and message
+integrity.
+
+In RNP's implementation, signature verification is handled through the FFI
+(Foreign Function Interface) layer, making it accessible to various programming
+languages and applications. The process is designed to be both secure and
+flexible, accommodating different use cases from simple document signing to
+complex multi-signature scenarios.
+
+For technical details on implementing verification in your applications, see the
+https://github.com/rnpgp/rnp/[RNP documentation].
+
+== Evolution of verification approaches
+
+=== Previous implementation: All-or-nothing
+
+Prior to version 0.16.1, RNP adhered to a strict verification model based on
+traditional OpenPGP implementations like https://www.gnupg.org/[GnuPG].
+
+This approach prioritized maximum security through rigid verification
+requirements, reflecting early cryptographic practices in the
+https://datatracker.ietf.org/doc/html/rfc4880[OpenPGP standard].
+
+The original implementation required that all signatures present in a message be
+valid for the verification process to succeed. This meant:
+
+* Every single signature in a message had to be successfully verified
+* If any signature failed verification, the entire process would fail
+* No distinction was made between encrypted-only content and signed content
+* Verification requirements were fixed and couldn't be adjusted for different use cases
+
+While this stringent approach provided strong security guarantees, it led to
+several practical challenges in real-world applications:
+
+* Multi-signer documents became problematic when not all public keys were
+immediately available in the keyring
+* Mixed content handling (combining both signed and encrypted data) was
+complicated and often unintuitive
+* The system lacked flexibility to accommodate different verification scenarios
+or security requirements
+* Legacy signatures or situations with partial key availability could cause
+unnecessary verification failures
+
+These limitations became particularly apparent in modern usage scenarios, such
+as in continuous integration pipelines, automated document processing, or
+situations where keys might be stored in different locations or hardware
+security modules (HSMs).
+
+The strict verification model also posed challenges for FFI users of RNP, who
+often needed more granular control over the verification process or better
+feedback about the verification status of individual signatures.
+
+
+=== New paradigm: Flexible and practical
+
+Version 0.16.1 of RNP introduces a modernized verification model through the
+`rnp_op_verify_execute()` function, representing a significant shift from the
+traditional approach used in OpenPGP implementations. This new model responds to
+real-world challenges faced by users of cryptographic software while maintaining
+strong security guarantees.
+
+=== Key features of the new model
+
+At its core, the new verification approach introduces four major improvements:
+
+* It considers verification successful when at least one valid signature is
+present, making it more practical for scenarios with multiple signers
+
+* It properly handles encrypted-only data that contains no signatures,
+addressing a common use case in secure communications
+
+* It provides a more intuitive way to handle multiple signers, aligning with
+how most users expect the software to behave
+
+* It offers flexible verification policies that can be adjusted based on
+specific security requirements through the verification API.
+
+=== Practical benefits
+
+The updated verification approach in RNP 0.16.1 reflects modern cryptographic
+system requirements while maintaining strong security. This change particularly
+benefits organizations dealing with distributed systems and complex key
+management scenarios.
+
+==== Distributed key management
+
+In distributed systems where public keys might be stored across different
+locations or hardware security modules, the new approach significantly improves
+operational efficiency.
+
+Modern enterprises often use
+https://en.wikipedia.org/wiki/Hardware_security_module[Hardware Security Modules (HSMs)]
+or distributed key management systems, making immediate access to all
+keys challenging.
+
+==== Flexible key availability
+
+The new model accommodates situations where immediate access to all signers'
+public keys isn't practical or possible.
+
+This is particularly relevant in scenarios involving multiple organizations or
+when dealing with legacy signatures where some keys might no longer be readily
+available.
+
+==== Customizable verification requirements
+
+Different types of documents often require varying levels of verification
+stringency. For example, internal documentation might need less strict
+verification compared to financial transactions.
+
+RNP now supports this through configurable verification policies, allowing
+organizations to match their security requirements precisely.
+
+==== Enhanced feedback mechanisms
+
+The updated system provides detailed feedback about the verification status,
+crucial for modern application logic and automation.
+
+This improvement is especially valuable in continuous integration/continuous
+deployment (CI/CD) pipelines and automated document processing systems where
+detailed verification status information drives subsequent processing steps.
+
+==== Improved interoperability
+
+The new approach enhances compatibility with other OpenPGP implementations like
+https://www.gnupg.org/[GnuPG], making RNP more practical for integration into
+existing cryptographic ecosystems. This compatibility is essential for
+organizations transitioning between different OpenPGP implementations or
+maintaining hybrid systems.
+
+These changes position RNP as a more versatile solution for modern
+cryptographic applications while maintaining the robust security guarantees
+expected from an OpenPGP implementation. The flexibility introduced allows for
+better integration with contemporary software architectures and deployment
+patterns without compromising on security fundamentals.
+
+
+== Technical implementation details
+
+=== Core changes in the FFI
+
+The new verification behavior is implemented through several key components:
+
+* `rnp_op_verify_execute()`: The main verification function that implements the
+new behavior
+
+* `rnp_op_verify_set_flags()`: Allows fine-tuning of verification requirements
+
+* Enhanced status reporting providing detailed information about each signature
+
+* Improved error handling and feedback mechanisms
+
+
+=== Verification policies and their implementation
+
+The new verification system in RNP introduces a flexible policy framework that
+allows users to choose how strictly they want to enforce signature verification.
+This framework is particularly important for organizations that need to balance
+security requirements with practical operational needs.
+
+==== Default policy: Single valid signature
+
+The default policy implements a pragmatic approach to signature verification. It
+considers a verification operation successful when at least one valid signature
+is present in the message. This aligns with most real-world use cases where the
+presence of a trusted signature is sufficient to establish authenticity.
+
+Key aspects of the default policy include:
+
+* Success criteria based on finding at least one valid signature
+
+* Proper handling of encrypted-only content without signatures
+
+* Comprehensive status reporting for all signatures present
+
+
+==== Strict policy: Complete verification
+
+For scenarios requiring maximum security, RNP maintains a strict verification
+policy option. This policy, similar to traditional OpenPGP implementations,
+requires all present signatures to be valid for the verification to succeed.
+
+This policy is particularly useful for:
+
+* High-security environments where complete verification is mandatory
+
+* Maintaining compatibility with legacy systems
+
+* Scenarios where all signers must be verified
+
+
+==== Custom verification requirements
+
+RNP provides extensive customization options through its verification flags
+system, implemented via the `rnp_op_verify_set_flags()` function. This allows
+organizations to:
+
+* Define specific verification requirements matching their security policies
+
+* Implement complex verification workflows
+
+* Balance security needs with operational requirements
+
+
+These policies are documented in detail in
+https://github.com/rnpgp/rnp/[RNP documentation]. The flexibility of this system
+makes RNP suitable for a wide range of applications, from simple document
+signing to complex enterprise security systems.
+
+== Security considerations and best practices
+
+=== Maintaining security with flexibility
+
+While RNP's new verification approach offers greater flexibility, it's crucial
+to maintain robust security practices throughout the verification process. This
+balance between flexibility and security ensures that the system remains both
+practical and trustworthy.
+
+==== Security fundamentals
+
+The core security principles in OpenPGP signature verification must be preserved
+even with a more flexible approach. Modern cryptographic standards, as
+recommended by https://www.nist.gov/[NIST] or https://www.ietf.org/[IETF], must
+be rigorously applied when validating signature quality and strength.
+Organizations should establish and maintain a robust web of trust or PKI
+infrastructure to verify the trust level of signing keys. Additionally,
+comprehensive key management practices that adhere to industry standards are
+essential, encompassing proper key rotation schedules, effective revocation
+handling procedures, and secure storage protocols. For compliance and security
+analysis purposes, maintaining detailed verification logs is imperative.
+
+=== Implementation recommendations
+
+When implementing OpenPGP signature verification in your applications using RNP,
+several key considerations should guide your approach.
+
+These implementation guidelines ensure that RNP's flexible verification approach
+can be deployed securely and effectively in production environments while
+meeting stringent security requirements.
+
+==== Standard implementations
+
+For most use cases, the default behavior provides an optimal balance of security
+and usability. Organizations should implement the standard single-signature
+verification approach, which effectively addresses common requirements for
+document signing and secure communication. It's essential to develop clear and
+comprehensive feedback mechanisms that provide users with detailed information
+about the verification status of each signature. Furthermore, proper handling of
+both signed and encrypted content must strictly follow the OpenPGP specification
+to ensure compliance and security.
+
+==== Enhanced security requirements
+
+In scenarios demanding heightened security measures, organizations should
+leverage the `rnp_op_verify_set_flags()` function to implement more stringent
+verification policies. For critical documents, supplementary validation checks
+should be incorporated, including timestamp verification and organizational
+policy compliance assessments. The implementation should be carefully aligned
+with specific organizational security policies and compliance requirements to
+ensure comprehensive protection.
+
+==== Robust error handling
+
+Error handling forms a critical component of secure operations. Organizations
+must implement sophisticated feedback systems that provide detailed information
+regarding verification failures and their underlying causes. Comprehensive
+logging of all verification attempts, results, and anomalies should be
+maintained for security auditing purposes. Furthermore, carefully designed
+fallback mechanisms should be implemented to handle edge cases and unexpected
+situations while maintaining security integrity.
+
+
+== Future implications
+
+This architectural change positions RNP for:
+
+* Better integration with modern cryptographic workflows
+
+* Improved compatibility with other OpenPGP implementations
+
+* More flexible security policies that can adapt to different needs
+
+* Enhanced user experience without compromising security
+
+The new verification behavior represents a significant step forward in making
+OpenPGP more accessible while maintaining its security guarantees. It
+demonstrates RNP's commitment to balancing security requirements with practical
+usability.
+
+For detailed technical information about the new verification behavior and
+available options, please refer to
+https://github.com/rnpgp/rnp/[RNP documentation].

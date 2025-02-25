@@ -9,42 +9,329 @@ authors:
     social_links:
       - https://github.com/ronaldtse
 excerpt: >-
-  Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1, x25519). Extended FFI with AEAD support and a bunch of examples. CLI functionality extended with `-f` command, allowing to use the key loaded from a file.
+  Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1,
+  x25519). Extended FFI with AEAD support and a bunch of examples. CLI
+  functionality extended with `-f` command, allowing to load keys from a file.
 redirect_from:
   - /blog/14-01-2019/rnp-012-released/
 ---
 
-== General
+RNP 0.12.0 significantly expands cryptographic capabilities with support for
+additional elliptic curves, introduces AEAD encryption support, and enhances
+both the FFI and CLI interfaces.
 
-Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1, x25519).
+This release also includes important fixes for key handling and signature
+validation.
 
-Extended FFI with AEAD support and a bunch of examples.
+== Introduction
 
-CLI functionality extended with `-f` command, allowing to use the key loaded from a file.
+This release marks a major expansion in RNP's cryptographic capabilities,
+particularly in the area of
+https://en.wikipedia.org/wiki/Elliptic_curve_cryptography[elliptic curve cryptography].
+The addition of new curves and AEAD support, combined with
+improved developer interfaces, makes RNP more versatile and secure for a wider
+range of applications.
 
-* We now require Botan 2.8+.
-* Fixed key grip calculations for various key types.
-* Fixed SM2 signatures hashing the hash of the message. See comment in https://github.com/rnpgp/rnp/issues/436[issue #436].
+Key highlights:
+
+* Added support for extra ECC curves (Brainpool p256, p384, p512, secp256k1, x25519).
+* CLI functionality extended with `-f` command, allowing to load keys directly from a file.
+* FFI enhancements for AEAD support.
+
+Other highlights:
+
+* Dependency upgrade: Botan 2.8+.
+* Enhanced key grip calculations across various key types.
+* Improved handling of SM2 signatures for hashing the message. See comment in https://github.com/rnpgp/rnp/issues/436[issue #436].
 * Added support for G10 ECC keys.
-* Fixed dumping of partial-length packets.
-* Added support for extra ECC curves:
-** Brainpool p256, p384, p512 ECDSA/ECDH
-** secp256k1 ECDSA/ECDH
-** x25519
-* Fixed AEAD with newer versions of Botan.
-* Removed a lot of legacy code.
+* Enhanced dumping logic for partial-length packets, ensuring accurate handling.
 
-== CLI
 
-* rnp: Added `-f`/`--keyfile` option to load keys directly from a file.
-* rnp: Fixed issue with selecting G10 secret keys via userid.
-* rnpkeys: Added support for SM2 with arbitrary hashes.
-* redumper: Added -g option to dump fingerprints and grips.
-* redumper: Display key id/fingerprint/grip in packet listings.
+== Cryptographic enhancements
 
-== FFI
+=== Extended ECC support
 
-* Added FFI examples.
-* Fixed a regression with loading subkeys directly.
-* Implemented support for per-signature hash and creation/expiration time.
-* Added AEAD support.
+The release adds support for several important elliptic curves.
+
+RNP supports the https://datatracker.ietf.org/doc/html/rfc6637[RFC 6637]
+specification which details the implementation and usage of ECC curves in
+OpenPGP.
+
+The new implemented curves provide:
+
+* More flexibility in curve selection
+* Better compliance with various standards
+* Enhanced interoperability
+* Improved performance options
+
+==== Brainpool curves
+
+The Brainpool curves (p256, p384, p512) are standardized elliptic curves
+developed by the
+https://www.bsi.bund.de/EN/Home/home_node.html[German Federal Office for Information Security (BSI)]
+as specified in
+https://tools.ietf.org/html/rfc5639[RFC 5639]. These curves were designed to
+provide verifiably pseudo-random parameters, offering an important alternative
+to the NIST curves.
+
+Key characteristics of Brainpool curves include:
+
+* Rigorous security verification through public, transparent generation processes
+* Three security levels (256-bit, 384-bit, and 512-bit) matching or exceeding RSA 3072-bit to 15360-bit security
+* Widespread adoption in European cryptographic applications and standards
+* Official approval by BSI for use in high-security applications
+
+In OpenPGP applications, Brainpool curves are particularly valuable when
+regulatory compliance or specific security requirements mandate the use of
+BSI-approved algorithms. Their implementation in RNP follows the
+https://datatracker.ietf.org/doc/html/rfc5639[RFC 5639] and enables both ECDSA
+(for signatures) and ECDH (for encryption) operations.
+
+The inclusion of Brainpool curves enhances RNP's ability to serve European
+markets and organizations requiring BSI-approved cryptographic algorithms while
+maintaining full interoperability within the OpenPGP ecosystem.
+
+==== secp256k1
+
+The secp256k1 curve, defined by
+http://www.secg.org/sec2-v2.pdf[Standards for Efficient Cryptography (SEC)],
+is a specialized elliptic curve that has gained widespread recognition primarily
+through its use in Bitcoin's cryptographic operations. This Koblitz curve over a
+prime field offers unique mathematical properties that make it particularly
+efficient for cryptographic operations while maintaining strong security
+characteristics.
+
+Key characteristics of secp256k1 include:
+
+* 256-bit security level, comparable to 3072-bit RSA
+* Exceptional performance for ECDSA operations
+* Mathematically elegant structure that enables efficient implementation
+* Strong resistance to known cryptographic attacks
+* Widespread adoption and extensive security analysis
+
+In OpenPGP applications, secp256k1 serves dual purposes - it can be used both for ECDSA digital
+signatures and ECDH key exchange operations, following the
+https://datatracker.ietf.org/doc/html/rfc6637[RFC 6637] specifications. Its implementation in RNP
+enables users to leverage the same high-performance cryptographic primitives used in blockchain
+applications while maintaining full compatibility with the OpenPGP ecosystem.
+
+The curve's efficiency comes from its specific parameters that enable particularly fast implementation
+of scalar multiplication operations, making it ideal for resource-constrained environments. While
+initially controversial due to its unusual generation process compared to NIST curves, secp256k1
+has undergone extensive scrutiny and real-world testing through its use in cryptocurrency systems,
+establishing itself as a trusted option for high-security applications.
+
+==== x25519
+
+The x25519 curve, designed by Daniel J. Bernstein, represents a significant
+advancement in elliptic curve cryptography. It is specifically optimized for the
+Montgomery ladder implementation of elliptic curve Diffie-Hellman (ECDH) key
+exchange, as specified in https://cr.yp.to/ecdh/curve25519-20060209.pdf[curve 25519].
+
+Key characteristics of x25519 include:
+
+* Designed for high-speed key exchange operations while maintaining strong security
+* Provides 128 bits of security, comparable to 3072-bit RSA
+* Resistant to various side-channel attacks due to its constant-time implementation
+* Widely adopted in protocols like TLS 1.3, Signal, and Wireguard
+
+In OpenPGP applications, x25519 is particularly valuable for secure key exchange
+operations, offering an excellent balance of security and performance. Its
+inclusion in RNP, following
+https://datatracker.ietf.org/doc/html/draft-ietf-openpgp-crypto-refresh#name-curves-for-elliptic-curve-pu[OpenPGP specification],
+enables modern, high-performance encrypted communications while
+maintaining compatibility with the OpenPGP ecosystem.
+
+Additionally, the x25519 curve strengthens the overall security framework,
+ensuring efficient and robust encryption methods are employed across various
+applications. It also positions RNP as a leader in the adoption of contemporary
+cryptographic practices, facilitating secure communication in today’s digital
+landscape.
+
+
+== Dependency updates
+
+=== Botan upgrade requirement
+
+Starting with this release, RNP requires https://botan.randombit.net/[Botan] 2.8
+or higher as its cryptographic backend. This upgrade represents a significant
+step forward in RNP's cryptographic capabilities and performance.
+
+Botan 2.8+ brings several crucial improvements:
+
+* Modern cryptographic implementations, including optimized ECC operations and AEAD support
+* Enhanced security features and fixes for known vulnerabilities
+* Improved performance through optimized algorithms and better hardware acceleration
+* More comprehensive API support, enabling better integration and feature expansion
+
+For users, this upgrade means:
+
+* Stronger security guarantees through up-to-date cryptographic implementations
+* Better performance in key operations, especially with modern CPU features
+* Access to newer cryptographic algorithms and modes
+* Improved stability and reliability
+
+While this change requires updating existing Botan installations, the benefits
+in security and performance make this upgrade essential for modern cryptographic
+applications. For installation instructions, see the
+https://botan.randombit.net/handbook/building.html[Botan installation guide].
+
+
+== Foreign Function Interface (FFI) enhancements
+
+=== AEAD
+
+https://en.wikipedia.org/wiki/Authenticated_encryption[Authenticated Encryption with Associated Data (AEAD)]
+is now fully supported through FFI, having been available through the CLI. This
+expansion brings modern encryption capabilities to developers integrating RNP
+into their applications.
+
+AEAD provides both confidentiality and authenticity of encrypted data, making it
+a crucial feature for secure communications. The implementation follows
+https://datatracker.ietf.org/doc/html/draft-ietf-openpgp-rfc4880bis[RFC 4880bis],
+ensuring interoperability while providing strong security guarantees.
+
+The FFI enhancements in this release include:
+
+* Comprehensive AEAD support for programmatic encryption operations
+* New example code demonstrating common usage patterns
+* Fixed regression issues with direct subkey loading
+* Implementation of per-signature hash and timing controls
+* Extended API documentation and usage examples
+
+These improvements particularly benefit:
+
+* Developers integrating RNP into their applications
+* Systems requiring high-performance authenticated encryption
+* Applications needing fine-grained control over cryptographic operations
+* Projects requiring modern encryption standards compliance
+
+The expanded FFI capabilities make RNP more accessible as a cryptographic
+library while maintaining its security standards and OpenPGP compliance.
+
+Extensive FFI-AEAD examples are provided to help developers quickly integrate AEAD
+encryption into their applications.
+
+=== Other improvements
+
+* Fixed regression with loading subkeys directly.
+
+
+=== Implemented support for per-signature hash and creation/expiration time
+
+This release implements support for per-signature hash and creation/expiration time.
+
+Specifically, the FFI provides fine-grained control over signature creation,
+allowing developers to specify:
+
+* Custom hash algorithms for individual signatures
+* Creation time for signatures
+* Expiration time for signatures
+
+This enhancement follows https://tools.ietf.org/html/rfc4880[RFC 4880]
+specifications for signature creation timestamps and provides greater
+flexibility in signature generation.
+
+Key benefits include:
+
+* Better control over signature properties
+* Support for specific compliance requirements
+* Enhanced timestamp accuracy
+* Improved signature verification capabilities
+
+The implementation is particularly valuable for:
+
+* Applications requiring precise signature timing
+* Systems with specific hash algorithm requirements
+* Compliance-focused implementations
+* Long-term document signing solutions
+
+This feature enables developers to create more precise and compliant signature
+implementations while maintaining full OpenPGP compatibility. Example code
+demonstrating these capabilities is available in the FFI documentation.
+
+
+== Key handling improvements
+
+=== Support for G10 ECC keys
+
+This release adds support for G10 format ECC keys, expanding RNP's compatibility
+with various OpenPGP implementations. G10 is the native key format used by
+GnuPG 2.x, making this addition particularly important for interoperability.
+
+Key features of G10 ECC key support:
+
+* Full compatibility with GnuPG 2.x key storage
+* Support for all implemented ECC curves
+* Seamless import and export capabilities
+* Proper handling of secret key material
+
+This enhancement is particularly beneficial for:
+
+* Systems migrating from GnuPG
+* Multi-implementation environments
+* Key management systems
+* Cross-platform applications
+
+The implementation follows the GnuPG key storage specification, ensuring
+reliable key handling across different OpenPGP implementations while maintaining
+security standards.
+
+=== Other improvements
+
+* Better key grip calculations
+* Improved subkey handling
+* More accurate key identification
+
+
+== Command-line interface enhancements
+
+=== `rnp`
+
+* Direct key file loading with `-f`/`--keyfile`
+* Fixed issue with selecting G10 secret keys via userid.
+
+=== `rnpkeys`
+
+* `rnpkeys` now supports SM2 with arbitrary hashes.
+
+* Improved key information display
+
+=== `redumper`
+
+* Added `-g` option to dump fingerprints and grips.
+* Display key id/fingerprint/grip in packet listings.
+
+
+== Debugging tools
+
+Enhanced debugging capabilities in redumper:
+
+* Fingerprint and grip dumping
+* Better packet listings
+* More detailed key information
+* Improved diagnostic output
+
+== Technical improvements
+
+Significant codebase improvements:
+
+* Removed legacy code
+* Better packet handling
+* Improved error handling
+* Enhanced maintainability
+
+== Looking ahead
+
+RNP 0.12.0 establishes a stronger foundation for modern cryptographic operations through:
+
+* Expanded curve support
+* Modern encryption modes
+* Better developer tools
+* Enhanced usability
+
+These improvements demonstrate RNP's commitment to providing a comprehensive and
+secure OpenPGP implementation.
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.12.0[release page].

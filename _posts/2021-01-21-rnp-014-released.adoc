@@ -9,97 +9,302 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  After a long delay the next version of the library and CLI was released. Major FFI, CLI and security improvements and compatibility fixes. Also now it can be built for Windows via MSVC and MinGW/MSYS2.
+  The long awaited new RNP is finally released with Windows support, major FFI,
+  CLI and security improvements and compatibility fixes.
 redirect_from:
   - /blog/21-01-2021/rnp-014-released/
 ---
 
-== General
+RNP 0.14.0 represents a major milestone in the project's evolution, introducing
+Windows support and comprehensive improvements across key validation,
+compatibility, and security.
 
-After a long delay the next version of the library and CLI was released. Major FFI, CLI and security improvements and compatibility fixes. Also now it can be built for Windows via MSVC and MinGW/MSYS2.
+This release significantly expands RNP's platform support while enhancing its
+robustness and usability.
 
-* Improved key validation: require to have at least one valid, non-expiring self signature.
-* Added support for 'stripped' keys without userids and certifications but with valid subkey binding signature.
-* Added support for Windows via MinGW/MSYS2.
-* Added support for Windows via MSVC.
-* Fixed secret key locking when it is updated with new signatures/subkeys.
-* Fixed key expiry/flags calculation (take in account only the latest valid self-signature/subkey binding).
-* Fixed MDC reading if it appears on 8k boundary.
-* Disabled logging by default in release builds and added support for environment variable `RNP_LOG_CONSOLE` to enable it back.
-* Fixed leading zeroes for secp521r1 b & n field constants.
-* Allowed keys and signatures with invalid MPI bit count.
-* Added support for private/experimental signature subpackets, used by GnuPG and other implementations.
-* Added support for reserved/placeholder signatures.
-* Added support for zero-size userid/attr packet.
-* Relaxed packet dumping, ignoring invalid packets and allowing to find wrong packet easier.
-* Improved logging of errored keys/subkeys information for easier debugging.
-* Fixed support for old RSA sign-only/encrypt-only and ElGamal encrypt-and-sign keys.
-* Fixed support for ElGamal keys larger then 3072 bits.
-* Fixed symbol visibility so only FFI functions are exposed outside of the library.
-* Added support for unwrapping of raw literal packets.
-* Fixed crash with non-detached signature input, fed into the `rnp_op_verify_detached_create()`.
-* Significantly reduced memory usage for the keys large number of signatures.
-* Fixed long armor header lines processing.
-* Added basic support for GnuPG's offline primary keys (`gnupg --export-secret-subkeys`) and secret keys, stored on card.
-* Fixed primary key binding signature validation when hash algorithm differs from the one used in the subkey binding signature.
+== Introduction
+
+This release marks a transformative moment for RNP, bringing Windows platform
+support through both link:https://visualstudio.microsoft.com/[MSVC] and
+link:https://www.msys2.org/[MinGW/MSYS2] build systems. Additionally, it
+introduces substantial improvements to key validation, memory management, and
+compatibility with other OpenPGP implementations.
+
+Key highlights:
+
+* <<windows-support,Windows platform support>> via MSVC and MinGW/MSYS2
+* <<key-validation,Enhanced key validation>> with stricter requirements
+* <<security-improvements,Improved security measures>> and memory management
+
+Other highlights:
+
+* Comprehensive FFI enhancements for better integration
+* Improved CLI tools with new key management features
+* Better compatibility with other OpenPGP implementations
+* Optimized memory usage and performance
+* Enhanced error handling and logging
+* Migration to C++ and Python 3 for testing
+
+
+[[windows-support]]
+== Platform support improvements
+
+=== Windows build system support
+
+A major achievement in this release is the addition of comprehensive Windows
+support:
+
+* Build system support for both MSVC and MinGW/MSYS2
+* Native Windows file system compatibility
+* Support for widechar parameters and file names
+* Integration with Windows development tools
+
+This expansion makes RNP a truly cross-platform solution, enabling:
+
+* Broader deployment options
+* Better integration with Windows applications
+* Consistent behavior across operating systems
+* Enhanced developer experience on Windows
+
+[[key-validation]]
+== Key management improvements
+
+=== Key validation
+
+* Improved key validation: require to have at least one valid, non-expiring self signature
+* Added support for 'stripped' keys without userids and certifications but with valid subkey binding signature
+* Fixed secret key locking when it is updated with new signatures/subkeys
+* Fixed key expiry/flags calculation (take in account only the latest valid self-signature/subkey binding)
+* Implemented userid validity checks so only certified/non-expired/non-revoked userid may be searched
+* Changed behaviour to use latest encryption subkey by default
+
+=== Smart card integration
+
+* Added basic support for GnuPG's offline primary keys (`gnupg --export-secret-subkeys`) and secret keys stored on card
+
+[[security-improvements]]
+== Security improvements
+
+=== Memory management enhancements
+
+Several improvements reduce memory usage and improve efficiency:
+
+* Optimized memory usage for keys with many signatures
+* Improved key/uid signatures access performance
+* Better memory handling during packet processing
+* Reduced memory leaks in error conditions
+
+=== Security hardening
+
+Multiple security improvements:
+
+* Removed version headers from armored messages
+* Enhanced fuzzing coverage via oss-fuzz
+* Fixed static analyzer issues
+* Updated to Botan 2.14.0 minimum requirement
+
+=== Other issues
+
+* Fixed MDC reading if it appears on 8k boundary
+* Fixed leading zeroes for secp521r1 b & n field constants
+* Allowed keys and signatures with invalid MPI bit count
+* Fixed support for old RSA sign-only/encrypt-only and ElGamal encrypt-and-sign keys
+* Fixed support for ElGamal keys larger than 3072 bits
+* Replaced usage of deprecated `botan_pbkdf()` with `botan_pwdhash()`
+
+
+== Compatibility improvements
+
+=== Legacy algorithm support
+
+Enhanced support for various key types and algorithms:
+
+* Improved handling of RSA sign-only and encrypt-only keys
+* Better support for ElGamal keys larger than 3072 bits
+* Fixed secp521r1 curve parameter handling
+* Support for private/experimental signature subpackets, used by GnuPG and other implementations
+* Support for reserved/placeholder signatures
+
+These improvements ensure:
+
+* Better interoperability with older systems
+* Support for legacy key formats
+* Improved compatibility with other OpenPGP implementations
+* More robust key processing
+
+=== Format handling improvements
+
+Significant improvements in message format handling:
+
+* Better processing of armored messages
+* Support for zero-size userid/attr packet
+* Support for unknown experimental s2ks
+* Improved text-mode signature handling
+* Enhanced CR character handling in text documents
+
+=== Other issues
+
+* Fixed GnuPG compatibility issues with CR (`\r`) characters in text-mode and cleartext-signed documents
+* Fixed support for widechar parameters/file names on Windows
+
+== Performance optimizations
+
+=== Memory management
+
+Several improvements reduce memory usage and improve efficiency:
+
+* Significantly reduced memory usage for keys with large number of signatures
+* Improved performance of the key/uid signatures access
 * Fixed multiple memory leaks related to invalid algorithms/versions/etc.
-* Fixed possible crashes during processing of malformed armored input.
-* Limited allowed nesting levels for OpenPGP packets.
-* Fixed support for text-mode signatures.
-* Replaced strcpy calls with std::string and memcpy where applicable.
-* Removed usage of mktemp, replacing it with mkstemp.
-* Replaced usage of deprecated `botan_pbkdf()` with `botan_pwdhash()`.
-* Added support for the marker packet, issued by some implementations.
-* Added support for unknown experimental s2ks.
-* Fixed armored message contents detection (so armored revocation signature is not more reported as the public key).
-* Changed behaviour to use latest encryption subkey by default.
-* Fixed support for widechar parameters/file names on Windows.
-* Implemented userid validity checks so only certified/non-expired/non-revoked userid may be searched.
-* Fixed GnuPG compatibility issues with CR (`\r`) characters in text-mode and cleartext-signed documents.
-* Improved performance of the key/uid signatures access.
-* Migrated tests to the Python 3.
-* Migrated most of the internal code to C++.
+* Fixed symbol visibility so only FFI functions are exposed outside of the library
 
-== CLI
+=== Robustness improvements
 
-* Do not load keyring when it is not required, avoiding extra `keyring not found` output.
-* Input/output data via the tty, if available, instead of stdin/stdout.
-* Fixed possible crash when HOME variable is not set.
-* rnpkeys: Added `--import-sigs` and changed behavior of `--import` to check whether input is key or signature.
-* rnpkeys: Added `--export-rev` command to export key's revocation, parameters `--rev-type`, `--rev-reason`.
-* rnpkeys: Added `--revoke-key` command.
-* rnpkeys: Added `--permissive` parameter to `--import-keys` command.
-* rnpkeys: Added `--password` options, allowing to specify password and/or generate unprotected key.
+Enhanced error handling and stability:
 
-== FFI
+* Limited allowed nesting levels for OpenPGP packets
+* Relaxed packet dumping, ignoring invalid packets and allowing to find wrong packets easier
+* Improved logging of errored keys/subkeys information for easier debugging
+* Disabled logging by default in release builds and added support for environment variable `RNP_LOG_CONSOLE` to enable it back
 
-* Added keystore type constants `RNP_KEYSTORE_*`.
-* Added `rnp_import_signatures`.
-* Added `rnp_key_export_revocation`.
-* Added `rnp_key_revoke`.
-* Added `rnp_request_password`.
-* Added `rnp_key_set_expiration` to update key's/subkey's expiration time.
-* Added flag `RNP_LOAD_SAVE_PERMISSIVE` to `rnp_import_keys`, allowing to skip erroneous packets.
-* Added flag `RNP_LOAD_SAVE_SINGLE`, allowing to import keys one-by-one.
-* Added `rnp_op_verify_get_protection_info` to check mode and cipher used to encrypt message.
-* Added functions to retrieve recipients information (`rnp_op_verify_get_recipient_count`, `rnp_op_verify_get_symenc_count`, etc.).
-* Added flag `RNP_KEY_REMOVE_SUBKEYS` to `rnp_key_remove` function.
-* Added function `rnp_output_pipe` allowing to write data from input to the output.
-* Added function `rnp_output_armor_set_line_length` allowing to change base64 encoding line length.
-* Added function `rnp_key_export_autocrypt` to export public key in autocrypt-compatible format.
-* Added functions to retrieve information about the secret key's protection (`rnp_key_get_protection_type`, etc.).
-* Added functions `rnp_uid_get_type`, `rnp_uid_get_data`, `rnp_uid_is_primary`.
-* Added function `rnp_uid_is_valid`.
-* Added functions `rnp_key_get_revocation_signature` and `rnp_uid_get_revocation_signature`.
-* Added function `rnp_signature_get_type`.
-* Added function `rnp_signature_is_valid`.
-* Added functions `rnp_key_is_valid` and `rnp_key_valid_till`.
-* Added exception guard to FFI boundary.
+
+== Command-line interface enhancements
+
+=== Key management
+
+New key management capabilities:
+
+* Flexible password handling options
+
+** Do not load keyring when it is not required, avoiding extra `keyring not found` output.
+** Input/output data via the tty, if available, instead of stdin/stdout.
+** Fixed possible crash when HOME variable is not set.
+
+* `rnpkeys`
+** New `--import-sigs` argument and changed behavior of `--import` to check
+whether input is key or signature.
+** New `--export-rev` command to export key's revocation, parameters `--rev-type`, `--rev-reason`.
+** New `--revoke-key` command.
+** New `--permissive` parameter to `--import-keys` command.
+** New `--password` options, allowing to specify password and/or generate unprotected key.
+
+=== Usability improvements
+
+Better user experience through:
+
+* Smarter keyring loading
+* Improved TTY handling
+* Better error messages
+* More flexible import options
+
+== Developer interface improvements
+
+=== Enhanced FFI capabilities
+
+Comprehensive new FFI functions for:
+
+* Key validation and status checking
+* Signature management
+* Protection information retrieval
+* Autocrypt compatibility
+
+New keystore type constants:
+
+* `RNP_KEYSTORE_*`
+
+New FFI functions:
+
+* `rnp_import_signatures`.
+* `rnp_key_export_revocation`.
+* `rnp_key_revoke`.
+* `rnp_request_password`.
+* `rnp_key_set_expiration` to update key's/subkey's expiration time.
+
+* `rnp_op_verify_get_protection_info` to check mode and cipher used to encrypt message.
+* functions to retrieve recipients information (`rnp_op_verify_get_recipient_count`, `rnp_op_verify_get_symenc_count`, etc.).
+* `rnp_output_pipe` allowing to write data from input to the output.
+* `rnp_output_armor_set_line_length` allowing to change base64 encoding line length.
+* `rnp_key_export_autocrypt` to export public key in autocrypt-compatible format.
+* functions to retrieve information about the secret key's protection (`rnp_key_get_protection_type`, etc.).
+* `rnp_uid_get_type`, `rnp_uid_get_data`, `rnp_uid_is_primary`.
+* `rnp_uid_is_valid`.
+* `rnp_key_get_revocation_signature` and `rnp_uid_get_revocation_signature`.
+* `rnp_signature_get_type`.
+* `rnp_signature_is_valid`.
+* `rnp_key_is_valid` and `rnp_key_valid_till`.
+
+New FFI flags:
+
+* flag `RNP_LOAD_SAVE_PERMISSIVE` to `rnp_import_keys`, allowing to skip erroneous packets.
+* flag `RNP_LOAD_SAVE_SINGLE`, allowing to import keys one-by-one.
+* flag `RNP_KEY_REMOVE_SUBKEYS` to `rnp_key_remove` function.
+
+Others:
+
 * Fixed documentation for the `rnp_unload_keys` function.
 
-== Security
 
-* Removed version header from armored messages (see footnote:[https://mailarchive.ietf.org/arch/msg/openpgp/KikdJaxvdulxIRX_yxU2_i3lQ7A/] ).
-* Enabled fuzzing via oss-fuzz and fixed reported issues.
-* Fixed a bunch of issues reported by static analyzer.
-* Require at least Botan 2.14.0.
+=== Improved integration
+
+Better integration support through:
+
+* Added exception guards at FFI boundary
+* Cleaner symbol visibility
+* Better documentation
+* More consistent API behavior
+
+== Security enhancements
+
+=== Hardening measures
+
+Multiple security improvements:
+
+* Removed version headers from armored messages
+* Enhanced fuzzing coverage
+* Fixed static analyzer issues
+* Updated cryptographic dependencies
+
+=== Cryptographic improvements
+
+Better cryptographic operations:
+
+* Updated to Botan 2.14.0
+* Improved key protection
+* Enhanced signature validation
+* Better random number generation
+
+== Technical improvements
+
+=== Code modernization
+
+Major technical improvements:
+
+* Migrated most of the internal code to C++
+* Updated test suite to Python 3
+* Better string handling
+** Replaced `strcpy` calls with `std::string` and `memcpy` where applicable
+* Improved temporary file management
+** Removed usage of `mktemp`, replacing it with `mkstemp`
+
+
+=== Bug fixes
+
+* Fixed crash with non-detached signature input, fed into the `rnp_op_verify_detached_create()`
+* Fixed long armor header lines processing
+* Fixed primary key binding signature validation when hash algorithm differs from the one used in the subkey binding signature
+* Fixed possible crashes during processing of malformed armored input
+* Fixed support for text-mode signatures
+* Fixed armored message contents detection (so armored revocation signature is not more reported as the public key)
+
+== Looking ahead
+
+RNP 0.14.0 establishes a stronger foundation for future development through:
+
+* Expanded platform support
+* Enhanced security measures
+* Improved developer interfaces
+* Better compatibility
+
+These improvements demonstrate RNP's commitment to being a robust, secure, and user-friendly OpenPGP implementation.
+
+For detailed technical information and the complete list of changes, please visit the https://github.com/rnpgp/rnp/releases/tag/v0.14.0[release page].
