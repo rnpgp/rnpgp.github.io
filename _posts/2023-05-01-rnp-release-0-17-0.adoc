@@ -35,7 +35,7 @@ Key highlights:
 
 Other highlights:
 
-* SExp parsing code moved to a separate library
+* SExp parsing code moved to a separate library (https://github.com/rnpgp/sexpp[SEXPP])
 * New FFI capabilities for signature export and key verification
 * Enhanced CLI features for key management and encryption
 * Configurable compile-time options for legacy algorithm support
@@ -100,9 +100,12 @@ is crucial
 === GnuPG 2.3+ compatibility
 
 This release adds support for modern key storage formats used by GnuPG 2.3 and
-later versions. The new format, based on
-https://people.csail.mit.edu/rivest/Sexp.txt[S-expressions], provides a more
-structured and extensible way to store OpenPGP keys and their metadata.
+later versions, described in its https://github.com/gpg/gnupg/blob/master/agent/keyformat.txt[specification].
+
+The new format, based on S-Expressions (SExp)
+(https://web.archive.org/web/20071017100533/http://people.csail.mit.edu/rivest/Sexp.txt[original specification from 1997]),
+provides a more structured and extensible way to store OpenPGP keys and their
+metadata.
 
 RNP can now read and write keys in this format, ensuring smooth interoperability
 with recent GnuPG versions. This is particularly important for users and
@@ -155,14 +158,15 @@ Users can expect:
 
 == Developer improvements
 
-=== SExp library separation
+=== S-Expression library separation to SEXPP
 
-The https://github.com/rnpgp/sexp[SExp] parsing library, essential for handling
-GnuPG key storage, has been moved to a separate repository. S-expressions,
-originally defined in a https://people.csail.mit.edu/rivest/Sexp.txt[1997 spec
-by Ron Rivest], provide a structured format for storing cryptographic data. This
-format is widely used in security applications, including GnuPG's modern key
-storage system.
+S-Expressions (SExp), was originally defined in a
+(https://web.archive.org/web/20071017100533/http://people.csail.mit.edu/rivest/Sexp.txt[specification from 1997]),
+that provides a structured format for storing cryptographic data. This format is
+oft-used in security applications, including GnuPG's modern key storage system.
+
+The RNP team has created a reusable C++ Library for working with SEXP data called
+https://github.com/rnpgp/sexpp[SEXPP].
 
 By separating the SExp parsing code into its own library, RNP achieves better
 code organization and enables other projects to benefit from this
@@ -172,8 +176,9 @@ with GnuPG keys or other cryptographic data storage.
 
 The separation also simplifies RNP's core codebase while maintaining full
 compatibility with GnuPG 2.3+ key storage formats through this dedicated
-component. Users and developers can expect better maintainability and easier
-updates to the S-expression handling code.
+component. Users and developers can expect better maintainability, easier
+updates to the S-expression handling code, and improved performance during
+cryptographic operations.
 
 
 This modularization:
