@@ -8,19 +8,142 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  Support for OpenSSL 3.0 backend and RHEL 9/Fedora 36
+  Implements support for OpenSSL 3.0, flexible SHA1 signature handling, and RHEL
+  9/Fedora 36
 ---
 
-Major new feature of RNP v0.16.1 is support for OpenSSL 3.0, allowing to build and use it on RHEL 9/Fedora 36 out of the box.
+RNP 0.16.1 brings significant improvements in security policies, operational
+flexibility, and platform support.
 
-== Other fixes and improvements:
+== Introduction
 
-* More flexible SHA1 signature handling, allowing to distinguish between key and data signatures. By default support for SHA1 key signatures is extended till 2024-01-19.
-* Optional raw encryption, allowing to encrypt already signed data
-* Option to override current timestamp
-* Do not fail completely on packets with unknown versions
-* Automatic backend's feature detection during the build
-* Optional import/export of base64-encoded keys (for Autocrypt headers)
-* Default 2-year key expiration time
+The release marks a major milestone in RNP's evolution with comprehensive
+support for https://www.openssl.org/blog/blog/2021/09/07/OpenSSL3.Final/[OpenSSL
+3.0], enabling seamless integration with the latest enterprise Linux
+distributions.
 
-Full changelog is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.1[RNP v0.16.1 release page]
+Additionally, it introduces more nuanced security policies and several
+user-requested features that improve flexibility and ease of use.
+
+Key highlights:
+
+* <<openssl-support,OpenSSL 3.0 support>> for RHEL 9 and Fedora 36 compatibility
+* <<sha1-handling,Enhanced SHA1 signature handling>> for key and data signatures
+* <<raw-encryption,Raw encryption support>> for flexible data processing
+
+Other highlights:
+
+* Configurable timestamp override functionality
+* Improved handling of unknown packet versions
+* <<feature-detection,Automatic backend feature detection>> during build
+* Base64-encoded key import/export for Autocrypt
+* Two-year default key expiration time
+
+[[openssl-support]]
+== Platform support improvements
+
+=== OpenSSL 3.0 compatibility
+
+https://www.openssl.org/blog/blog/2021/09/07/OpenSSL3.Final/[OpenSSL 3.0] has
+been recently released and RNP 0.16.1 is the only OpenPGP implementation that
+fully supports it.
+
+This feature enables:
+
+* Native compatibility with
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9[RHEL 9],
+https://www.centos.org/centos-stream/[CentOS Stream 9], and
+https://getfedora.org/[Fedora 36]
+* Support for OpenSSL's new provider architecture
+* Improved FIPS compatibility through OpenSSL 3.0's FIPS provider
+* Enhanced performance through OpenSSL 3.0's optimizations
+
+The implementation ensures that RNP works seamlessly with these platforms'
+default cryptographic backends, eliminating the need for custom builds or
+external dependencies.
+
+== Security policy enhancements
+
+[[sha1-handling]]
+=== SHA1 signature handling improvements
+
+This release introduces a more sophisticated approach to SHA1 signatures:
+
+* Allows distinguishing between data and key signatures
+* Extended support for SHA1 key signatures until January 19, 2024 (2024-01-19)
+* More granular control over signature acceptance policies
+* Better compatibility with existing key infrastructure
+
+This change allows organizations to maintain compatibility with legacy systems
+while gradually transitioning to stronger algorithms.
+
+=== Key expiration defaults
+
+A new security-focused default has been implemented:
+
+* Automatic 2-year expiration time for newly generated keys
+* Encourages regular key rotation practices
+* Aligns with modern security recommendations
+* Helps prevent the use of outdated keys
+
+== Operational improvements
+
+[[raw-encryption]]
+=== Raw encryption support
+
+The addition of raw encryption capabilities provides:
+
+* Ability to encrypt already-signed data
+* More flexible processing pipelines
+* Better integration with existing workflows
+* Improved performance for certain use cases
+
+=== Timestamp control
+
+New timestamp override functionality enables:
+
+* Testing of time-dependent operations
+* Reproduction of specific scenarios
+* Validation of expiration handling
+* Better debugging capabilities
+
+=== Enhanced format handling
+
+Several improvements make RNP more robust when dealing with various OpenPGP implementations:
+
+* Graceful handling of unknown packet versions
+* Support for base64-encoded keys in Autocrypt headers
+* More flexible packet processing
+* Improved interoperability
+
+== Developer improvements
+
+[[feature-detection]]
+=== Build system feature detection
+
+The new automatic backend feature detection during build:
+
+* Simplifies configuration
+* Ensures optimal use of available crypto features
+* Reduces build-time errors
+* Improves portability
+
+=== API enhancements
+
+New FFI capabilities have been added:
+
+* `rnp_op_encrypt_set_flags()` with `RNP_ENCRYPT_NOWRAP` for raw encryption
+* Base64 encoding options for key import/export
+* Timestamp override functionality
+* Updated security rule functions
+
+== Looking ahead
+
+RNP 0.16.1 sets a strong foundation for future development with its improved platform support and security policies. The changes demonstrate RNP's commitment to:
+
+* Maintaining broad platform compatibility
+* Implementing flexible security policies
+* Improving usability and integration capabilities
+* Supporting modern cryptographic practices
+
+For detailed technical information and the complete list of changes, please visit the https://github.com/rnpgp/rnp/releases/tag/v0.16.1[RNP v0.16.1 release page].

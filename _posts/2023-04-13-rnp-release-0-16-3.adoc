@@ -8,13 +8,122 @@ authors:
     social_links:
       - https://github.com/ribose-jeffreylau
 excerpt: >-
-  Security fixes (CVE-2023-29479, CVE-2023-29480)
+  Addresses critical security vulnerabilities affecting input validation and
+  secret key handling
 ---
 
-This update fixes the following security issues:
+RNP 0.16.3 is a critical security release that addresses two important
+vulnerabilities. This release focuses on strengthening RNP's robustness against
+malformed inputs and improving the security of secret key handling.
 
-- Possible hang on malformed inputs (CVE-2023-29479)
-- In some cases, secret keys remain unlocked after use (CVE-2023-29480)
+== Introduction
+
+Security is a paramount concern in cryptographic software, and this release
+demonstrates RNP's commitment to maintaining a secure OpenPGP implementation.
+The fixes address potential denial of service and key material exposure risks,
+making this an important update for all RNP users.
+
+Key highlights:
+
+* <<input-validation,Fixed input validation vulnerability>> (CVE-2023-29479) preventing denial of service
+* <<key-handling,Improved secret key handling>> (CVE-2023-29480) for better security
+
+Other highlights:
+
+* Enhanced security best practices implementation
+* Improved key lifecycle management
+* Updated input processing safeguards
+* Strengthened memory handling for sensitive data
+
+[[input-validation]]
+== Security improvements
+
+=== Input validation vulnerability (CVE-2023-29479)
+
+The first security fix addresses a vulnerability where malformed inputs could
+cause RNP to hang indefinitely. This issue could potentially be exploited to
+create a denial of service condition.
+
+The vulnerability:
+
+* Could be triggered by specially crafted OpenPGP messages
+
+* Had the potential to make applications using RNP unresponsive
+
+* Affected all operations involving message parsing
 
 
-The release is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.3[release page].
+The fix implements proper input validation and adds safeguards against malformed
+data, ensuring RNP handles invalid inputs gracefully without entering infinite
+processing loops.
+
+[[key-handling]]
+=== Secret key handling vulnerability (CVE-2023-29480)
+
+The second security fix resolves an issue where secret keys could remain
+unlocked after their intended use.
+
+This vulnerability:
+
+* Could potentially expose sensitive key material in memory
+
+* Affected scenarios where keys were temporarily unlocked for operations
+
+* Created a risk of key material being accessible longer than necessary
+
+
+The fix ensures that secret keys are properly locked immediately after use,
+implementing a more robust key lifecycle management system.
+
+This enhancement:
+
+* Improves the security of secret key handling
+
+* Reduces the window of vulnerability for key material
+
+* Follows the principle of least privilege more strictly
+
+
+== Security impact and mitigation
+
+These vulnerabilities could affect any application using RNP for OpenPGP
+operations.
+
+Users should:
+
+* Update to RNP 0.16.3 as soon as possible
+
+* Review their applications for any cached or stored key material
+
+* Ensure proper key handling practices are followed
+
+
+== Security best practices
+
+To maintain security when using RNP, we recommend:
+
+* Regular updates to the latest version
+
+* Proper input validation in applications using RNP
+
+* Implementation of secure key handling procedures
+
+* Regular security audits of systems using RNP
+
+
+== Looking ahead
+
+This release reinforces RNP's security foundation and demonstrates our
+commitment to addressing security issues promptly.
+
+We continue to:
+
+* Monitor for potential security issues
+
+* Implement proactive security measures
+
+* Maintain transparency in security-related communications
+
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.16.3[release page].

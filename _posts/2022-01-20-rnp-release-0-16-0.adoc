@@ -8,20 +8,154 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  OpenSSL backend and security profiles support
+  Introduces OpenSSL backend support, and customizable security profiles for
+  enhanced cryptographic policy control
 ---
 
-The latest release of RNP v0.16.0 adds support for OpenSSL backend and security profiles, as well as improved security and compatibility with other implementations.
+RNP 0.16.0 represents a major milestone in the project's evolution, introducing
+OpenSSL backend support and customizable security profiles.
 
-== Other fixes and improvements:
+This release significantly enhances RNP's flexibility, security, and
+compatibility with other OpenPGP implementations.
 
-* Ability to disable certain features via compile-time switches (`ENABLE_AEAD`, `ENABLE_SM2`, etc.)
-* Mark signatures with SHA1/MD5 hash, produced after the specific date (2019-01-19 and 2012-01-01) as invalid
-* Fixed possible incompatibility with GnuPG on x25519 secret key export
-* Fixed export of non-FFI symbols from rnp.so/rnp.dylib
-* Fixed key expiration time calculation in some edge cases
-* Added security profile manipulation functions to the FFI
-* Improved CLI tools help messages
-* Improved CLI: stdin/stdout/env input/output specifiers, `--notty` for batch processing, etc.
+== Introduction
 
-Full changelog is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.0[RNP v0.16.0 release page]
+This release marks a transformative moment for RNP, introducing two major
+features that expand its utility and security capabilities. The addition of
+OpenSSL backend support broadens deployment options, while the new security
+profiles system enables fine-grained control over cryptographic policies.
+
+Key highlights:
+
+* <<openssl-backend,OpenSSL backend support>> for flexible deployment options
+* <<security-profiles,Customizable security profiles>> for granular cryptographic control
+* <<hash-policies,Enhanced hash algorithm policies>> for improved security
+
+Other highlights:
+
+* Configurable compile-time feature switches
+* Improved signature validation mechanisms
+* Enhanced cross-platform compatibility
+* Extended FFI capabilities
+* Optimized CLI tools with better usability
+* Performance improvements for large-scale operations
+
+[[openssl-backend]]
+== Major feature improvements
+
+=== OpenSSL backend support
+
+The introduction of https://www.openssl.org[OpenSSL] backend support is a
+game-changing addition that offers several advantages.
+
+OpenSSL is the most widely deployed and used cryptographic library in the world,
+powering the majority of HTTPS connections on the internet. It provides a robust,
+commercial-grade, full-featured toolkit for Transport Layer Security (TLS) and
+Secure Sockets Layer (SSL) protocols, as well as a general-purpose cryptography
+library.
+
+* Eliminates the requirement for https://botan.randombit.net[Botan] installation
+* Enables RNP usage on systems with OpenSSL as the primary cryptographic library
+* Provides alternative implementation choices for different deployment scenarios
+* Improves integration with existing OpenSSL-based systems
+
+This feature allows RNP to be built and used on systems without Botan installed,
+making it more accessible and easier to deploy in various environments.
+
+[[security-profiles]]
+=== Security profile system
+
+The new security profiles system provides unprecedented control over
+cryptographic policies:
+
+* Customizable security rules for different usage scenarios
+* Fine-grained control over algorithm acceptance
+* Temporal validation of cryptographic algorithms
+* Configurable policy enforcement
+
+This system helps organizations implement and maintain their specific security
+requirements while ensuring compliance with evolving cryptographic standards.
+
+== Security enhancements
+
+[[hash-policies]]
+=== Hash algorithm policy improvements
+
+Stricter policies have been implemented for older hash algorithms:
+
+* SHA1 signatures produced after January 19, 2019 (2019-01-19), are now marked as invalid
+* MD5 signatures produced after January 1, 2012 (2012-01-01), are now marked as invalid
+* SHA1 and 3DES have been removed from default key preferences
+* SHA1 collision detection code has been implemented
+
+=== Signature validation enhancements
+
+Several enhancements to signature validation have been made:
+
+* Signatures with unknown critical notation are now marked as invalid
+* Secret key validation occurs before first operation
+* More robust key material validation procedures
+* Limited number of possible message recipients/signatures to 16k
+
+== Compatibility improvements
+
+=== Cross-platform support enhancements
+
+The release includes several important compatibility fixes:
+
+* Resolved x25519 secret key export compatibility with GnuPG
+* Fixed support for Gnu/Hurd systems lacking `PATH_MAX`
+* Improved support for old RSA sign-only/encrypt-only keys
+* Enhanced ElGamal key support for sizes larger than 3072 bits
+
+=== Build system improvements
+
+New compile-time options provide better control over feature sets:
+
+* `ENABLE_AEAD` for AEAD encryption support
+* `ENABLE_SM2` for SM2/SM3/SM4 algorithm support
+* `ENABLE_BRAINPOOL` for Brainpool curves
+* `ENABLE_TWOFISH` for Twofish algorithm
+
+== Developer improvements
+
+=== FFI enhancements
+
+New FFI functions have been added to support the latest features:
+
+* `rnp_backend_string()` and `rnp_backend_version()`
+* `rnp_key_25519_bits_tweaked()` and `rnp_key_25519_bits_tweak()`
+* Security profile manipulation functions
+* `rnp_signature_get_expiration()`
+
+=== Command-line interface improvements
+
+The CLI has been significantly improved:
+
+* New detailed help messages for both `rnp` and `rnpkeys`
+* Support for stdin/stdout/env input/output specifiers
+* New `--notty` option for batch processing
+* Enhanced key editing capabilities with `--edit-key`
+
+== Performance improvements
+
+Several optimizations have been implemented:
+
+* Reduced memory usage for keys with many signatures
+* Improved key import performance
+* Better handling of large ElGamal keys
+* Optimized signature subpacket processing
+
+== Looking ahead
+
+RNP 0.16.0 establishes a strong foundation for future development with its
+flexible backend support and customizable security policies. The improvements in
+this release demonstrate RNP's commitment to:
+
+* Providing deployment flexibility
+* Maintaining strong security standards
+* Improving compatibility with other implementations
+* Enhancing developer experience
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.16.0[RNP v0.16.0 release page].

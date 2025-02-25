@@ -8,26 +8,147 @@ authors:
     social_links:
       - https://github.com/ronaldtse
 excerpt: >-
-  API and security enhancements
+  Addresses key protection vulnerability and implements Year 2038 compatibility
+  for cryptographic operations
 ---
 
-The latest release of RNP v0.15.1 on 2021-05-28 provides API and security enhancements.
+Version: RNP 0.15.1
+Release date: 2021-05-28
 
+RNP 0.15.1 delivers critical security fixes and important improvements to key
+expiration handling, particularly addressing the Year 2038 problem in
+cryptographic applications.
 
-== General
+This release also enhances build system flexibility and API robustness.
 
-* Make man pages building optional.
-* Fixed updating of expiration time for a key with multiple user ids.
-* Fixed key expiry check for keys valid after the year 2038.
-* Pick up key expiration time from direct-key signature or primary userid certification if available.
+== Introduction
 
-== FFI
+This release addresses several important areas: a security vulnerability in key
+protection, long-term key expiration handling, and build system improvements.
+These changes strengthen RNP's security while improving its usability in various
+deployment scenarios.
 
-* Added function `rnp_key_valid_till64()` to correctly handle keys which expire after the year 2038.
-* Added `RNP_FEATURE_*` defines to be used instead of raw strings.
+Key highlights:
 
-== Security
+* <<security-fix,Fixed key protection vulnerability>> (CVE-2021-33589)
+* <<y2038-support,Implemented "Year 2038" compatibility>> for long-term key validity
+* <<key-expiration,Enhanced key expiration handling>> for complex PKI deployments
 
-* Fixed issue with cleartext key data after `rnp_key_unprotect()`/`rnp_key_protect()` calls
-(link:/advisories/ri-2021-001[RI 2021-001/CVE-2021-33589 advisory]).
+Other highlights:
 
+* link:https://en.wikipedia.org/wiki/Man_page[man pages] building is now optional for flexible deployment
+* Improved FFI feature detection mechanisms
+* Enhanced timestamp handling throughout codebase
+* Better support for keys with multiple user IDs
+* Improved direct-key signature support
+
+[[security-fix]]
+== Security improvements
+
+=== Key protection vulnerability fix (CVE-2021-33589)
+
+A significant security fix addresses a vulnerability in key protection
+functions:
+
+* Issue: Cleartext key material could remain accessible after `rnp_key_unprotect()`/`rnp_key_protect()` calls
+* Impact: Potential exposure of sensitive key data in memory
+* Fix: Proper clearing of sensitive data after key operations
+* Importance: Critical for maintaining key confidentiality
+
+For detailed information about this security fix, please refer to the
+link:/advisories/ri-2021-001[RI 2021-001/CVE-2021-33589 advisory].
+
+[[y2038-support]]
+== Year 2038 compatibility improvements
+
+=== Long-term cryptographic operations
+
+The link:https://en.wikipedia.org/wiki/Year_2038_problem[Year 2038 problem]
+presents unique challenges for cryptographic software:
+
+* The 32-bit `time_t` will overflow on January 19, 2038
+* Critical for long-term key validity and expiration
+* Particularly important for infrastructure and root certificates
+* Affects both key generation and validation
+
+=== Post-2038 date handling
+
+This release implements several improvements to handle post-2038 dates:
+
+* New `rnp_key_valid_till64()` function for 64-bit time handling
+* Fixed key expiry checks for dates beyond 2038
+* Improved timestamp handling throughout the codebase
+* Better support for long-term key validity
+
+These changes ensure that RNP can properly handle keys and certificates with
+validity periods extending beyond 2038, which is crucial for:
+
+* Long-term infrastructure planning
+* Root certificate management
+* Compliance with modern security practices
+* Future-proofing cryptographic operations
+
+[[key-expiration]]
+== Key management improvements
+
+=== Expiration time handling
+
+The release includes several improvements to key expiration management:
+
+* Better handling of keys with multiple user IDs
+* Improved expiration time updates
+* Support for link:https://www.rfc-editor.org/rfc/rfc4880#section-5.2.1[direct-key signatures]
+* Enhanced primary user ID certification handling
+
+These changes provide more accurate and reliable key lifecycle management,
+particularly important for:
+
+* Enterprise key management
+* Certificate authority operations
+* Long-term document signing
+* Complex PKI deployments
+
+== Build system improvements
+
+=== Documentation building options
+
+The release makes link:https://en.wikipedia.org/wiki/Man_page[man pages]
+building optional, which:
+
+* Reduces build dependencies when documentation isn't needed
+* Simplifies minimal installations
+* Improves build system flexibility
+* Enables faster builds in development environments
+
+== Developer improvements
+
+=== FFI enhancements
+
+New FFI features improve integration capabilities:
+
+* `RNP_FEATURE_*` defines replace raw strings
+** More robust feature detection
+** Better compile-time checking
+** Improved IDE support
+** Clearer API documentation
+
+* 64-bit time handling functions
+** Future-proof timestamp operations
+** Better support for long-term keys
+** Improved platform compatibility
+
+== Looking ahead
+
+RNP 0.15.1 strengthens the foundation for secure and reliable OpenPGP
+implementations by:
+
+* Addressing critical security concerns
+* Preparing for future compatibility challenges
+* Improving build system flexibility
+* Enhancing developer experience
+
+These improvements demonstrate RNP's commitment to maintaining a robust, secure,
+and future-proof OpenPGP implementation.
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.15.1[release page].

@@ -8,25 +8,132 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  Compatibility and security improvements
+  Enhances key validation mechanisms and improves compatibility with other
+  OpenPGP implementations
 ---
 
-The latest release of RNP v0.15.2 on 2021-08-05 provides compatibility and security improvements.
+Version: RNP 0.15.2
+Release date: 2021-08-05
 
-== General
+RNP 0.15.2 introduces significant improvements to key validation, signature
+handling, and expiration time calculations. This release focuses on enhancing
+compatibility with other OpenPGP implementations while maintaining robust
+security practices.
 
-* Be less strict in userid validation: allow to use userids with self-signature, which has key expiration in the past.
-* Do not mark signature as invalid if key which produced it is expired now, but was valid during signing.
-* Fix incorrect key expiration calculation in some cases.
-* Fix incorrect version number in the `version.txt`.
+== Introduction
 
-== FFI
+Key and signature validation are fundamental aspects of any OpenPGP
+implementation. This release refines RNP's approach to these critical functions,
+making it more practical while maintaining security. The changes reflect
+real-world usage patterns and improve interoperability with other OpenPGP
+software.
 
-* Add function `rnp_key_get_default_key()` to pick the default key/subkey for the specific operation.
-* Allow to pass NULL hash parameter to `rnp_key_add_uid()` to pick the default one.
-* Use the same approach as in `rnp_op_encrypt_add_recipient()` for encryption subkey selection in `rnp_key_export_autocrypt()`.
+Key highlights:
 
-== CLI
+* <<user-id-validation,Enhanced user ID validation>> for expired self-signatures
+* <<signature-validation,Improved signature validation>> based on historical key status
+* <<expiration-handling,Fixed expiration time calculations>> for better key lifecycle management
 
-* `rnp`: Show error message if encryption failed.
-* `rnpkeys` : Add `--expiration` option to specify expiration time during key generation.
+Other highlights:
+
+* New FFI function for intelligent key selection
+* Enhanced user ID management in FFI
+* Improved CLI error reporting
+* Better encryption subkey selection
+* New key generation options for expiration
+
+[[user-id-validation]]
+== Key validation improvements
+
+=== User ID validation enhancements
+
+A major enhancement in this release is the more flexible approach to user ID
+validation. The changes include:
+
+* Support for user IDs with expired self-signatures
+* Better handling of historical validity periods
+* Improved compatibility with existing key infrastructure
+* More intuitive behavior for end users
+
+This refinement helps users maintain access to their identities while preserving
+the security benefits of key expiration mechanisms.
+
+[[signature-validation]]
+=== Signature validation improvements
+
+RNP now recognizes historical validity of keys during signature verification.
+
+Signatures are now validated based on the key's status at the time of signing.
+This means a signature is not considered as "invalid" if the key which produced
+it was valid during signing, even when it is expired at verification time.
+
+Expired keys no longer invalidate their previously valid signatures. This
+approach better aligns with OpenPGP specification requirements and other
+implementations.
+
+This change ensures that valid signatures remain verifiable even after key
+expiration, which is particularly important for long-term document verification.
+
+[[expiration-handling]]
+=== Expiration time handling
+
+Several improvements have been made to key expiration handling:
+
+* Fixed incorrect expiration time calculations in edge cases
+* More accurate handling of certification expiration dates
+* Better synchronization between primary keys and user IDs
+* Improved handling of overlapping validity periods
+
+These fixes ensure more reliable key lifecycle management and prevent unexpected key invalidation.
+
+== Developer improvements
+
+=== FFI enhancements
+
+New FFI capabilities have been added to improve integration flexibility:
+
+* `rnp_key_get_default_key()` function for intelligent key selection
+** Automatically selects appropriate subkeys for operations
+** Considers key capabilities and validity
+** Improves application usability
+
+* Enhanced user ID management
+** NULL hash parameter support in `rnp_key_add_uid()`
+** Automatic selection of appropriate hash algorithms
+** Simplified API usage
+
+* Consistent encryption subkey selection
+** Unified approach across different encryption operations
+** Improved Autocrypt compatibility
+** More predictable behavior for developers
+
+=== Command-line interface improvements
+
+The CLI tools have received important usability improvements:
+
+* Better error reporting for encryption operations in `rnp`
+
+** Clear error messages when encryption fails
+** Improved debugging capabilities
+** Better user experience
+
+* New key generation options in `rnpkeys`
+** `rnpkeys` now provides an `--expiration` option for setting key validity periods
+** More flexible key lifecycle management
+** Better control over key properties
+
+
+== Looking ahead
+
+RNP 0.15.2 represents an important step in improving the usability and
+reliability of OpenPGP implementations. The changes demonstrate RNP's commitment
+to:
+
+* Practical security measures
+* Enhanced compatibility
+* Improved developer experience
+* Better end-user usability
+
+For detailed technical information and the complete list of changes, please
+visit the
+https://github.com/rnpgp/rnp/releases/tag/v0.15.2[release page].

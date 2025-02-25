@@ -8,9 +8,125 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  Fix for CMake issues introduced in v0.16.2
+  Resolves CMake build issues introduced in v0.16.2 affecting cryptographic
+  algorithm support customization
 ---
 
-This update fixes CMake configuration issues, causing incorrect behaviour of `ENABLE_IDEA` and `ENABLE_BRAINPOOL` options.
+RNP 0.16.2 addresses important build system configuration issues that affected
+the customization of cryptographic algorithm support.
 
-Release is available at the https://github.com/rnpgp/rnp/releases/tag/v0.16.2[RNP v0.16.2 release page]
+This maintenance release ensures proper functionality of build-time options,
+particularly for IDEA cipher and Brainpool elliptic curves, where the
+`ENABLE_IDEA` and `ENABLE_BRAINPOOL` options caused incorrect behavior.
+
+== Introduction
+
+Build system reliability is crucial for cryptographic software, as it ensures
+users can properly customize their builds to meet specific security requirements
+and compliance standards. This release fixes issues in the CMake configuration
+system that affected how certain cryptographic algorithms could be enabled or
+disabled during compilation.
+
+Key highlights:
+
+* <<cmake-fixes,Fixed CMake configuration>> for IDEA cipher and Brainpool curves support
+* <<algorithm-support,Improved build-time algorithm customization>> for compliance requirements
+
+Other highlights:
+
+* Enhanced build configuration verification
+* Improved documentation for build options
+* Better support for regulated environments
+* Streamlined build customization process
+
+[[cmake-fixes]]
+== Build system improvements
+
+=== CMake configuration fixes
+
+The release resolves issues with two important build configuration options:
+
+* `ENABLE_IDEA`: Controls support for the IDEA (International Data Encryption
+Algorithm) cipher
+
+* `ENABLE_BRAINPOOL`: Controls support for Brainpool elliptic curves
+
+These options previously exhibited incorrect behavior, which could lead to:
+
+* Unintended inclusion or exclusion of algorithm support
+
+* Inconsistent build configurations
+
+* Potential compliance issues in regulated environments
+
+[[algorithm-support]]
+=== Algorithm support improvements
+
+==== IDEA cipher implementation
+
+The https://en.wikipedia.org/wiki/International_Data_Encryption_Algorithm[IDEA (International Data Encryption Algorithm)]
+cipher is a significant component in OpenPGP implementations, particularly for:
+
+* Historical compatibility with legacy PGP systems and older encrypted data
+* Interoperability with systems that require IDEA for regulatory compliance
+* Supporting users who need to decrypt messages from legacy PGP implementations
+
+RNP's implementation of IDEA provides:
+
+* Full compliance with the https://datatracker.ietf.org/doc/html/rfc4880[OpenPGP RFC 4880] specification
+* Controlled enablement through CMake for organizations with specific compliance needs
+* Proper key handling and encryption/decryption operations for IDEA-encrypted content
+
+While newer algorithms are recommended for modern applications, IDEA support remains important for:
+
+* It was one of the original algorithms supported by PGP
+
+* Some organizations still require it for backwards compatibility
+
+* It may be subject to patent restrictions in certain jurisdictions
+
+* It is critical in certain legacy systems where PGP is still used
+
+The fix ensures that the `ENABLE_IDEA` option correctly controls the inclusion
+of IDEA cipher support, allowing organizations to make informed decisions about
+its use.
+
+==== Brainpool curves implementation
+
+Brainpool elliptic curves are important for:
+
+* Meeting specific security requirements, particularly in European standards
+
+* Providing alternative curves to NIST standards
+
+* Supporting high-security applications that require specific curve
+characteristics
+
+The fix ensures proper control over Brainpool curve support, allowing users to
+accurately configure their builds according to their security requirements.
+
+== Build configuration best practices
+
+When building RNP with these options, users should:
+
+* Explicitly set `ENABLE_IDEA` and `ENABLE_BRAINPOOL` according to their
+requirements
+
+* Verify the final build configuration through RNP's feature reporting
+
+* Document their build-time choices for compliance purposes
+
+== Looking ahead
+
+This release reinforces RNP's commitment to providing a flexible and reliable
+build system. Users can now confidently customize their builds to:
+
+* Meet specific security requirements
+
+* Comply with regulatory standards
+
+* Optimize the library for their specific use cases
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.16.2[RNP v0.16.2 release
+page].

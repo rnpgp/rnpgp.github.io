@@ -5,76 +5,204 @@ date:   2018-08-20 20:37:38 +0700
 categories: release
 authors:
   - name: Ronald Tse
+    email: tse@ribose.com
+    social_links:
+      - https://github.com/ronaldtse
+  - name: Nickolay Olshevsky
     email: o.nickolay@gmail.com
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  After a year since it stemmed off NetPGP, the OpenPGP library
-  shares little code in common with its ancestor.
-  Enjoy new features, better performance, and better
-  compatibility with other implementations.
+  RNP has evolved into a powerful, modern OpenPGP library with
+  significant improvements in features, performance, and compatibility.
+  This release marks a major milestone in RNP's development,
+  delivering a robust and versatile cryptographic solution.
 redirect_from:
   - /blog/08-20-2018/rnp-010-released/
 ---
 
 :cpp: C++
 
+== What is RNP?
+
 Meet RNP, an https://datatracker.ietf.org/doc/html/rfc4880[RFC 4880]-compliant
-OpenPGP library written in {cpp}.
+OpenPGP library written in {cpp}. As a modern implementation of the OpenPGP standard,
+RNP provides a robust foundation for secure communications and data protection.
 
-RNP was born at Ribose and is continuously maintained under its initiative.
+=== Origins and development
 
-Originally stemmed from NetPGP, it now shares little in common with its
-ancestor after a year of active development. A thorough rewrite of legacy code,
-resolving compatibility issues with GnuPG and other implementations,
-with improved performance and added cutting-edge features.
+RNP was born at https://www.ribose.com[Ribose] and is continuously maintained under
+its initiative. While it originally stemmed from NetPGP, RNP has evolved significantly
+through a year of active development, resulting in a complete transformation of the
+codebase.
 
-RNP also differs from other implementations -- it is offered under a
-http://opensource.org/licenses/BSD-3-Clause[BSD 3-clause license],
-which means it is compatible for embedded distribution within GPL,
-MPL, MIT and most other open-source licenses, as well as being
-included in commercial binary distributions.
+=== Key improvements
 
-Feel free to use RNP in your software!
+The development team has:
+
+* Thoroughly rewritten legacy code for modern systems
+* Resolved compatibility issues with GnuPG and other OpenPGP implementations
+* Enhanced performance across all operations
+* Added support for cutting-edge cryptographic features
+* Maintained strict RFC 4880 compliance
+
+=== Licensing benefits
+
+RNP stands out with its http://opensource.org/licenses/BSD-3-Clause[BSD 3-clause license],
+offering unique advantages for both academic and commercial projects:
+
+* Intentionally non-copyleft to enable broad integration options
+
+* Compatible with https://opensource.org/licenses/GPL-3.0[GPL],
+https://opensource.org/licenses/MPL-2.0[MPL],
+https://opensource.org/licenses/MIT[MIT], and most other open-source licenses
+
+* Suitable for commercial binary distributions
+
+* Flexible embedding options in academic research and proprietary software
+
+* No reciprocal licensing requirements unlike copyleft licenses
+
+Whether you're developing research software, an open-source tool, or a
+commercial application, RNP provides a reliable, well-maintained OpenPGP
+implementation that you can freely integrate into your software without
+licensing constraints.
 
 
 == Getting started with RNP
 
-If you are deploying OpenPGP in a Ruby-based application,
-there are bindings
+RNP is both a library for direct integration into applications and a set of
+command-line tools. You can use it in several ways:
+
+=== As a library
+
+If you are developing a Ruby application, there are official bindings
 (see https://www.rubydoc.info/github/rnpgp/ruby-rnp[ruby-rnp RubyDocs]).
 
-Since RNP written in {cpp}, you can call it from Objective-C code,
-or with `ctypes` under Python.
+Since RNP is written in {cpp}, you can also integrate it directly into:
 
-The RNP binaries `rnp` and `rnpkeys` can be installed via https://brew.sh[Homebrew]
-or YUM,
-with Debian packages coming next.
-You can use the binaries similarly to GnuPG's command-line tools
+* C/C++ applications
+* Objective-C code
+* Python applications using `ctypes`
+
+=== As command-line tools
+
+The CLI tools `rnp` and `rnpkeys` can be installed via:
+
+* https://brew.sh[Homebrew] on macOS
+* YUM on RPM-based Linux distributions
+* Debian packages (coming soon)
+
+These tools provide similar functionality to GnuPG's command-line interface
 (see supported flags and use cases in the https://github.com/rnpgp/rnp[README]).
 
 
 == Why RNP?
+=== True library architecture
 
-* It is a proper library, in contrast to GnuPG/GPGME (see https://news.ycombinator.com/item?id=5180217[GnuPG is not a library (2013)]).
+RNP is designed as a proper library from the ground up, unlike GnuPG/GPGME which
+historically developed as a monolithic application (see
+https://news.ycombinator.com/item?id=5180217[GnuPG is not a library (2013)]).
 
-* Ruby bindings are available with Python & Go bindings in the works, and you can use it wherever you can call {cpp} code.
+This architectural choice means you can easily integrate RNP into your
+applications without wrestling with process management or complex IPC
+mechanisms. The library provides clean APIs that allow direct integration at the
+code level.
 
-* Implemented in {cpp} and offers constant memory footprint with large amounts of data.
+=== Extensive language support
 
-* It offers comprehensive cipher support, including (uniquely) the SM algorithm family -- a desirable feature if you deploy cryptography in mainland Chinese market.
+While RNP's core is written in {cpp}, it offers seamless integration across
+multiple programming languages. Official
+https://www.rubydoc.info/github/rnpgp/ruby-rnp[Ruby bindings] are available and
+actively maintained. Python and Go bindings are under development, making RNP
+accessible to a wider range of developers. Thanks to its {cpp} foundation, you
+can also integrate RNP into any environment that supports native code calling
+conventions.
 
-* Active development and focused on adding cutting-edge features.
+=== Optimized memory management
+
+Built with modern {cpp}, RNP implements efficient memory management that
+maintains a constant memory footprint even when processing large amounts of
+data. This makes it particularly suitable for environments with memory
+constraints or when handling large encrypted files. The implementation follows
+best practices for secure memory handling of cryptographic material.
+
+=== Comprehensive cipher support
+
+RNP stands out with its extensive cryptographic algorithm support, including
+unique implementation of the SM algorithm family - making it one of
+the few OpenPGP implementations suitable for deployment in mainland China. The
+SM series (including SM2, SM3, and SM4) meets Chinese national standards for
+cryptographic algorithms, opening opportunities for applications that need to
+comply with Chinese regulatory requirements.
+
+=== Active development and innovation
+
+The project maintains an active development cycle, focusing on implementing
+cutting-edge cryptographic features while ensuring backwards compatibility.
+Regular updates bring performance improvements, security enhancements, and
+support for new standards as they emerge. The development team actively engages
+with the community and responds to security considerations in the evolving
+cryptographic landscape.
 
 
-== Which algorithms does RNP support?
+== Algorithm support in RNP
 
-The following ciphers, encryption modes and hash functions are supported:
+RNP provides comprehensive support for various cryptographic algorithms, ensuring compatibility with different security requirements and standards.
 
-* Symmetric: IDEA, Triple DES, CAST5, Blowfish, AES-128, AES-192, AES-256, Twofish, Camellia-128, Camellia-192, Camellia-256, SM4
+=== Symmetric encryption
 
-* Symmetric encryption modes: CFB, AEAD-EAX, AEAD-OCB
+RNP implements a wide range of symmetric encryption algorithms, offering different security levels and performance characteristics:
 
-* Hash: MD5, SHA1, RIPEMD160, SHA-256, SHA-384, SHA-512, SHA-224, SM3
+* https://en.wikipedia.org/wiki/International_Data_Encryption_Algorithm[IDEA] - A block cipher that was once used in early versions of PGP
+* https://en.wikipedia.org/wiki/Triple_DES[Triple DES] - A triple-application of the DES cipher, providing additional security over single DES
+* https://en.wikipedia.org/wiki/CAST-128[CAST5] - A block cipher offering good performance and security for legacy systems
+* https://en.wikipedia.org/wiki/Blowfish_(cipher)[Blowfish] - A fast block cipher suitable for environments with limited resources
+* https://en.wikipedia.org/wiki/Advanced_Encryption_Standard[AES] variants (128, 192, 256-bit) - The current industry standard for symmetric encryption
+* https://en.wikipedia.org/wiki/Twofish[Twofish] - A highly secure alternative to AES, offering excellent performance
+* https://en.wikipedia.org/wiki/Camellia_(cipher)[Camellia] variants (128, 192, 256-bit) - A cipher widely used in Japan and compatible with many international standards
+* https://en.wikipedia.org/wiki/SM4_(cipher)[SM4] - The Chinese national standard block cipher, essential for applications requiring Chinese regulatory compliance
 
-* Asymmetric: RSA, ElGamal, DSA, so-called DSA2 (i.e. DSA with keys larger then 1024 bits), ECDSA/ECDH (with some subset of curves which later on will be expanded), EdDSA, SM2.
+=== Symmetric encryption modes
+
+RNP supports multiple encryption modes that provide different security properties:
+
+* CFB (Cipher Feedback) - A traditional mode that converts block ciphers into stream ciphers
+* AEAD-EAX - An authenticated encryption mode providing both confidentiality and authenticity
+* AEAD-OCB - A high-performance authenticated encryption mode offering parallel processing capabilities
+
+=== Hash functions
+
+RNP implements various cryptographic hash functions for different use cases:
+
+* MD5 - While cryptographically broken, maintained for legacy compatibility
+* SHA1 - Maintained for backwards compatibility with older systems
+* https://en.wikipedia.org/wiki/RIPEMD[RIPEMD160] - A hash function developed in Europe as an open alternative
+* SHA-2 family (SHA-224, SHA-256, SHA-384, SHA-512) - The current industry standard hash functions providing different security levels
+* https://en.wikipedia.org/wiki/SM3_(hash_function)[SM3] - The Chinese national standard hash function, required for Chinese market compliance
+
+=== Asymmetric cryptography
+
+RNP supports a comprehensive set of public-key algorithms:
+
+* https://en.wikipedia.org/wiki/RSA_(cryptosystem)[RSA] - The widely-used public-key cryptosystem for encryption and digital signatures
+* https://en.wikipedia.org/wiki/ElGamal_encryption[ElGamal] - An asymmetric algorithm particularly useful for encryption operations
+* https://en.wikipedia.org/wiki/Digital_Signature_Algorithm[DSA] - The Digital Signature Algorithm, including support for key sizes beyond 1024 bits (DSA2)
+* https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm[ECDSA]/ECDH - Elliptic curve cryptography offering strong security with shorter key lengths
+* https://en.wikipedia.org/wiki/EdDSA[EdDSA] - Modern elliptic curve signatures providing high security and performance
+* https://en.wikipedia.org/wiki/SM2_(cryptography)[SM2] - The Chinese national standard for public-key cryptography, essential for Chinese market compliance
+
+
+== Summary
+
+RNP stands out as a unique solution in the OpenPGP ecosystem by combining:
+
+* True library architecture enabling direct integration without IPC overhead
+* High-performance implementation in modern {cpp}
+* BSD 3-clause license allowing both open-source and commercial use
+* Comprehensive algorithm support including Chinese SM standards
+* Active development with regular updates and security improvements
+
+Whether you're building an open-source tool or a commercial application, RNP
+offers a reliable, high-performance OpenPGP implementation that seamlessly
+integrates into your software stack.

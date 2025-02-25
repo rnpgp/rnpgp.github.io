@@ -8,30 +8,161 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  API, CLI and FFI enhancements
+  Enhances build system flexibility and improves message format handling for better OpenPGP compatibility
 ---
 
-RNP v0.15 has been released on 2021-04-04, providing API, CLI and FFI improvements.
+Version: RNP 0.15.0
+Release date: 2021-04-04
 
+RNP 0.15.0 represents a significant milestone in the project's evolution,
+introducing important changes to library versioning, build system improvements,
+and enhanced message format handling.
 
-== General
+This release focuses on making RNP more accessible to developers while improving
+compatibility and usability.
 
-* Added CMake options to allow offline builds, i.e. without `Googletest`/`ruby-rnp` downloads.
-* Removed major library version from the library name (`librnp-0.{so,dll}` -> `librnp.{so,dll}`).
-* Improved handling of cleartext signatures, when empty line between headers and contents contains some whitespace characters.
-* Relaxed requirements for the armored messages CRC (allow absence of the CRC, and issue warning instead of complete failure).
-* Updated build instructions for MSVC.
-* Improved support of 32-bit platforms (year 2038 problem).
+== Introduction
 
-== CLI
+This release brings substantial improvements to RNP's build system, library
+organization, and developer documentation. It also addresses several format
+handling issues to improve interoperability with other OpenPGP implementations.
 
-* Added up-to-date manual pages for `rnp` and `rnpkeys`.
-* rnpkeys: added `--remove-key` command.
+Key highlights:
 
+* <<offline-builds,Offline build support>> for secure environments
+* <<format-handling,Enhanced cleartext signature handling>> for better compatibility
+* <<library-versioning,Simplified library versioning>> for easier integration
 
-== FFI
+Other highlights:
 
-* Added up-to-date manual page for `librnp`.
-* Added function `rnp_signature_remove`
-* Added function `rnp_uid_remove`
-* Added function `rnp_key_remove_signatures` for batch signature removal and filtering.
+* Improved MSVC build support and documentation
+* Better 32-bit platform compatibility
+* Enhanced armored message processing
+* New FFI functions for key management
+* Improved CLI tools with new commands
+* Updated manual pages and documentation
+
+[[offline-builds]]
+== Build system improvements
+
+=== Offline build support
+
+A major enhancement to the build system enables offline builds:
+
+* New https://cmake.org[CMake] options for building without external downloads:
+** https://github.com/google/googletest[Googletest] can be skipped during build
+** https://github.com/rnpgg/ruby-rnp[ruby-rnp] can be skipped during build
+* Better support for air-gapped environments
+* Improved build reproducibility
+
+This change is particularly important for:
+
+* Security-conscious environments
+* Regulated development environments
+* Automated build systems
+* Package maintainers
+
+[[library-versioning]]
+=== Library versioning improvements
+
+The library naming scheme has been simplified:
+
+* Changed from `librnp-0.{so,dll}` to `librnp.{so,dll}`
+* Simplified dependency specifications
+* Better alignment with common library naming practices
+* Improved package management integration
+
+=== MSVC build support
+
+Enhanced Microsoft Visual Studio support includes:
+
+* Updated build instructions for MSVC
+* Better Windows integration
+* Improved development experience on Windows
+* More consistent cross-platform builds
+
+[[format-handling]]
+== Format handling improvements
+
+=== Cleartext signature enhancements
+
+Significant improvements have been made to cleartext signature handling:
+
+* Better handling of whitespace in empty lines between headers and content
+* Improved compatibility with various email clients
+* More robust processing of formatted text
+* Enhanced interoperability with other OpenPGP implementations
+
+=== Armored message handling
+
+The release includes more flexible handling of armored messages:
+
+* Relaxed CRC requirements
+* Warning-based approach instead of hard failures
+* Better handling of legacy messages
+* Improved error reporting
+
+These changes make RNP more resilient when processing messages from different sources while maintaining security.
+
+== Platform compatibility improvements
+
+=== 32-bit platform support
+
+Continued improvements for 32-bit systems include:
+
+* Better handling of the https://en.wikipedia.org/wiki/Year_2038_problem[Year 2038 problem]
+* Enhanced timestamp processing
+* Improved compatibility with legacy systems
+* Future-proofing for long-term key validity
+
+== Documentation improvements
+
+=== Manual page enhancements
+
+New and updated manual pages provide better documentation:
+
+* Complete `rnp` and `rnpkeys` command documentation
+* Detailed `librnp` API reference
+* Usage examples and best practices
+* Implementation guidelines
+
+== Developer improvements
+
+=== Key management enhancements
+
+New FFI functions enhance key management capabilities:
+
+* `rnp_signature_remove` for individual signature removal
+* `rnp_uid_remove` for user ID management
+* `rnp_key_remove_signatures` for batch operations
+
+These additions provide:
+
+* More granular control over key data
+* Better key cleanup capabilities
+* Improved key maintenance workflows
+* Enhanced key lifecycle management
+
+=== Command-line interface improvements
+
+The CLI has been enhanced with:
+
+* New `--remove-key` command in rnpkeys
+* Better key management capabilities
+* Improved user experience
+* More consistent command behavior
+
+== Looking ahead
+
+RNP 0.15.0 establishes a stronger foundation for future development by:
+
+* Simplifying the build process
+* Improving cross-platform support
+* Enhancing developer documentation
+* Providing better key management tools
+
+These improvements demonstrate RNP's commitment to being a developer-friendly,
+robust OpenPGP implementation.
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.15.0[release page].

@@ -8,20 +8,230 @@ authors:
     social_links:
       - https://github.com/ni4
 excerpt: >-
-  AEAD-OCB support for OpenSSL backend and other features
+  Implements AEAD-OCB encryption for OpenSSL backend and enhances key management
+  capabilities with GnuPG 2.3+ compatibility
 ---
 
-This release adds support for AEAD OCB encryption mode for OpenSSL backend.
+RNP 0.17.0 brings significant enhancements to encryption capabilities, key
+management, and overall functionality.
 
-== Other fixes and improvements:
+This release introduces AEAD-OCB support for the OpenSSL backend, improves
+hidden recipient handling, and adds compatibility with newer GnuPG key storage
+formats.
 
-* support for hidden recipients
-* support for GnuPG 2.3+ key storage format
-* FFI function to export key's signature
-* improvements in key-related checks
-* compile-time options to disable support of Blowfish, CAST5 and RIPEMD160
-* CLI improvements
+== Introduction
 
-Since this release, SExp parsing code (required for GnuPG key storage parsing) has been moved to the separate https://github.com/rnpgp/sexp[SExp] library.
+This release represents a major step forward in RNP's evolution, focusing on
+enhanced security features, improved compatibility with other OpenPGP
+implementations, and better key management capabilities. The changes make RNP
+more versatile while maintaining its commitment to security and usability.
 
-The release and full changelog are available at the https://github.com/rnpgp/rnp/releases/tag/v0.17.0[release page].
+Key highlights:
+
+* <<aead-ocb,AEAD-OCB encryption support>> for improved performance and security
+* <<hidden-recipients,Enhanced hidden recipient handling>> for better privacy
+* <<gnupg-compatibility,GnuPG 2.3+ key storage format compatibility>>
+* <<offline-keys,Improved offline secret key handling>>
+
+Other highlights:
+
+* SExp parsing code moved to a separate library
+* New FFI capabilities for signature export and key verification
+* Enhanced CLI features for key management and encryption
+* Configurable compile-time options for legacy algorithm support
+
+[[aead-ocb]]
+== Enhanced encryption capabilities
+
+=== AEAD-OCB encryption support
+
+A major highlight of this release is the addition of
+https://en.wikipedia.org/wiki/OCB_mode[AEAD-OCB] (Authenticated Encryption with
+Associated Data - Offset Codebook) mode support for the OpenSSL backend.
+
+OCB mode offers several advantages over traditional encryption modes:
+
+* Provides both confidentiality and authenticity in a single pass
+
+* Offers better performance compared to other AEAD modes like https://en.wikipedia.org/wiki/EAX_mode[EAX]
+
+* Allows parallel processing of encrypted data
+
+* Reduces overhead in encrypted messages
+
+The implementation now defaults to using OCB instead of EAX when AEAD encryption
+is selected, providing better performance without compromising security.
+
+
+[[hidden-recipients]]
+=== Hidden recipient handling
+
+The release introduces comprehensive support for "hidden recipients" during
+decryption operations. Hidden recipients, also known as
+https://datatracker.ietf.org/doc/html/rfc4880[anonymous recipients]
+in the OpenPGP specification, allow encrypting messages without revealing the
+intended recipient's key information in the message metadata.
+
+When using hidden recipients, the message's recipient key IDs are replaced with
+zeroes, making it more difficult for third parties to determine who can decrypt
+the message. This is particularly valuable in environments where metadata
+analysis could reveal sensitive communication patterns or relationships between
+parties.
+
+RNP now fully supports decrypting messages with hidden recipients and includes
+new API capabilities through the `RNP_VERIFY_ALLOW_HIDDEN_RECIPIENT` flag. This
+allows applications to explicitly control whether messages with hidden
+recipients should be accepted during decryption operations.
+
+
+This feature:
+
+* Enhances privacy by concealing the intended recipients of encrypted messages
+
+* Maintains compatibility with other OpenPGP implementations that use this
+feature
+
+* Provides better security for sensitive communications where recipient privacy
+is crucial
+
+== Key management improvements
+
+[[gnupg-compatibility]]
+=== GnuPG 2.3+ compatibility
+
+This release adds support for modern key storage formats used by GnuPG 2.3 and
+later versions. The new format, based on
+https://people.csail.mit.edu/rivest/Sexp.txt[S-expressions], provides a more
+structured and extensible way to store OpenPGP keys and their metadata.
+
+RNP can now read and write keys in this format, ensuring smooth interoperability
+with recent GnuPG versions. This is particularly important for users and
+organizations that maintain mixed environments or need to migrate between
+different OpenPGP implementations.
+
+When GnuPG 2.3 was released, it introduced changes in how secret keys are
+stored, moving away from the legacy OpenPGP packet format to S-expressions. This
+change improved security and flexibility but required other implementations to
+adapt. RNP now fully supports this modern approach while maintaining backward
+compatibility.
+
+
+This enhancement:
+
+* Enables seamless key sharing between RNP and GnuPG 2.3+
+
+* Supports modern key storage practices
+
+* Maintains backward compatibility with older formats
+
+[[offline-keys]]
+=== Offline key handling
+
+The release includes significant improvements in handling offline secret keys -
+keys that are stored separately from the main keyring for enhanced security.
+This feature is particularly important for organizations implementing the
+https://en.wikipedia.org/wiki/Air_gap_(networking)[air-gapped] security model
+where signing keys are kept on isolated systems.
+
+With these improvements, RNP now provides better support for:
+
+* Automatically distinguishing between online and offline keys during operations
+* Smart fallback to available keys when preferred keys are offline
+* Integration with hardware security tokens and smart cards
+* Support for detached secret key storage on separate secure systems
+
+This enhancement is especially valuable for users who follow security best
+practices by keeping their primary keys offline and only using subkeys for
+day-to-day operations. The improved handling reduces friction when working with
+such configurations while maintaining strong security boundaries.
+
+Users can expect:
+
+* Improved ease of management for keys stored on separate secure storage
+
+* Enhanced implementation of security best practices for key management
+
+* Better support for handling keys stored on hardware security devices
+
+== Developer improvements
+
+=== SExp library separation
+
+The https://github.com/rnpgp/sexp[SExp] parsing library, essential for handling
+GnuPG key storage, has been moved to a separate repository. S-expressions,
+originally defined in a https://people.csail.mit.edu/rivest/Sexp.txt[1997 spec
+by Ron Rivest], provide a structured format for storing cryptographic data. This
+format is widely used in security applications, including GnuPG's modern key
+storage system.
+
+By separating the SExp parsing code into its own library, RNP achieves better
+code organization and enables other projects to benefit from this
+implementation. The library provides a robust parser for both canonical and
+advanced transport S-expression formats, making it valuable for projects dealing
+with GnuPG keys or other cryptographic data storage.
+
+The separation also simplifies RNP's core codebase while maintaining full
+compatibility with GnuPG 2.3+ key storage formats through this dedicated
+component. Users and developers can expect better maintainability and easier
+updates to the S-expression handling code.
+
+
+This modularization:
+
+* Improves code maintainability
+
+* Allows independent development of SExp parsing functionality
+
+* Reduces the core RNP codebase complexity
+
+=== FFI improvements
+
+New FFI capabilities have been added, including:
+
+* `rnp_signature_export()` for exporting key signatures
+
+* Support for hidden recipient verification via
+`RNP_VERIFY_ALLOW_HIDDEN_RECIPIENT` flag
+
+* Enhanced key-related checks for better security validation
+
+== Command-line interface improvements
+
+The CLI has been improved with several new features:
+
+* Default armor message type for `--enarmor` command
+
+* New `--set-filename` command for specifying stored file names
+
+* Enhanced key management with `--add-subkey` and `set-expire` subcommands
+
+* Additional S2K configuration options with `--s2k-iterations` and `--s2k-msec`
+
+* Support for weak hash algorithms via `--allow-weak-hash`
+
+== Security and performance improvements
+
+=== Configurable features
+
+New compile-time options have been added to disable support for legacy
+algorithms:
+
+* `ENABLE_BLOWFISH` for Blowfish algorithm support
+
+* `ENABLE_CAST5` for CAST5 algorithm support
+
+* `ENABLE_RIPEMD160` for RIPEMD160 hash function
+
+This allows users to create builds that exclude potentially vulnerable or
+unnecessary algorithms, reducing the attack surface.
+
+== Looking ahead
+
+RNP 0.17.0 sets a strong foundation for future development with its improved
+encryption capabilities, better key management, and enhanced developer tools.
+The modularization of components and addition of modern encryption modes
+demonstrate RNP's commitment to maintaining a secure, efficient, and
+user-friendly OpenPGP implementation.
+
+For complete technical details and the full changelog, please visit the
+https://github.com/rnpgp/rnp/releases/tag/v0.17.0[release page].
