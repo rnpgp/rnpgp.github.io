@@ -33,7 +33,7 @@ authors:
 
 contact_email: open.source@ribose.com
 
-theme: jekyll-theme-open-project
+theme: jekyll-theme-rop
 
 parent_hub:
   git_repo_url: https://github.com/riboseinc/open.ribose.com
@@ -112,8 +112,7 @@ defaults:
       layout: spec
 
 plugins:
-  - jekyll-seo-tag
-  - jekyll-sitemap
+  - jekyll-theme-rop
 
 url: https://www.rnpgp.org
 
