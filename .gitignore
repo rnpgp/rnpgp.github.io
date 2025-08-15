@@ -3,10 +3,11 @@ _software/*/docs
 _software/_*_repo
 _specs/*/
 !_specs/*.*
-parent-hub/*
+# parent-hub/*
 _site/
 .sass-cache/
 .jekyll-cache/
 .jekyll-metadata
 .DS_Store
 Gemfile.lock
+.man_pages_cache
