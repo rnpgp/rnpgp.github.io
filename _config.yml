@@ -37,7 +37,7 @@ theme: jekyll-theme-rop
 
 parent_hub:
   git_repo_url: https://github.com/riboseinc/open.ribose.com
-  home_url: https://open.ribose.com/
+  home_url: https://www.ribose.com/
 
 includes_dir: '.'
 
