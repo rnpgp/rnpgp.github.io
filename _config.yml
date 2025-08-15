@@ -118,6 +118,13 @@ url: https://www.rnpgp.org
 
 github_repo_url: https://github.com/rnpgp/rnpgp.org
 
+# RNP configuration for man pages plugin
+rnp:
+  version: "0.18.0"
+  man_pages:
+    enabled: true
+    cache_duration: 3600
+
 tag_namespaces:
   software:
     writtenin: "Written in"

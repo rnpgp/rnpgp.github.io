@@ -10,3 +10,4 @@ _site/
 .jekyll-metadata
 .DS_Store
 Gemfile.lock
+.man_pages_cache
