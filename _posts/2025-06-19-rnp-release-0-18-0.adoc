@@ -1,0 +1,225 @@
+---
+layout: post
+title: "RNP version 0.18.0 released"
+categories: release
+authors:
+  - name: Nickolay Olshevsky
+    email: o.nickolay@gmail.com
+    social_links:
+      - https://github.com/ni4
+excerpt: >-
+  Enhanced key generation defaults, improved signature validation with error
+  reporting, expanded FFI capabilities for certifications, and better
+  cryptographic security practices.
+---
+
+The RNP 0.18.0 release brings significant improvements to key generation
+defaults, signature validation, and FFI capabilities while strengthening
+cryptographic security practices.
+
+This release enhances RNP's security posture by discouraging weak cryptographic
+modes, improving key generation defaults, and providing better tools for
+signature validation and certification management.
+
+== Introduction
+
+RNP continues to evolve as a modern OpenPGP implementation, and this release
+focuses on improving security defaults, expanding API capabilities, and
+enhancing compatibility with various OpenPGP implementations.
+
+The updates to key generation defaults, signature validation error reporting,
+and certification management provide developers with more powerful tools while
+maintaining backward compatibility and improving overall security.
+
+== Key generation enhancements
+
+=== RSA 3072-bit keys by default
+
+RNP now generates https://en.wikipedia.org/wiki/RSA_(cryptosystem)[RSA]
+3072-bit keys by default, moving away from the previous 2048-bit default.
+
+This change reflects current best practices in cryptographic key strength:
+
+* 3072-bit RSA keys provide approximately 128-bit security level
+
+* Aligns with modern security recommendations from
+https://www.keylength.com/[cryptographic research]
+
+* Better future-proofs keys against advances in computational power
+
+* Maintains good performance while significantly improving security
+
+This enhancement ensures that users benefit from stronger cryptographic
+protection without needing to explicitly configure key generation parameters.
+
+=== DSA 4096-bit key support
+
+Support for https://en.wikipedia.org/wiki/Digital_Signature_Algorithm[DSA]
+4096-bit keys has been added to accommodate existing keys used by various
+entities.
+
+While DSA is generally being phased out in favor of more modern algorithms,
+this support ensures:
+
+* Compatibility with legacy systems and keys
+* Proper handling of existing 4096-bit DSA keys
+* Smooth migration paths for organizations with established key infrastructure
+
+== Cryptographic security improvements
+
+=== Discouraging EAX AEAD mode
+
+The release actively discourages the use of
+https://en.wikipedia.org/wiki/EAX_mode[EAX AEAD mode] due to security
+considerations.
+
+EAX mode has several limitations compared to more modern AEAD modes:
+
+* Limited adoption in the OpenPGP ecosystem
+* Potential security concerns with certain usage patterns
+* Better alternatives available (such as OCB or GCM)
+
+This change helps guide users toward more secure and widely-supported
+cryptographic modes.
+
+=== 64-bit cipher restrictions
+
+RNP no longer allows 64-bit ciphers for encryption without an explicit option.
+
+This restriction addresses security concerns:
+
+* 64-bit block ciphers are vulnerable to birthday attacks
+* https://sweet32.info/[SWEET32 attack] demonstrates practical exploits
+* Modern alternatives provide better security
+
+Users who specifically need 64-bit ciphers for compatibility can still enable
+them explicitly, but the default behavior now promotes better security.
+
+=== Hash function updates on key expiration changes
+
+When changing key expiration dates, RNP now automatically updates the hash
+function if the current one is considered weak.
+
+This enhancement ensures:
+
+* Keys don't retain weak hash functions during updates
+* Automatic migration to stronger algorithms
+* Improved long-term security without manual intervention
+
+== Signature validation enhancements
+
+=== Signature error reporting
+
+New FFI functions have been added to provide detailed signature validation
+error information:
+
+* `rnp_signature_error_count()`: Returns the number of errors encountered during
+signature validation
+
+* `rnp_signature_error_at()`: Retrieves specific error details at a given index
+
+These functions enable developers to:
+
+* Understand exactly why signature validation failed
+* Provide detailed error messages to users
+* Make informed decisions based on specific validation failures
+* Implement more sophisticated error handling
+
+=== Invalid signatures from encrypt-only keys
+
+Signatures produced by encrypt-only keys or subkeys are now properly marked as
+invalid.
+
+This enforcement ensures:
+
+* Proper adherence to key usage flags
+* Prevention of cryptographic misuse
+* Better compliance with OpenPGP best practices
+
+== Key certification management
+
+=== New certification API
+
+RNP now provides comprehensive functions for creating and customizing key
+certifications:
+
+* `rnp_key_certification_create()`: Creates new key certifications
+
+* `rnp_key_signature_set_*` family: Functions to set various certification properties
+
+* `rnp_key_signature_get_*` family: Functions to retrieve certification properties
+
+These API enhancements enable:
+
+* Programmatic creation of key certifications
+* Fine-grained control over certification properties
+* Better integration with key management workflows
+* Support for advanced certification scenarios
+
+== Format and compatibility improvements
+
+=== GnuPG armored file support
+
+RNP now supports dearmoring of GnuPG-armored files that use the `ARMORED FILE`
+header.
+
+This enhancement improves interoperability with
+https://gnupg.org/[GnuPG] and other OpenPGP implementations that use this
+header format.
+
+=== Flexible armored key import
+
+The armored key import process now allows extra spaces, improving compatibility
+with various formatting styles produced by different OpenPGP implementations.
+
+This tolerance for whitespace variations ensures:
+
+* Robust handling of keys from diverse sources
+* Reduced import failures due to formatting differences
+* Better user experience when working with keys from multiple systems
+
+== Backend and build improvements
+
+=== Botan 3.5.0+ support
+
+Enhanced support for https://botan.randombit.net/[Botan] 3.5.0 and later
+versions ensures compatibility with the latest cryptographic library releases.
+
+=== Generated version header
+
+RNP now generates an `rnp_ver.h` header file, providing:
+
+* Compile-time version information
+* Better integration with build systems
+* Easier version checking in dependent projects
+
+=== Cross-platform compatibility
+
+Numerous compatibility fixes have been implemented for different operating
+systems and platforms, ensuring RNP works reliably across diverse environments.
+
+== Performance and code quality
+
+=== Internal refactoring
+
+Significant internal refactoring has been conducted to improve:
+
+* Code maintainability and readability
+* Long-term project sustainability
+* Easier contributions and extensions
+
+=== Performance updates
+
+Various performance optimizations have been implemented throughout the codebase,
+improving efficiency in common operations.
+
+== Looking ahead
+
+This release demonstrates RNP's continued commitment to security best practices,
+API extensibility, and broad compatibility. The improved key generation
+defaults, comprehensive signature validation error reporting, and expanded
+certification management capabilities provide a solid foundation for
+applications requiring robust OpenPGP functionality.
+
+For detailed technical information and the complete list of changes, please
+visit the https://github.com/rnpgp/rnp/releases/tag/v0.18.0[release page].
