@@ -44,6 +44,12 @@ body {
         }
       }
     }
+    > footer {
+      .parent-hub-plug .logo {
+        width: 100px;
+        fill: white;
+      }
+    }
   }
 }
 
