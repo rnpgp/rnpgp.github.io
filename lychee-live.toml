@@ -2,10 +2,10 @@
 # Unlike lychee.toml (pre-deploy), this does NOT exclude www.rnpgp.org — the whole
 # point is verifying that production URLs, including canonical/OG ones, resolve.
 
-max_concurrency = 32
+max_concurrency = 16
 timeout = 30
-retry_wait_time = 2
-max_retries = 2
+retry_wait_time = 3
+max_retries = 3
 
 # Pages exist but rate-limit automated checkers (HN, git.gnupg.org, …)
 accept = ["200", "204", "429"]
@@ -17,3 +17,8 @@ exclude = [
   # Cirrus CI blocks non-browser TLS clients.
   '^https://cirrus-ci\.com/',
 ]
+
+# Be gentle with GitHub Pages — full-concurrency crawls get throttled (503).
+[hosts."www.rnpgp.org"]
+concurrency = 4
+request_interval = "500ms"
