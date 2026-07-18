@@ -106,7 +106,14 @@ There is no unit test suite; validation is building + link checking.
 - **Imports**: use the `@/` alias (`@/components/...`, `@/layouts/...`).
 - **Islands**: interactivity goes in Vue SFCs under `src/components/vue/`,
   hydrated with `client:visible` (below the fold) or `client:load`; props must
-  be JSON-serializable. Respect `prefers-reduced-motion`.
+  be JSON-serializable. Respect `prefers-reduced-motion` — headless Chrome
+  forces it, so test checks must accept both paths.
+- **WAAPI easter eggs** (keep them working, don't spoil them in visible copy):
+  header logo on the home page — hover wobble, click pulse, every 3rd click is
+  the "ribosome shuffle" (lenses split and snap back); Konami code summons a
+  brand-colored hex rain; typing `decrypt` replays the hero scramble; the hero
+  watermark rotates on scroll via `ScrollTimeline`. All are covered by
+  `scripts/e2e-cdp.mjs` (25 checks).
 - **Search**: Pagefind index is generated post-build (`pagefind --site dist`);
   the `SiteSearch` island loads `/pagefind/pagefind.js` at runtime (absent in
   plain `astro dev`).

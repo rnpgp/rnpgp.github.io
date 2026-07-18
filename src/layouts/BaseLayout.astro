@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import SiteHeader from '../components/vue/SiteHeader.vue';
 import SiteSearch from '../components/vue/SiteSearch.vue';
+import EasterEggs from '../components/vue/EasterEggs.vue';
 import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
@@ -118,5 +119,6 @@ const jsonLd = {
     </main>
     <SiteFooter />
     <SiteSearch client:only="vue" />
+    <EasterEggs client:load />
   </body>
 </html>

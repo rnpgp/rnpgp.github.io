@@ -18,7 +18,69 @@ const hidden = ref(false);
 const scrolled = ref(false);
 const mobileOpen = ref(false);
 const mounted = ref(false);
+const logoSvg = ref<SVGSVGElement | null>(null);
 let lastY = 0;
+let clickCount = 0;
+let clickTimer: ReturnType<typeof setTimeout> | undefined;
+
+const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SPRING = 'cubic-bezier(.22, 1.4, .36, 1)';
+
+/** WAAPI logo play: wobble on hover, pulse per click, lens-shuffle every 3rd. */
+const onLogoEnter = () => {
+  if (!logoSvg.value || reducedMotion()) return;
+  logoSvg.value.animate(
+    [
+      { transform: 'rotate(0deg)' },
+      { transform: 'rotate(-7deg)' },
+      { transform: 'rotate(4deg)' },
+      { transform: 'rotate(0deg)' },
+    ],
+    { duration: 500, easing: 'ease-out' },
+  );
+};
+
+const onLogoClick = (e: MouseEvent) => {
+  if (props.currentPath !== '/') return; // normal navigation elsewhere
+  e.preventDefault();
+  if (reducedMotion() || !logoSvg.value) return;
+  clickCount++;
+  clearTimeout(clickTimer);
+  clickTimer = setTimeout(() => (clickCount = 0), 900);
+  if (clickCount % 3 === 0) shuffleLenses();
+  else
+    logoSvg.value.animate(
+      [
+        { transform: 'scale(1)' },
+        { transform: 'scale(1.18) rotate(-4deg)' },
+        { transform: 'scale(1)' },
+      ],
+      { duration: 450, easing: SPRING },
+    );
+};
+
+/** The ribosome shuffle: the two outer lenses part and snap back, center pulses. */
+const shuffleLenses = () => {
+  const lenses = logoSvg.value?.querySelectorAll('.lens') ?? [];
+  const moves = [20, -20];
+  lenses.forEach((lens, i) => {
+    if (i < 2) {
+      (lens as SVGGraphicsElement).animate(
+        [
+          { transform: 'translateX(0)' },
+          { transform: `translateX(${moves[i]}px)` },
+          { transform: 'translateX(0)' },
+        ],
+        { duration: 700, easing: SPRING },
+      );
+    } else {
+      (lens as SVGGraphicsElement).animate(
+        [{ transform: 'scale(1)' }, { transform: 'scale(1.45)' }, { transform: 'scale(1)' }],
+        { duration: 700, easing: SPRING },
+      );
+    }
+  });
+};
 
 const onScroll = () => {
   const y = window.scrollY;
@@ -64,11 +126,17 @@ const isOverlay = computed(() => !!props.overlay && !scrolled.value);
       "
     >
       <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-6">
-        <a href="/" class="site-logo flex shrink-0 items-center gap-2.5" aria-label="RNP home">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 275.37 167.48" class="h-7 w-auto" aria-hidden="true">
-            <path fill="#ffdc4a" d="M95.79,83.73a95.44,95.44,0,0,1,31.82-71.27,83.73,83.73,0,1,0,0,142.54A95.44,95.44,0,0,1,95.79,83.73Z" transform="translate(0.08 0.01)" />
-            <path fill="#1a7bec" d="M179.46,83.73A95.44,95.44,0,0,1,147.6,155a83.73,83.73,0,1,0,0-142.54A95.44,95.44,0,0,1,179.46,83.73Z" transform="translate(0.08 0.01)" />
-            <path fill="#00dfb7" d="M167.49,83.73a83.57,83.57,0,0,0-29.87-64,83.59,83.59,0,0,0,0,128.09A83.57,83.57,0,0,0,167.49,83.73Z" transform="translate(0.08 0.01)" />
+        <a
+          href="/"
+          class="site-logo flex shrink-0 items-center gap-2.5"
+          aria-label="RNP home"
+          @click="onLogoClick"
+          @mouseenter="onLogoEnter"
+        >
+          <svg ref="logoSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 275.37 167.48" class="h-7 w-auto" aria-hidden="true">
+            <path class="lens" fill="#ffdc4a" d="M95.79,83.73a95.44,95.44,0,0,1,31.82-71.27,83.73,83.73,0,1,0,0,142.54A95.44,95.44,0,0,1,95.79,83.73Z" transform="translate(0.08 0.01)" />
+            <path class="lens" fill="#1a7bec" d="M179.46,83.73A95.44,95.44,0,0,1,147.6,155a83.73,83.73,0,1,0,0-142.54A95.44,95.44,0,0,1,179.46,83.73Z" transform="translate(0.08 0.01)" />
+            <path class="lens" fill="#00dfb7" d="M167.49,83.73a83.57,83.57,0,0,0-29.87-64,83.59,83.59,0,0,0,0,128.09A83.57,83.57,0,0,0,167.49,83.73Z" transform="translate(0.08 0.01)" />
           </svg>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 387.41 172.4" class="h-[1.35rem] w-auto" fill="currentColor" aria-label="rnp">
             <path d="M27.3,3.19,29.48,17C38.67,2.23,51,0,63.12,0S87.33,4.84,93.86,11.38L80.55,37.08a29.5,29.5,0,0,0-21.31-7.74c-15.5,0-29.71,8.23-29.71,30.27v62.92H0V3.19Z" />
@@ -175,5 +243,9 @@ const isOverlay = computed(() => !!props.overlay && !scrolled.value);
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.lens {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 </style>
