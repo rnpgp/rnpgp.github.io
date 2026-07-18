@@ -3,6 +3,7 @@ name: links_live
 # Post-deploy link check of the LIVE site: verifies that production URLs —
 # including the absolute canonical/OG URLs that pre-deploy checks must skip —
 # actually resolve. Runs after every successful deploy and weekly.
+# Page URLs come from the sitemap (lychee does not spider).
 
 on:
   workflow_run:
@@ -20,9 +21,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Build URL list from the live sitemap
+      run: |
+        curl -fsSL https://www.rnpgp.org/sitemap-index.xml \
+          | grep -oE 'https://www\.rnpgp\.org/sitemap-[0-9]+\.xml' \
+          | while read -r sm; do curl -fsSL "$sm"; done \
+          | grep -oE '<loc>[^<]+' \
+          | sed 's/<loc>//' > urls.txt
+        wc -l urls.txt
+
     - name: Link Checker (live site)
       id: lychee
       uses: lycheeverse/lychee-action@v2
       with:
-        args: --config lychee-live.toml --no-progress 'https://www.rnpgp.org'
+        args: --config lychee-live.toml --no-progress --files-from urls.txt
         fail: true
