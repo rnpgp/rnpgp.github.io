@@ -1,0 +1,122 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import SiteHeader from '../components/vue/SiteHeader.vue';
+import SiteSearch from '../components/vue/SiteSearch.vue';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  publishedTime?: string;
+  /** Header floats with white text over a dark/bright hero band (home page). */
+  headerOverlay?: boolean;
+}
+
+const {
+  title,
+  description = 'Secure email with unrivaled performance. LibrePGP and RFC 4880 compliant.',
+  type = 'website',
+  noindex = false,
+  publishedTime,
+  headerOverlay = false,
+} = Astro.props;
+
+const pageTitle = title === 'RNP' ? 'RNP' : `${title} — RNP`;
+const siteUrl = Astro.site ?? new URL('https://www.rnpgp.org');
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const ogImage = new URL('/assets/brand/og.png', siteUrl);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'RNP',
+  url: 'https://www.rnpgp.org',
+  logo: 'https://www.rnpgp.org/favicon-192x192.png',
+  description:
+    'RNP is an open-source LibrePGP/OpenPGP library and toolset powering end-to-end email encryption in Mozilla Thunderbird.',
+  sameAs: ['https://github.com/rnpgp/rnp', 'https://twitter.com/RiboseUS'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (() => {
+        const apply = () => {
+          // ?theme=light|dark preview links stick for the rest of the session.
+          const q = new URLSearchParams(location.search).get('theme');
+          if (q === 'light' || q === 'dark') localStorage.setItem('rnp-theme', q);
+          const t = localStorage.getItem('rnp-theme');
+          const dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.classList.toggle('dark', dark);
+        };
+        apply();
+        document.addEventListener('astro:after-swap', apply);
+        // Sync theme across browser tabs.
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'rnp-theme' || e.key === null) apply();
+        });
+      })();
+    </script>
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/favicon-192x192.png" />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-sans-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-sans-latin-600-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/ibm-plex-mono-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="RNP Blog" href="/rss.xml" />
+
+    <meta property="og:site_name" content="RNP" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:image" content={ogImage} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <ClientRouter />
+  </head>
+  <body class="flex min-h-screen flex-col bg-background text-foreground">
+    <SiteHeader client:load currentPath={Astro.url.pathname} overlay={headerOverlay} />
+    <main class="w-full flex-1" data-pagefind-body>
+      <slot />
+    </main>
+    <SiteFooter />
+    <SiteSearch client:only="vue" />
+  </body>
+</html>

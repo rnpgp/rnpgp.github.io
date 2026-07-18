@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import Prose from '@/components/Prose.astro';
+
+export async function getStaticPaths() {
+  const manpages = await getCollection('manpages');
+  return manpages.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={data.title} description={data.description} type="article">
+  <PageHero
+    eyebrow={`RNP Manual · Section ${data.section} · v${data.version}`}
+    title={data.title}
+    description={data.description}
+  />
+
+  <article class="mx-auto w-full max-w-3xl px-6 py-14">
+    <Prose>
+      <Content />
+    </Prose>
+    <p class="mono-label mt-14 border-t border-line pt-6">
+      Rendered from the RNP v{data.version} release · Source: github.com/rnpgp/rnp
+    </p>
+  </article>
+</BaseLayout>

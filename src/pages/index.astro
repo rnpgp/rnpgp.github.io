@@ -1,0 +1,271 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import HeroDecrypt from '../components/vue/HeroDecrypt.vue';
+import FingerprintPlayground from '../components/vue/FingerprintPlayground.vue';
+import InstallTabs from '../components/vue/InstallTabs.vue';
+import Reveal from '../components/vue/Reveal.vue';
+import { tagLabel } from '../lib/tags';
+import { getLatestRelease } from '../lib/github';
+
+const release = await getLatestRelease();
+
+const products = (await getCollection('software')).sort(
+  (a, b) => (a.data.feature_with_priority ?? 99) - (b.data.feature_with_priority ?? 99),
+);
+const specs = (await getCollection('specs')).sort(
+  (a, b) => (a.data.feature_with_priority ?? 99) - (b.data.feature_with_priority ?? 99),
+);
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+const advisory = (await getCollection('advisories')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+)[0];
+const manpages = (await getCollection('manpages')).sort((a, b) => a.id.localeCompare(b.id));
+
+const releaseDate = release.publishedAt.slice(0, 10);
+---
+
+<BaseLayout
+  title="RNP"
+  description="RNP — open-source LibrePGP/OpenPGP library and tools. Secure email with unrivaled performance, powering end-to-end encryption in Mozilla Thunderbird."
+  headerOverlay
+>
+  <!-- ============ HERO ============ -->
+  <section class="hero-gradient relative overflow-hidden text-white">
+    <div class="hero-grid absolute inset-0" aria-hidden="true"></div>
+    <img
+      src="/assets/brand/symbol.svg"
+      alt=""
+      aria-hidden="true"
+      class="pointer-events-none absolute -right-40 top-1/2 hidden w-[30rem] -translate-y-1/2 opacity-[0.14] blur-[1px] lg:block dark:opacity-[0.09]"
+    />
+    <div class="relative mx-auto w-full max-w-6xl px-6 pb-16 pt-28 md:pb-24 md:pt-36">
+      <div class="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+        <div>
+          <p class="mono-label text-white/70">LibrePGP · RFC 4880 · C++</p>
+          <h1
+            class="mt-4 text-balance font-sans text-4xl font-bold leading-[1.12] tracking-tight text-white md:text-5xl md:leading-[1.08]"
+          >
+            <HeroDecrypt client:visible text="Powering end-to-end email encryption in" />
+            <a
+              href="https://www.thunderbird.net/"
+              class="underline decoration-white/50 underline-offset-[6px] transition-colors hover:decoration-white"
+              >Mozilla Thunderbird.</a
+            >
+          </h1>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
+            Secure email with unrivaled performance. LibrePGP and RFC&nbsp;4880 compliant —
+            openly licensed, cross-platform, and built for the long haul.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="/software/rnp/" class="btn btn-white">Get started</a>
+            <a href="/contribute/" class="btn btn-outline-white">Contribute</a>
+            <a
+              href={release.url}
+              class="group inline-flex items-center gap-2 font-mono text-sm text-white/75 transition-colors hover:text-white"
+            >
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+              Latest: {release.tag} · {releaseDate}
+              <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true"
+                >→</span
+              >
+            </a>
+          </div>
+        </div>
+        <div class="lg:justify-self-end">
+          <FingerprintPlayground client:visible />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIBREPGP BANNER ============ -->
+  <section class="band-gold border-b border-line">
+    <div
+      class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 px-6 py-8"
+    >
+      <div class="flex items-center gap-5">
+        <img src="/assets/librepgp-button.svg" alt="LibrePGP" class="h-10 w-auto" />
+        <p class="max-w-xl leading-relaxed text-muted">
+          <a
+            href="https://www.ribose.com"
+            class="font-bold text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+            >Ribose</a
+          > proudly announces <strong class="text-foreground">full support for LibrePGP</strong>: a
+          new specification for OpenPGP that defends secure communication into the future.
+        </p>
+      </div>
+      <a
+        href="/blog/2024-07-22-rnp-and-librepgp/"
+        class="group inline-flex items-center gap-1.5 font-sans text-sm font-bold text-accent transition-colors hover:text-accent-deep"
+      >
+        Read the announcement
+        <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ SOFTWARE ============ -->
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <Reveal client:visible>
+      <SectionHeader
+        eyebrow="§ 01 — Software"
+        title="The RNP suite"
+        linkHref="/software/"
+        linkLabel="All software"
+      />
+      <div class="grid gap-5 md:grid-cols-2">
+        {
+          products.map((p) => (
+            <a href={`/software/${p.id}/`} class="card card-hover group block p-6">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="font-sans text-2xl font-bold transition-colors group-hover:text-accent">
+                  {p.data.title}
+                </h3>
+                <span
+                  class="text-faint transition-all group-hover:translate-x-0.5 group-hover:text-accent"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </div>
+              <p class="mt-2 leading-relaxed text-muted">{p.data.description}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {p.data.tags.map((tag) => (
+                  <span class="chip">{tagLabel(tag)}</span>
+                ))}
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="card mt-6 p-6">
+        <div class="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+          <h3 class="font-sans text-xl font-bold">Install RNP</h3>
+          <span class="mono-label">rnp · rnpkeys · librnp</span>
+        </div>
+        <InstallTabs client:visible />
+      </div>
+    </Reveal>
+  </section>
+
+  <!-- ============ SPECS ============ -->
+  <section class="band-teal border-y border-line">
+    <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+      <Reveal client:visible>
+        <SectionHeader
+          eyebrow="§ 02 — Specifications"
+          title="Standards work"
+          linkHref="/specs/"
+          linkLabel="All specifications"
+        />
+        <div class="grid gap-5 md:grid-cols-2">
+          {
+            specs.map((s) => (
+              <a href={`/specs/${s.id}/`} class="card card-hover group block p-6">
+                <p class="mono-label !text-accent2">{s.data.tags.join(' · ')}</p>
+                <h3 class="mt-2 font-sans text-xl font-bold transition-colors group-hover:text-accent">
+                  {s.data.title}
+                </h3>
+                <p class="mt-2 leading-relaxed text-muted">{s.data.description}</p>
+              </a>
+            ))
+          }
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- ============ BLOG ============ -->
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <Reveal client:visible>
+      <SectionHeader
+        eyebrow="§ 03 — Blog"
+        title="Releases & news"
+        linkHref="/blog/"
+        linkLabel="All posts"
+      />
+      <div class="card divide-y divide-line overflow-hidden">
+        {
+          posts.map((post) => (
+            <a
+              href={`/blog/${post.id}/`}
+              class="group flex flex-wrap items-baseline gap-x-5 gap-y-1 px-6 py-4 transition-colors hover:bg-surface-dim"
+            >
+              <span class="shrink-0 font-mono text-sm text-faint">
+                {post.data.date.toISOString().slice(0, 10)}
+              </span>
+              <span class="chip chip-teal shrink-0 uppercase tracking-wider">
+                {post.data.categories[0] ?? 'post'}
+              </span>
+              <span class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
+                {post.data.title}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </Reveal>
+  </section>
+
+  <!-- ============ SECURITY + MANUAL ============ -->
+  <section class="band-blue border-t border-line">
+    <div class="mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:py-20">
+      <Reveal client:visible>
+        <SectionHeader
+          eyebrow="§ 04 — Security"
+          title="Advisories"
+          linkHref="/advisories/"
+          linkLabel="All advisories"
+        />
+        {
+          advisory && (
+            <a href={`/advisories/${advisory.id}/`} class="card card-hover group block p-6">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="chip chip-gold font-bold">{advisory.data.id}</span>
+                <span class="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-muted">
+                  {advisory.data.cve_id}
+                </span>
+                <span class="font-mono text-xs text-faint">
+                  {advisory.data.date.toISOString().slice(0, 10)}
+                </span>
+              </div>
+              <h3 class="mt-3 font-sans text-lg font-bold leading-snug transition-colors group-hover:text-accent">
+                {advisory.data.title}
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{advisory.data.excerpt}</p>
+            </a>
+          )
+        }
+      </Reveal>
+
+      <Reveal client:visible delay={120}>
+        <SectionHeader
+          eyebrow="§ 05 — Manual"
+          title="Man pages"
+          linkHref="/docs/"
+          linkLabel="Full manual"
+        />
+        <div class="space-y-3">
+          {
+            manpages.map((m) => (
+              <a
+                href={`/docs/${m.id}/`}
+                class="card card-hover group flex items-baseline justify-between gap-4 px-6 py-4"
+              >
+                <span class="font-mono text-lg font-bold text-accent transition-colors group-hover:text-accent-deep">
+                  {m.data.title}
+                </span>
+                <span class="text-sm text-muted">{m.data.description}</span>
+              </a>
+            ))
+          }
+        </div>
+      </Reveal>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const products = await getCollection('software');
+  return products
+    .filter((p) => p.data.docs_repo)
+    .map((p) => ({ params: { product: p.id } }));
+}
+
+const { product } = Astro.params;
+const target = `/software/${product}/docs/README/`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting to {target}</title>
+    <style>
+      body {
+        font-family: monospace;
+        margin: 4rem auto;
+        max-width: 42rem;
+        padding: 0 1.5rem;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <p>This page has moved — <a href={target}>{target}</a></p>
+  </body>
+</html>

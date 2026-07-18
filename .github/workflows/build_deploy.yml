@@ -28,11 +28,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          ruby-version: '3.3'
-          bundler-cache: true
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch software documentation sources
+        run: npm run fetch-sources
 
       - name: Setup Pages
         id: pages
@@ -40,16 +46,16 @@ jobs:
         with:
           enablement: true
 
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --verbose --trace --baseurl "${{ steps.pages.outputs.base_path }}"
+      - name: Build with Astro
+        # Outputs to the './dist' directory; postbuild runs Pagefind indexing
+        run: npm run build
         env:
-          JEKYLL_ENV: production
-          JEKYLL_LOG_LEVEL: debug
+          CI: true
 
       - name: Upload artifact
-        # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./dist
 
   # Deployment job
   deploy:

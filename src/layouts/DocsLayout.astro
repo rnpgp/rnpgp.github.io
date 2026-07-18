@@ -1,0 +1,67 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Prose from '@/components/Prose.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  product: string;
+  productTitle: string;
+  docs: { slug: string; title: string }[];
+  currentSlug: string;
+}
+
+const { title, description, product, productTitle, docs, currentSlug } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="border-b border-line bg-surface-dim">
+    <div class="mx-auto w-full max-w-6xl px-6 pb-8 pt-24">
+      <nav class="font-mono text-xs text-faint">
+        <span aria-hidden="true">/</span>{' '}
+        <a href="/software/" class="transition-colors hover:text-accent">software</a>{' '}
+        <span aria-hidden="true">/</span>{' '}
+        <a href={`/software/${product}/`} class="transition-colors hover:text-accent"
+          >{productTitle}</a
+        >{' '}
+        <span aria-hidden="true">/</span>{' '}
+        <span>docs</span>
+      </nav>
+      <h1 class="mt-4 font-sans text-3xl font-bold tracking-tight md:text-4xl">{title}</h1>
+      <hr class="gradient-rule mt-6 w-16" />
+    </div>
+  </header>
+
+  <section class="mx-auto w-full max-w-6xl px-6 py-10">
+    <div class="grid gap-10 lg:grid-cols-[15rem_1fr]">
+      <aside>
+        <div class="lg:sticky lg:top-24">
+          <p class="mono-label">Documentation</p>
+          <nav class="mt-4 space-y-0.5">
+            {
+              docs.map((doc) => (
+                <a
+                  href={`/software/${product}/docs/${doc.slug}/`}
+                  class:list={[
+                    'block rounded-md px-3 py-2 font-sans text-sm transition-colors',
+                    doc.slug.includes('/') && 'pl-6',
+                    doc.slug === currentSlug
+                      ? 'bg-surface-dim font-bold text-accent'
+                      : 'text-muted hover:bg-surface-dim hover:text-foreground',
+                  ]}
+                >
+                  {doc.slug === 'README' ? 'Overview' : doc.title}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+      </aside>
+      <div class="min-w-0">
+        <Prose>
+          <slot />
+        </Prose>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+
+const manpages = (await getCollection('manpages')).sort((a, b) => a.id.localeCompare(b.id));
+---
+
+<BaseLayout title="Manual" description="Command-line man pages for rnp, rnpkeys and librnp.">
+  <PageHero
+    eyebrow="Index — Manual"
+    title="Command-line man pages"
+    description="Reference manual rendered from the latest RNP release."
+  />
+
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <div class="space-y-4">
+      {
+        manpages.map((m) => (
+          <a
+            href={`/docs/${m.id}/`}
+            class="card card-hover group flex flex-wrap items-baseline justify-between gap-4 p-6"
+          >
+            <div>
+              <h2 class="font-mono text-xl font-bold text-accent transition-colors group-hover:text-accent-deep">
+                {m.data.title}
+              </h2>
+              <p class="mt-1 text-muted">{m.data.description}</p>
+            </div>
+            <div class="flex gap-2">
+              <span class="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-muted">
+                section {m.data.section}
+              </span>
+              <span class="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-muted">
+                v{m.data.version}
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

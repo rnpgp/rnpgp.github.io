@@ -1,0 +1,107 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import Prose from '@/components/Prose.astro';
+import InstallTabs from '@/components/vue/InstallTabs.vue';
+import { tagLabel } from '@/lib/tags';
+
+export async function getStaticPaths() {
+  const products = await getCollection('software');
+  return products.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+/** README first, then alphabetical by slug, with develop/* pages last. */
+function docSort(a: string, b: string): number {
+  if (a === 'README') return -1;
+  if (b === 'README') return 1;
+  const aDev = a.startsWith('develop/') ? 1 : 0;
+  const bDev = b.startsWith('develop/') ? 1 : 0;
+  if (aDev !== bDev) return aDev - bDev;
+  return a.localeCompare(b);
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const docs = (await getCollection('softwareDocs'))
+  .filter((d) => d.data.product === entry.id)
+  .map((d) => ({ slug: d.id.split('/').slice(1).join('/'), title: d.data.title }))
+  .sort((a, b) => docSort(a.slug, b.slug));
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <PageHero eyebrow="Software" title={data.title} description={data.description}>
+    {
+      data.tags.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-2">
+          {data.tags.map((tag) => (
+            <span class="rounded-full border border-line bg-surface-dim px-2.5 py-0.5 font-mono text-xs text-muted">
+              {tagLabel(tag)}
+            </span>
+          ))}
+        </div>
+      )
+    }
+  </PageHero>
+
+  <section class="mx-auto w-full max-w-6xl px-6 py-14">
+    <div class="grid gap-10 lg:grid-cols-[1fr_17rem]">
+      <div class="min-w-0">
+        {
+          entry.id === 'rnp' && (
+            <div class="card mb-10 p-6">
+              <h2 class="mb-4 font-sans text-xl font-bold">Installation</h2>
+              <InstallTabs client:visible />
+            </div>
+          )
+        }
+        <Prose>
+          <Content />
+        </Prose>
+      </div>
+
+      <aside class="space-y-6">
+        <div class="card p-5">
+          <h2 class="mono-label">Links</h2>
+          {
+            data.external_links.length > 0 && (
+              <div class="mt-4 space-y-1">
+                {data.external_links.map((link) => (
+                  <a href={link.url} class="btn btn-ghost justify-start w-full text-sm">
+                    {link.title}
+                  </a>
+                ))}
+              </div>
+            )
+          }
+          <a
+            href={data.repo_url}
+            class="mt-4 block break-all font-mono text-xs text-faint transition-colors hover:text-accent"
+          >
+            {data.repo_url}
+          </a>
+        </div>
+
+        {
+          docs.length > 0 && (
+            <div class="card p-5">
+              <h2 class="mono-label">Documentation</h2>
+              <nav class="mt-4">
+                {docs.map((doc) => (
+                  <a
+                    href={`/software/${entry.id}/docs/${doc.slug}/`}
+                    class="block py-1.5 font-sans text-sm text-muted transition-colors hover:text-accent"
+                  >
+                    {doc.title}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )
+        }
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Prose from '@/components/Prose.astro';
+
+export async function getStaticPaths() {
+  const advisories = await getCollection('advisories');
+  return advisories.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.excerpt ?? data.title}
+  type="article"
+  publishedTime={data.date.toISOString()}
+>
+  <article class="mx-auto w-full max-w-3xl px-6 pb-20 pt-28">
+    <div class="flex flex-wrap items-center gap-3">
+      <p class="mono-label">Advisory · {data.id}</p>
+      <span class="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-muted">
+        {data.cve_id}
+      </span>
+      <span class="font-mono text-sm text-faint">{data.date.toISOString().slice(0, 10)}</span>
+    </div>
+    <h1 class="mt-4 font-sans text-4xl font-bold tracking-tight md:text-[2.6rem] md:leading-[1.15]">
+      {data.title}
+    </h1>
+    <hr class="gradient-rule mt-8" />
+    <Prose class="mt-10">
+      <Content />
+    </Prose>
+    <footer class="mt-16 border-t border-line pt-6">
+      <a href="/advisories/" class="font-sans text-sm font-bold text-accent">← All advisories</a>
+    </footer>
+  </article>
+</BaseLayout>

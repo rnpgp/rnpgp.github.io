@@ -1,0 +1,130 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Prose from '@/components/Prose.astro';
+
+interface Props {
+  post?: CollectionEntry<'blog'>;
+  redirectTo?: string;
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.flatMap((post) => [
+    { params: { id: post.id }, props: { post } },
+    // Legacy permalinks like /blog/08-20-2018/rnp-010-released/ → meta-refresh pages.
+    ...post.data.redirect_from.map((legacy) => ({
+      params: { id: legacy.replace(/^\/blog\//, '').replace(/\/+$/, '') },
+      props: { redirectTo: `/blog/${post.id}/` },
+    })),
+  ]);
+}
+
+const { post, redirectTo } = Astro.props;
+
+const Content = post ? (await render(post)).Content : undefined;
+const dateISO = post ? post.data.date.toISOString().slice(0, 10) : '';
+---
+
+{
+  redirectTo ? (
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="noindex" />
+        <meta http-equiv="refresh" content={`0; url=${redirectTo}`} />
+        <link rel="canonical" href={new URL(redirectTo, Astro.site ?? 'https://www.rnpgp.org')} />
+        <title>Moved</title>
+        <style>
+          body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family:
+              system-ui,
+              -apple-system,
+              sans-serif;
+            font-size: 0.95rem;
+            color: #555;
+            background: #fafafa;
+          }
+          a {
+            color: #0b7285;
+          }
+        </style>
+      </head>
+      <body>
+        <p>
+          This page has moved —{' '}
+          <a href={redirectTo}>{redirectTo}</a>
+        </p>
+      </body>
+    </html>
+  ) : (
+    post && (
+      <BaseLayout
+        title={post.data.title}
+        description={post.data.excerpt ?? post.data.title}
+        type="article"
+        publishedTime={post.data.date.toISOString()}
+      >
+        <article class="mx-auto w-full max-w-3xl px-6 pb-20 pt-28">
+          <header>
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <span class="rounded-full border border-line bg-surface-dim px-2 py-0.5 font-mono text-[0.7rem] uppercase tracking-wider text-accent2">
+                {post.data.categories[0] ?? 'post'}
+              </span>
+              <time datetime={dateISO} class="font-mono text-sm text-faint">
+                {dateISO}
+              </time>
+            </div>
+            <h1 class="mt-4 font-sans text-4xl font-bold tracking-tight md:text-5xl">
+              {post.data.title}
+            </h1>
+            {post.data.excerpt && (
+              <p class="mt-4 text-lg leading-relaxed text-muted">{post.data.excerpt}</p>
+            )}
+            {post.data.authors.length > 0 && (
+              <p class="mt-4 font-sans text-sm text-muted">
+                By{' '}
+                {post.data.authors.map((author, i) => (
+                  <Fragment>
+                    {i > 0 && ', '}
+                    {author.email ? (
+                      <a
+                        class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+                        href={`mailto:${author.email}`}
+                      >
+                        {author.name}
+                      </a>
+                    ) : author.social_links?.length ? (
+                      <a
+                        class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+                        href={author.social_links[0]}
+                      >
+                        {author.name}
+                      </a>
+                    ) : (
+                      author.name
+                    )}
+                  </Fragment>
+                ))}
+              </p>
+            )}
+            <hr class="gradient-rule mt-8" />
+          </header>
+          <Prose class="mt-10">{Content && <Content />}</Prose>
+          <div class="mt-16 border-t border-line pt-6">
+            <a href="/blog/" class="font-sans text-sm font-bold text-accent">
+              ← All posts
+            </a>
+          </div>
+        </article>
+      </BaseLayout>
+    )
+  )
+}

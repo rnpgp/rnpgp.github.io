@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '@/layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('softwareDocs');
+  // entry.id is `<product>/<docPath>`; docPath may itself contain '/'
+  // (e.g. 'develop/packaging') and 'README' maps to the docs landing page.
+  return entries.map((entry) => {
+    const [product, ...rest] = entry.id.split('/');
+    return {
+      params: { product, slug: rest.join('/') },
+      props: { entry },
+    };
+  });
+}
+
+/** README first, then alphabetical by slug, with develop/* pages last. */
+function docSort(a: string, b: string): number {
+  if (a === 'README') return -1;
+  if (b === 'README') return 1;
+  const aDev = a.startsWith('develop/') ? 1 : 0;
+  const bDev = b.startsWith('develop/') ? 1 : 0;
+  if (aDev !== bDev) return aDev - bDev;
+  return a.localeCompare(b);
+}
+
+const { entry } = Astro.props;
+const { product } = Astro.params;
+const docPath = entry.id.split('/').slice(1).join('/');
+
+const products = await getCollection('software');
+const productTitle = products.find((p) => p.id === product)?.data.title ?? product;
+
+const docs = (await getCollection('softwareDocs'))
+  .filter((d) => d.data.product === product)
+  .map((d) => ({ slug: d.id.split('/').slice(1).join('/'), title: d.data.title }))
+  .sort((a, b) => docSort(a.slug, b.slug));
+
+const { Content } = await render(entry);
+---
+
+<DocsLayout
+  title={entry.data.title}
+  description={`${entry.data.title} — ${productTitle} documentation`}
+  product={product}
+  productTitle={productTitle}
+  docs={docs}
+  currentSlug={docPath}
+>
+  <Content />
+</DocsLayout>

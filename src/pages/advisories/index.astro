@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+
+const advisories = (await getCollection('advisories')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout title="Advisories" description="Security advisories for RNP.">
+  <PageHero
+    eyebrow="Index — Security"
+    title="Security advisories"
+    description="Security advisories for RNP."
+  />
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <div class="max-w-3xl space-y-5">
+      {
+        advisories.map((a) => (
+          <a href={`/advisories/${a.id}/`} class="card card-hover group block p-6">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="chip chip-gold font-bold">{a.data.id}</span>
+              <span class="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-muted">
+                {a.data.cve_id}
+              </span>
+              <span class="font-mono text-xs text-faint">
+                {a.data.date.toISOString().slice(0, 10)}
+              </span>
+            </div>
+            <h2 class="mt-3 font-sans text-xl font-bold leading-snug transition-colors group-hover:text-accent">
+              {a.data.title}
+            </h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{a.data.excerpt}</p>
+          </a>
+        ))
+      }
+    </div>
+    <div class="card mt-8 max-w-3xl p-5 text-sm text-muted">
+      Found a vulnerability? Please report it via our{' '}
+      <a href="/feedback/" class="text-accent underline decoration-accent/30 underline-offset-4"
+        >security reporting channel</a
+      >.
+    </div>
+  </section>
+</BaseLayout>

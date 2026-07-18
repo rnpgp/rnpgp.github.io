@@ -1,0 +1,47 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import Prose from '@/components/Prose.astro';
+
+export async function getStaticPaths() {
+  const specs = await getCollection('specs');
+  return specs.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <PageHero
+    eyebrow={`Specification · ${data.tags.join(' · ')}`}
+    title={data.title}
+    description={data.description}
+  >
+    <div class="mt-6 flex flex-wrap items-center">
+      {
+        data.external_links.map((link) => (
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener"
+            class="btn btn-ghost mr-3"
+          >
+            {link.title} ↗
+          </a>
+        ))
+      }
+    </div>
+  </PageHero>
+  <section class="mx-auto w-full max-w-4xl px-6 py-14">
+    <p class="mono-label mb-6">IETF Internet-Draft · full text below</p>
+    <Prose>
+      <Content />
+    </Prose>
+  </section>
+</BaseLayout>

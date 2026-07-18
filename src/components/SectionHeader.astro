@@ -1,0 +1,30 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  linkHref?: string;
+  linkLabel?: string;
+}
+const { eyebrow, title, linkHref, linkLabel } = Astro.props;
+---
+
+<div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <p class="mono-label">{eyebrow}</p>
+    <h2 class="mt-2 font-sans text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
+    <hr class="gradient-rule mt-4 w-16" />
+  </div>
+  {
+    linkHref && (
+      <a
+        href={linkHref}
+        class="group inline-flex items-center gap-1.5 font-sans text-sm font-bold text-accent transition-colors hover:text-accent-deep"
+      >
+        {linkLabel ?? 'View all'}
+        <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+          →
+        </span>
+      </a>
+    )
+  }
+</div>

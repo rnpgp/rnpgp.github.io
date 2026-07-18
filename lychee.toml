@@ -1,0 +1,21 @@
+# Lychee link-checker configuration — used by `npm run check:links:external`
+# locally and by .github/workflows/links.yml in CI.
+
+max_concurrency = 64
+timeout = 30
+retry_wait_time = 2
+max_retries = 2
+
+# Pages exist but rate-limit automated checkers (HN, git.gnupg.org, …)
+accept = ["200", "204", "429"]
+
+exclude = [
+  # Our own production URLs: canonical/OG URLs resolve only after deploy;
+  # internal structure is covered by --root-dir and scripts/check-links.mjs.
+  '^https://www\.rnpgp\.org/',
+  # Red Hat sites bot-block link checkers with 403 even for valid pages.
+  '^https://access\.redhat\.com/',
+  '^https://docs\.redhat\.com/',
+  # Cirrus CI blocks non-browser TLS clients.
+  '^https://cirrus-ci\.com/',
+]
