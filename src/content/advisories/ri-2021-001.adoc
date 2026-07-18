@@ -15,7 +15,7 @@ excerpt: >-
 
 CNA ID:: RI-2021-001
 Name:: Key protection settings not copied after unprotect action
-CVE ID:: CVE-2021-33589
+CVE ID:: link:/cves/CVE-2021-33589.json[CVE-2021-33589^]
 CVSS 3.1 score:: 3.2
 CVSS 3.1 vector:: AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N/E:H/RL:O/RC:C/CR:X/IR:X/AR:L/MAV:L/MAC:L/MPR:L/MUI:N/MS:U/MC:X/MI:X/MA:N
 Affected vendors:: Ribose

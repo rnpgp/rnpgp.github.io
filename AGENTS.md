@@ -41,7 +41,10 @@ website.
   optional `redirect_from` (legacy `/blog/DD-MM-YYYY/.../` URLs are emitted as
   redirect pages).
 - `src/content/advisories/*.adoc` — security advisories. Front matter:
-  `title`, `date`, `id` (e.g. `RI-2021-01`), `cve_id`, `excerpt`.
+  `title`, `date`, `id` (e.g. `RI-2021-01`), `cve_id`, `excerpt`. Advisories
+  are dual-published with open.ribose.com (check there for new ones). CVE
+  JSON 5.0 records are self-hosted in `public/cves/` and linked from the
+  advisory pages — when adding an advisory, add its JSON record too.
 - `src/content/software/*.md` — product pages. Front matter: `title`,
   `description`, `repo_url`, `tags`, `external_links` (`{url, title}`),
   optional `docs_repo`/`docs_subtree`/`docs_ref` (enables on-site docs),
@@ -132,8 +135,8 @@ There is no unit test suite; validation is building + link checking.
 
 ## Gotchas
 
-- `Gemfile.lock`, `_site/`, `vendor/`, `dist/`, `node_modules/` are gitignored.
-  `package-lock.json` **is** committed — keep it in sync.
+- `Gemfile.lock`, `_site/`, `vendor/`, `dist/`, `node_modules/`, `parent-hub/`
+  are gitignored. `package-lock.json` **is** committed — keep it in sync.
 - Old blog URLs (`/blog/DD-MM-YYYY/slug/`) are redirect pages generated from
   posts' `redirect_from` front matter — keep that field when touching old posts.
 - The `openpgp_keys/*.asc` files are release-signing keys; treat them as
@@ -141,8 +144,8 @@ There is no unit test suite; validation is building + link checking.
 - Man-page/description strings in `src/content.config.ts` are parsed from the
   AsciiDoc `== NAME` sections — if upstream renames sections, descriptions
   fall back to empty.
-- `parent-hub/` is a legacy nested checkout consumed by open.ribose.com;
-  leave it untouched.
+- `parent-hub/` was a legacy nested checkout from the Jekyll theme era;
+  it has been removed — the footer links to open.ribose.com directly.
 - **Tailwind v4 important syntax**: the important modifier is a *suffix*
   (`border-teal!`), not the v3 prefix (`!border-teal`). You rarely need it —
   custom classes in `@layer components` (`.mono-label`, `.btn`, …) lose to

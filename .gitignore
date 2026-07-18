@@ -1,18 +1,14 @@
-_software/*/.git
-_software/*/docs
-_software/_*_repo
-_specs/*/
-!_specs/*.*
-# parent-hub/*
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
 .DS_Store
-Gemfile.lock
 # Astro / Node
 node_modules/
 dist/
 .astro/
 # Pulled-in software sources (fetch-sources.mjs)
 vendor/
+# Legacy Jekyll-era artifacts (never recommit)
+parent-hub/
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+Gemfile.lock

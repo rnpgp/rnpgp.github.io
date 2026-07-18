@@ -99,7 +99,7 @@ with RNP 0.18.1 or 0.17.1 based on their security requirements and threat model.
 
 == References
 
-* CVE: https://www.cve.org/CVERecord?id=CVE-2025-13470[CVE-2025-13470]
+* CVE: link:/cves/CVE-2025-13470.json[CVE-2025-13470^] (download as CVE JSON 5.0)
 * Red Hat CVE: https://access.redhat.com/security/cve/cve-2025-13402
 * Red Hat Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=2415863
 * GitHub Release: https://github.com/rnpgp/rnp/releases/tag/v0.18.1
