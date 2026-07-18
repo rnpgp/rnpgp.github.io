@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404" description="Page not found" noindex>
+  <section class="graph-bg flex min-h-[70vh] items-center justify-center px-6 pt-28">
+    <div class="text-center">
+      <p class="font-sans text-8xl font-bold">404</p>
+      <p class="mt-2 text-xl text-muted">Page not found :(</p>
+      <p class="mt-4 font-mono text-sm text-faint">Check the URL, or head back to firm ground:</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="btn btn-primary">Back to home</a>
+        <a href="/blog/" class="btn btn-ghost">Blog</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

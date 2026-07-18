@@ -1,0 +1,631 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   IBM Plex — self-hosted (OFL). Plex Sans for text & display, Plex Mono for
+   code, fingerprints and spec labels.
+--------------------------------------------------------------------------- */
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-sans-latin-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-sans-latin-600-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-sans-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
+}
+
+/* ---------------------------------------------------------------------------
+   Static brand tokens (never theme-flipped — these are the logo's colors)
+--------------------------------------------------------------------------- */
+@theme {
+  --color-brand: #1a7bec;
+  --color-teal: #00dfb7;
+  --color-gold: #ffdc4a;
+  --color-navy: #14172b;
+
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --shadow-card: 0 1px 2px rgb(26 60 120 / 0.05), 0 8px 28px -10px rgb(26 60 120 / 0.1);
+  --shadow-lift: 0 2px 4px rgb(26 60 120 / 0.07), 0 18px 44px -12px rgb(26 60 120 / 0.18);
+}
+
+/* ---------------------------------------------------------------------------
+   Semantic tokens — flipped by .dark
+--------------------------------------------------------------------------- */
+:root {
+  --bg: #f8fbfe; /* airy pastel white */
+  --surface: #ffffff;
+  --surface-dim: #eef4fa;
+  --fg: #23273a;
+  --fg-soft: #4f5469;
+  --fg-faint: #7e85a1;
+  --line: #dfe8f2;
+  --accent: #1a7bec;
+  --accent-deep: #0f5fc4;
+  --accent2: #009e80; /* text-safe teal on paper */
+  --gold-ink: #a07d0a;
+  --gridline: rgb(26 123 236 / 0.055);
+  --code-bg: #14172b;
+  --code-fg: #e8eaf2;
+  /* pastel tints — the friendly face of the brand */
+  --tint-blue: #e6f0fe;
+  --tint-teal: #dcf8f0;
+  --tint-gold: #fff4d6;
+  /* the original rnpgp.org identity gradient */
+  --brand-grad: linear-gradient(135deg, #1a7bec 0%, #00c2c9 45%, #00dfb7 100%);
+}
+
+.dark {
+  --bg: #0b0e1a;
+  --surface: #12162c;
+  --surface-dim: #0f1326;
+  --fg: #e8eaf2;
+  --fg-soft: #a2a8c2;
+  --fg-faint: #60678a;
+  --line: #232a4a;
+  --accent: #5ea2f5;
+  --accent-deep: #8fbcf8;
+  --accent2: #2be8c8;
+  --gold-ink: #ffdc4a;
+  --gridline: rgb(232 234 242 / 0.045);
+  --code-bg: #070a14;
+  --code-fg: #e8eaf2;
+  --tint-blue: color-mix(in oklab, #1a7bec 13%, #0b0e1a);
+  --tint-teal: color-mix(in oklab, #00dfb7 10%, #0b0e1a);
+  --tint-gold: color-mix(in oklab, #ffdc4a 13%, #0b0e1a);
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 24px -8px rgb(0 0 0 / 0.5);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.45), 0 16px 40px -12px rgb(0 0 0 / 0.6);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
+  --color-foreground: var(--fg);
+  --color-muted: var(--fg-soft);
+  --color-faint: var(--fg-faint);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent2: var(--accent2);
+  --color-gold-ink: var(--gold-ink);
+  --color-tint-blue: var(--tint-blue);
+  --color-tint-teal: var(--tint-teal);
+  --color-tint-gold: var(--tint-gold);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 1.03rem;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 24%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components / utilities
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Small uppercase spec label — the "technical document" voice */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  /* Graph-paper background */
+  .graph-bg {
+    background-image:
+      linear-gradient(var(--gridline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  /* Blue→teal brand hairline */
+  .gradient-rule {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(90deg, var(--color-brand), var(--color-teal));
+  }
+  .gradient-text {
+    background: linear-gradient(100deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Card chrome */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Pastel chips */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 9999px;
+    padding: 0.18rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    background: var(--tint-blue);
+    color: var(--accent-deep);
+    border: 1px solid transparent;
+  }
+  .dark .chip {
+    color: var(--accent);
+  }
+  .chip-teal {
+    background: var(--tint-teal);
+    color: var(--accent2);
+  }
+  .chip-gold {
+    background: var(--tint-gold);
+    color: var(--gold-ink);
+  }
+
+  /* Pastel section bands */
+  .band-blue {
+    background: var(--tint-blue);
+  }
+  .band-teal {
+    background: var(--tint-teal);
+  }
+  .band-gold {
+    background: var(--tint-gold);
+  }
+
+  /* The original rnpgp.org hero identity: the brand gradient.
+     Light mode: bright and positive. Dark mode: deep aurora version. */
+  .hero-gradient {
+    background:
+      radial-gradient(55rem 26rem at 88% -20%, rgb(255 220 74 / 0.28), transparent 60%),
+      radial-gradient(46rem 24rem at -12% 115%, rgb(0 223 183 / 0.4), transparent 55%),
+      var(--brand-grad);
+  }
+  .dark .hero-gradient {
+    background:
+      radial-gradient(55rem 26rem at 88% -20%, rgb(26 123 236 / 0.4), transparent 62%),
+      radial-gradient(46rem 24rem at -12% 115%, rgb(0 223 183 / 0.24), transparent 58%),
+      radial-gradient(34rem 20rem at 35% 125%, rgb(255 220 74 / 0.07), transparent 60%),
+      linear-gradient(160deg, #0c1230 0%, #0f1a44 55%, #0a2a33 100%);
+  }
+  .hero-grid {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.09) 1px, transparent 1px);
+    background-size: 30px 30px;
+    mask-image: linear-gradient(to bottom, black 30%, transparent 95%);
+  }
+
+  /* Sub-page hero: pastel tint wash over the graph paper */
+  .page-hero-bg {
+    background-color: var(--surface-dim);
+    background-image:
+      linear-gradient(
+        115deg,
+        color-mix(in oklab, var(--tint-blue) 90%, transparent),
+        color-mix(in oklab, var(--tint-teal) 65%, transparent) 55%,
+        color-mix(in oklab, var(--tint-gold) 50%, transparent)
+      ),
+      linear-gradient(var(--gridline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+    background-size:
+      auto,
+      30px 30px,
+      30px 30px;
+  }
+  .dark .page-hero-bg {
+    background-image:
+      linear-gradient(var(--gridline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+    background-size:
+      30px 30px,
+      30px 30px;
+  }
+  .card-hover {
+    transition:
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.25s;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-sm font-sans font-bold no-underline transition-all duration-200;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 20px -6px color-mix(in oklab, var(--accent) 70%, transparent);
+  }
+  .btn-primary:hover {
+    background: var(--accent-deep);
+    transform: translateY(-1px);
+  }
+  .dark .btn-primary {
+    color: #0b0e1a;
+  }
+  .btn-ghost {
+    border: 1px solid var(--line);
+    color: var(--fg);
+    background: var(--surface);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .btn-white {
+    background: #fff;
+    color: var(--accent-deep);
+    box-shadow: 0 8px 24px -8px rgb(0 40 90 / 0.45);
+  }
+  .btn-white:hover {
+    background: var(--tint-blue);
+    transform: translateY(-1px);
+  }
+  .btn-outline-white {
+    border: 1px solid rgb(255 255 255 / 0.55);
+    color: #fff;
+    background: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(4px);
+  }
+  .btn-outline-white:hover {
+    background: rgb(255 255 255 / 0.2);
+    border-color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* Header: default palette + `header-overlay` variant (white text while the
+     header floats over the home hero, before any scrolling) */
+  .site-logo {
+    color: var(--fg);
+    transition: color 0.2s;
+  }
+  .nav-link {
+    color: var(--fg-soft);
+  }
+  .nav-link:hover {
+    color: var(--fg);
+    background: var(--surface-dim);
+  }
+  .nav-link.active {
+    background: var(--fg);
+    color: var(--bg);
+    font-weight: 700;
+  }
+  .icon-btn {
+    color: var(--fg-soft);
+  }
+  .icon-btn:hover {
+    color: var(--fg);
+  }
+  .search-btn {
+    border-color: var(--line);
+    background: var(--surface);
+    color: var(--fg-faint);
+  }
+  .search-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .header-overlay .site-logo {
+    color: #fff;
+  }
+  .header-overlay .nav-link {
+    color: rgb(255 255 255 / 0.82);
+  }
+  .header-overlay .nav-link:hover {
+    color: #fff;
+    background: rgb(255 255 255 / 0.14);
+  }
+  .header-overlay .nav-link.active {
+    background: #fff;
+    color: var(--accent-deep);
+  }
+  .header-overlay .icon-btn {
+    color: rgb(255 255 255 / 0.82);
+  }
+  .header-overlay .icon-btn:hover {
+    color: #fff;
+  }
+  .header-overlay .search-btn {
+    border-color: rgb(255 255 255 / 0.45);
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
+  }
+  .header-overlay .search-btn:hover {
+    border-color: #fff;
+    background: rgb(255 255 255 / 0.2);
+    color: #fff;
+  }
+
+  /* Fingerprint / hex display */
+  .fingerprint {
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    word-spacing: 0.4em;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Prose (typography plugin) — themed via --tw-prose vars. Dark terminals
+   (navy code blocks) in both modes.
+--------------------------------------------------------------------------- */
+.prose {
+  --tw-prose-body: var(--fg-soft);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-lead: var(--fg-soft);
+  --tw-prose-links: var(--accent);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-counters: var(--fg-faint);
+  --tw-prose-bullets: var(--accent);
+  --tw-prose-hr: var(--line);
+  --tw-prose-quotes: var(--fg);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-captions: var(--fg-faint);
+  --tw-prose-code: var(--fg);
+  --tw-prose-pre-code: var(--code-fg);
+  --tw-prose-pre-bg: var(--code-bg);
+  --tw-prose-th-borders: var(--line);
+  --tw-prose-td-borders: var(--line);
+  line-height: 1.8;
+}
+.prose :where(a):not(:where(.not-prose, .not-prose *)) {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  transition: text-decoration-color 0.15s;
+}
+.prose :where(a:hover):not(:where(.not-prose, .not-prose *)) {
+  text-decoration-color: var(--accent);
+}
+.prose :where(code):not(:where(.not-prose, .not-prose *)) {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface-dim);
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  padding: 0.1em 0.35em;
+}
+.prose :where(code)::before,
+.prose :where(code)::after {
+  content: none; /* kill the plugin's backticks */
+}
+.prose :where(pre):not(:where(.not-prose, .not-prose *)) {
+  border-radius: 0.6rem;
+  border: 1px solid color-mix(in oklab, var(--code-fg) 12%, transparent);
+  font-family: var(--font-mono);
+}
+.prose :where(pre code):not(:where(.not-prose, .not-prose *)) {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.prose :where(blockquote):not(:where(.not-prose, .not-prose *)) {
+  font-style: italic;
+}
+.prose :where(img):not(:where(.not-prose, .not-prose *)) {
+  border-radius: 0.5rem;
+}
+.prose :where(dt):not(:where(.not-prose, .not-prose *)) {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* Shiki dual themes (Astro emits --shiki-light / --shiki-dark vars) */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+}
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+.prose pre.astro-code {
+  background-color: var(--shiki-light-bg) !important;
+}
+.dark .prose pre.astro-code {
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Asciidoctor output extras (admonitions, sidebars, image blocks, dlists)
+--------------------------------------------------------------------------- */
+.adoc-content .admonitionblock {
+  margin: 1.6em 0;
+}
+.adoc-content .admonitionblock > table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent2);
+  border-radius: 0.5rem;
+  background: var(--surface-dim);
+}
+.adoc-content .admonitionblock td.icon {
+  padding: 0.85em 0 0.85em 1em;
+  vertical-align: top;
+  width: 1%;
+  white-space: nowrap;
+}
+.adoc-content .admonitionblock td.icon .title,
+.adoc-content .admonitionblock td.icon {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+.adoc-content .admonitionblock td.content {
+  padding: 0.85em 1.1em;
+  font-size: 0.95em;
+}
+.adoc-content .admonitionblock td.content > .paragraph:last-child p {
+  margin-bottom: 0;
+}
+.adoc-content .sidebarblock {
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--surface-dim);
+  padding: 1.2em 1.4em;
+  margin: 1.6em 0;
+}
+.adoc-content .sidebarblock > .content > .title {
+  font-weight: 700;
+  color: var(--fg);
+  margin-bottom: 0.5em;
+}
+.adoc-content .imageblock {
+  margin: 1.8em 0;
+  text-align: center;
+}
+.adoc-content .imageblock img {
+  display: inline-block;
+  border-radius: 0.5rem;
+}
+.adoc-content .imageblock .title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--fg-faint);
+  margin-top: 0.6em;
+}
+.adoc-content .hdlist1,
+.adoc-content .hdlist2 {
+  font-style: italic;
+}
+.adoc-content .literalblock pre,
+.adoc-content .listingblock pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.adoc-content .footnotes {
+  font-size: 0.85em;
+  color: var(--fg-faint);
+  border-top: 1px solid var(--line);
+  margin-top: 2.5em;
+  padding-top: 1em;
+}
+.adoc-content table.tableblock {
+  width: 100%;
+  border-collapse: collapse;
+}

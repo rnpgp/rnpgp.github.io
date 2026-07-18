@@ -1,0 +1,56 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+---
+
+<BaseLayout title="Contribute" description="Ways to contribute to RNP!">
+  <PageHero
+    eyebrow="Project — Contribute"
+    title="Contributing to RNP"
+    description="RNP is a community effort for a more secure Internet — thanks to our committed partners and fellow contributors!"
+  />
+
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="card p-8">
+        <p class="mono-label">Developers</p>
+        <h2 class="mt-2 font-sans text-2xl font-bold">For developers</h2>
+        <p class="mt-4 leading-relaxed text-muted">
+          RNP core code and related projects are all hosted at the RNP GitHub organization as
+          open-source software. Any contribution — bugfixes, enhancements — is much appreciated.
+        </p>
+        <div class="mt-6">
+          <a href="https://github.com/rnpgp" class="btn btn-primary">github.com/rnpgp →</a>
+        </div>
+      </div>
+
+      <div class="card p-8">
+        <p class="mono-label">Technical writers</p>
+        <h2 class="mt-2 font-sans text-2xl font-bold">For technical writers</h2>
+        <p class="mt-4 leading-relaxed text-muted">
+          RNP has applied for support from the Google Seasons of Docs program. We are committed to
+          making the application process and participation accessible to everyone — please reach out
+          and we will do our best to accommodate your needs.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-4">
+          <a href="https://github.com/rnpgp/rnp/discussions" class="btn btn-ghost">
+            Discussions page
+          </a>
+          <a
+            href="/blog/2021-03-26-rnp-gsod-2021/"
+            class="font-mono text-sm text-accent transition-colors hover:text-accent-deep"
+          >
+            GSoD 2021 proposal →
+          </a>
+        </div>
+        <p class="mt-5 text-sm text-muted">
+          or write to{' '}
+          <a
+            href="mailto:open.source@ribose.com"
+            class="text-accent transition-colors hover:text-accent-deep">open.source@ribose.com</a
+          >
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

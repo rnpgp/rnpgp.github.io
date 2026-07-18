@@ -1,0 +1,19 @@
+# Lychee configuration for the POST-DEPLOY live check (.github/workflows/links_live.yml).
+# Unlike lychee.toml (pre-deploy), this does NOT exclude www.rnpgp.org — the whole
+# point is verifying that production URLs, including canonical/OG ones, resolve.
+
+max_concurrency = 32
+timeout = 30
+retry_wait_time = 2
+max_retries = 2
+
+# Pages exist but rate-limit automated checkers (HN, git.gnupg.org, …)
+accept = ["200", "204", "429"]
+
+exclude = [
+  # Red Hat sites bot-block link checkers with 403 even for valid pages.
+  '^https://access\.redhat\.com/',
+  '^https://docs\.redhat\.com/',
+  # Cirrus CI blocks non-browser TLS clients.
+  '^https://cirrus-ci\.com/',
+]

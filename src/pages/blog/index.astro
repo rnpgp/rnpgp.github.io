@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import BlogBrowser from '@/components/vue/BlogBrowser.vue';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map((post) => ({
+    id: post.id,
+    title: post.data.title,
+    date: post.data.date.toISOString().slice(0, 10),
+    categories: post.data.categories,
+    excerpt: post.data.excerpt ?? '',
+  }));
+---
+
+<BaseLayout title="Blog" description="Releases, news and updates on the RNP project.">
+  <PageHero
+    eyebrow="Index — Blog"
+    title="Blog"
+    description="Releases, news and updates on the RNP project."
+  />
+  <section class="mx-auto w-full max-w-6xl px-6 py-16">
+    <BlogBrowser client:load posts={posts} />
+  </section>
+</BaseLayout>

@@ -1,0 +1,488 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SymbolLogo from '../components/brand/SymbolLogo.astro';
+import Wordmark from '../components/brand/Wordmark.astro';
+import Reveal from '../components/vue/Reveal.vue';
+
+const ecosystem = [
+  {
+    name: 'rnp / rnpkeys',
+    desc: 'Command-line tools for handling OpenPGP data and managing keys.',
+    role: 'CLI',
+    href: '/software/rnp/',
+  },
+  {
+    name: 'librnp',
+    desc: 'The core C++ library behind everything, available via a C/FFI interface.',
+    role: 'Core',
+    href: '/software/rnp/',
+  },
+  {
+    name: 'Py-RNP',
+    desc: 'Python bindings for the RNP C++ library.',
+    role: 'Bindings',
+    href: '/software/py-rnp/',
+  },
+  {
+    name: 'Ruby-RNP',
+    desc: 'Ruby bindings for the RNP C++ library.',
+    role: 'Bindings',
+    href: '/software/ruby-rnp/',
+  },
+  {
+    name: 'homebrew-rnp',
+    desc: 'The Homebrew formula — one-command installation on macOS.',
+    role: 'Distribution',
+    href: '/software/homebrew-rnp/',
+  },
+];
+
+const useCases = [
+  {
+    title: 'End-to-end email encryption',
+    desc: 'RNP powers the built-in OpenPGP support in <a href="https://www.thunderbird.net/" class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">Mozilla Thunderbird</a>, securing mail for millions of users.',
+    icon: 'M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm0 1 8 6 8-6',
+  },
+  {
+    title: 'File & data encryption',
+    desc: 'The rnp CLI encrypts, decrypts, signs and verifies files and streams — scriptable and fast.',
+    icon: 'M6 3h8l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 0v6h6',
+  },
+  {
+    title: 'Key management',
+    desc: 'rnpkeys generates, inspects and maintains OpenPGP keys across keyrings with care.',
+    icon: 'M14 10a4 4 0 1 0-4 4c.35 0 .69-.04 1-.12L12.5 15.4V17h1.6v1.5h1.5V20H17l3-3-6-7Zm-5 2.5A1.5 1.5 0 1 1 10.5 11 1.5 1.5 0 0 1 9 12.5Z',
+  },
+  {
+    title: 'Embedding via FFI',
+    desc: 'librnp exposes a stable C interface, ready for bindings and for deep integration in your own products.',
+    icon: 'M8 4 3 12l5 8m8-16 5 8-5 8M13 5l-2 14',
+  },
+];
+
+const standards = [
+  {
+    name: 'LibrePGP',
+    desc: 'A new specification for OpenPGP that defends secure communication into the future. RNP proudly supports it.',
+    href: 'https://www.librepgp.org',
+  },
+  {
+    name: 'RFC 4880 — OpenPGP',
+    desc: 'The IETF OpenPGP message format. RNP is a conformant, interoperable implementation.',
+    href: 'https://datatracker.ietf.org/doc/html/rfc4880',
+  },
+  {
+    name: 'IANA Registry Updates for OpenPGP',
+    desc: 'Our draft modernizing the OpenPGP IANA registries (with W. Koch).',
+    href: '/specs/draft-openpgp-iana-registry-updates/',
+  },
+  {
+    name: 'SCA Extensions for OpenPGP',
+    desc: 'Enables OpenPGP to be used in compliance with SCA regulations within China (SM2/SM3/SM4).',
+    href: '/specs/draft-ribose-openpgp-sca/',
+  },
+];
+
+const partners = [
+  {
+    name: 'Mozilla',
+    desc: 'RNP powers end-to-end email encryption in <a href="https://www.thunderbird.net/" class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">Thunderbird</a>.',
+    href: 'https://www.mozilla.org/',
+  },
+  { name: 'g10 Code', desc: 'Deep OpenPGP expertise and collaboration.', href: 'https://g10code.com' },
+  {
+    name: 'Intevation',
+    desc: 'Long-standing partner in the OpenPGP ecosystem.',
+    href: 'https://intevation.de',
+  },
+];
+
+const funders = [
+  { name: 'Ribose', desc: 'Creator and primary maintainer of RNP.', href: 'https://www.ribose.com' },
+  {
+    name: 'Mozilla',
+    desc: 'Through the Mozilla Open Source Support (MOSS) program.',
+    href: 'https://www.mozilla.org/en-US/moss/',
+  },
+  {
+    name: 'NLnet Foundation',
+    desc: 'Supporting open standards and a more open Internet.',
+    href: 'https://nlnet.nl',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="About RNP — the open-source LibrePGP/OpenPGP library powering end-to-end email encryption in Mozilla Thunderbird."
+>
+  <PageHero
+    eyebrow="Project — About"
+    title="About RNP"
+    description="RNP is a powerful open-source software library for working with LibrePGP and OpenPGP messages — a high-level API for encryption, decryption, signing, verification, and key management."
+  />
+
+  <!-- ============ ORIGIN & MISSION ============ -->
+  <section class="band-teal border-y border-line">
+    <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+      <Reveal client:visible>
+        <SectionHeader eyebrow="§ 01 — Why" title="Why RNP exists" />
+        <div class="grid gap-10 lg:grid-cols-2">
+          <div class="space-y-4 leading-relaxed text-muted">
+            <p>
+              RNP is developed by{' '}
+              <a
+                href="https://www.ribose.com"
+                class="font-bold text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+                >Ribose</a
+              >, an organization specializing in secure collaboration and communication. It
+              originally stemmed from NetPGP, and through years of active development it has been
+              transformed into a modern, high-performance codebase.
+            </p>
+            <p>
+              Its flagship deployment is
+              <a
+                href="https://www.thunderbird.net/"
+                class="font-bold text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+                >Mozilla Thunderbird</a
+              >, where RNP performs the end-to-end encryption of email for users around the world —
+              a rare level of trust for a cryptographic library.
+            </p>
+            <p>
+              Ribose is committed to promoting privacy and security in the digital world, and
+              supports RNP as part of its mission to empower individuals and organizations with
+              secure communication solutions.
+            </p>
+          </div>
+          <figure class="card flex flex-col justify-center border-l-4 border-l-accent p-8">
+            <span class="mono-label">Mission statement</span>
+            <blockquote class="mt-4 font-sans text-2xl font-bold leading-snug">
+              “Empower individuals and organizations with secure communication — and make strong
+              encryption accessible to everyone.”
+            </blockquote>
+            <figcaption class="mt-4 font-mono text-xs text-faint">
+              Privacy is not a feature. It is the foundation.
+            </figcaption>
+          </figure>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- ============ ECOSYSTEM ============ -->
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <Reveal client:visible>
+      <SectionHeader
+        eyebrow="§ 02 — Ecosystem"
+        title="The ecosystem"
+        linkHref="/software/"
+        linkLabel="All software"
+      />
+      <div class="card overflow-x-auto">
+        <table class="w-full min-w-[36rem] border-collapse text-left">
+          <thead>
+            <tr class="border-b border-line bg-surface-dim">
+              <th class="mono-label px-5 py-3">Project</th>
+              <th class="mono-label px-5 py-3">Description</th>
+              <th class="mono-label px-5 py-3">Category</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            {
+              ecosystem.map((row) => (
+                <tr class="transition-colors hover:bg-surface-dim">
+                  <td class="px-5 py-4">
+                    <a
+                      href={row.href}
+                      class="font-sans font-bold text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+                    >
+                      {row.name}
+                    </a>
+                  </td>
+                  <td class="px-5 py-4 text-sm leading-relaxed text-muted">{row.desc}</td>
+                  <td class="px-5 py-4">
+                    <span class="rounded-full border border-line bg-surface-dim px-2.5 py-0.5 font-mono text-xs text-muted">
+                      {row.role}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </Reveal>
+  </section>
+
+  <!-- ============ USE CASES ============ -->
+  <section class="band-gold border-y border-line">
+    <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+      <Reveal client:visible>
+        <SectionHeader eyebrow="§ 03 — Use cases" title="What RNP is for" />
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            useCases.map((u) => (
+              <div class="card card-hover p-6">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="h-8 w-8 text-accent"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d={u.icon} />
+                </svg>
+                <h3 class="mt-4 font-sans text-lg font-bold leading-snug">{u.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted" set:html={u.desc} />
+              </div>
+            ))
+          }
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- ============ STANDARDS ============ -->
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <Reveal client:visible>
+      <SectionHeader
+        eyebrow="§ 04 — Standards"
+        title="Standards support"
+        linkHref="/specs/"
+        linkLabel="All specifications"
+      />
+      <p class="mb-8 max-w-2xl leading-relaxed text-muted">
+        RNP believes in standards that stand the test of time — and helps write them.
+      </p>
+      <div class="card divide-y divide-line overflow-hidden">
+        {
+          standards.map((s) => (
+            <a
+              href={s.href}
+              class="group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-6 py-5 transition-colors hover:bg-surface-dim"
+              {...(s.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}
+            >
+              <span class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
+                {s.name}
+              </span>
+              <span class="text-sm text-muted">{s.desc}</span>
+            </a>
+          ))
+        }
+      </div>
+    </Reveal>
+  </section>
+
+  <!-- ============ PARTNERS & FUNDERS ============ -->
+  <section class="band-blue border-y border-line">
+    <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+      <Reveal client:visible>
+        <SectionHeader eyebrow="§ 05 — Community" title="Partners & supporters" />
+        <div class="grid gap-10 md:grid-cols-2">
+          <div>
+            <h3 class="mono-label mb-4">RNP collaborates closely with</h3>
+            <div class="space-y-3">
+              {
+                partners.map((p) => (
+                  <div class="card card-hover p-5">
+                    <h4 class="font-sans text-lg font-bold">
+                      <a
+                        href={p.href}
+                        target="_blank"
+                        rel="noopener"
+                        class="text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent"
+                      >
+                        {p.name}
+                      </a>
+                    </h4>
+                    <p class="mt-1 text-sm text-muted" set:html={p.desc} />
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+          <div>
+            <h3 class="mono-label mb-4">RNP is funded by</h3>
+            <div class="space-y-3">
+              {
+                funders.map((f) => (
+                  <div class="card card-hover p-5">
+                    <h4 class="font-sans text-lg font-bold">
+                      <a
+                        href={f.href}
+                        target="_blank"
+                        rel="noopener"
+                        class="text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent"
+                      >
+                        {f.name}
+                      </a>
+                    </h4>
+                    <p class="mt-1 text-sm text-muted">{f.desc}</p>
+                  </div>
+                ))
+              }
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-muted">
+              RNP is also supported by a dedicated community of developers who contribute to its
+              ongoing development and improvement.
+            </p>
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- ============ OPEN SOURCE + GET STARTED ============ -->
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <Reveal client:visible>
+      <SectionHeader eyebrow="§ 06 — Open source" title="Get started" />
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+        <div class="space-y-4 leading-relaxed text-muted">
+          <p>
+            RNP is an open-source project. All repositories live on GitHub under permissive
+            licenses, and contributions of every kind — code, documentation, testing, advocacy —
+            are warmly welcomed.
+          </p>
+          <p>
+            <a
+              href="https://github.com/rnpgp"
+              class="font-mono text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+              >github.com/rnpgp</a
+            >
+          </p>
+          <p>
+            Questions or feedback? Reach us at{' '}
+            <a
+              href="mailto:open.source@ribose.com"
+              class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
+              >open.source@ribose.com</a
+            >.
+          </p>
+        </div>
+        <ol class="space-y-3">
+          {
+            [
+              {
+                n: '01',
+                t: 'Install RNP',
+                d: 'One command via Homebrew, Nix, YUM — or build from source.',
+                href: '/software/rnp/',
+              },
+              {
+                n: '02',
+                t: 'Read the manual',
+                d: 'Man pages for rnp, rnpkeys and the librnp FFI.',
+                href: '/docs/',
+              },
+              {
+                n: '03',
+                t: 'Browse the source',
+                d: 'Review the code — cryptographic software earns trust in the open.',
+                href: 'https://github.com/rnpgp/rnp',
+              },
+              {
+                n: '04',
+                t: 'Join the community',
+                d: 'Star the repos, report issues, contribute fixes.',
+                href: '/contribute/',
+              },
+            ].map((step) => (
+              <li>
+                <a
+                  href={step.href}
+                  class="card card-hover group flex items-center gap-5 px-6 py-4"
+                >
+                  <span class="font-mono text-2xl font-bold text-faint transition-colors group-hover:text-accent">
+                    {step.n}
+                  </span>
+                  <span>
+                    <span class="block font-sans text-lg font-bold transition-colors group-hover:text-accent">
+                      {step.t}
+                    </span>
+                    <span class="block text-sm text-muted">{step.d}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </Reveal>
+  </section>
+
+  <!-- ============ THE NAME & THE MARK (least important — keep last) ============ -->
+  <section class="border-t border-line">
+    <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+      <Reveal client:visible>
+        <SectionHeader eyebrow="§ 07 — Identity" title="The name & the mark" />
+        <div class="grid gap-10 lg:grid-cols-2">
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-sans text-xl font-bold">The name</h3>
+              <p class="mt-2 leading-relaxed text-muted">
+                <em>RNP</em> is widely recognized in the biological sciences as the acronym for
+                <strong class="text-foreground"> ribonucleoprotein</strong>. The name was chosen
+                for its strong association with <strong class="text-foreground">Ribose</strong> — a
+                sugar fundamental to life on Earth. The human ribosome, the molecular machine that
+                translates RNA into proteins, consists of two ribonucleoprotein (RNP) particles.
+              </p>
+              <p class="mt-3 leading-relaxed text-muted">
+                The acronym was never back-fitted with specific words, but it originated with an
+                <strong class="text-foreground">R</strong> for Ribose and a
+                <strong class="text-foreground">P</strong> for OpenPGP — aligning neatly with the
+                biological RNP.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-sans text-xl font-bold">The mark</h3>
+              <p class="mt-2 leading-relaxed text-muted">
+                The RNP symbol is a <em>vesica piscis</em> — two overlapping lenses that create a
+                third in their intersection. It represents the abstract structure of the ribosome:
+                two ribonucleoprotein particles locked together in translation.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid content-start gap-5 sm:grid-cols-2">
+            <div class="card overflow-hidden">
+              <div class="border-b border-line bg-surface-dim px-4 py-2">
+                <span class="mono-label">Light mode</span>
+              </div>
+              <div class="flex flex-col items-center gap-4 bg-white px-6 py-10">
+                <SymbolLogo class="h-14 w-auto" />
+                <Wordmark class="h-8 w-auto text-navy" />
+              </div>
+            </div>
+            <div class="card overflow-hidden">
+              <div class="border-b border-line bg-surface-dim px-4 py-2">
+                <span class="mono-label">Dark mode</span>
+              </div>
+              <div class="flex flex-col items-center gap-4 bg-navy px-6 py-10">
+                <SymbolLogo class="h-14 w-auto" />
+                <Wordmark class="h-8 w-auto text-white" />
+              </div>
+            </div>
+            <p class="text-sm leading-relaxed text-muted sm:col-span-2">
+              In light mode the mark sits on paper like a seal in a technical paper. In dark mode
+              the tricolor lenses glow against the deep navy — the same geometry, revealed
+              differently, just as the ribosome's structure emerges only when you look closely
+              enough.
+            </p>
+          </div>
+        </div>
+        <p class="mt-16 border-t border-line pt-6 text-center font-mono text-xs text-faint">
+          Open-source project maintained by{' '}
+          <a
+            href="https://www.ribose.com"
+            class="underline decoration-line underline-offset-4 hover:text-accent">Ribose</a
+          >
+        </p>
+      </Reveal>
+    </div>
+  </section>
+</BaseLayout>

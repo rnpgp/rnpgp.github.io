@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+
+const specs = (await getCollection('specs')).sort(
+  (a, b) => (a.data.feature_with_priority ?? 99) - (b.data.feature_with_priority ?? 99),
+);
+---
+
+<BaseLayout title="Specifications" description="Specifications behind the RNP project.">
+  <PageHero
+    eyebrow="Index — Specifications"
+    title="Specifications"
+    description="Specifications behind the RNP project."
+  />
+  <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
+    <div class="max-w-3xl space-y-5">
+      {
+        specs.map((s) => (
+          <a href={`/specs/${s.id}/`} class="card card-hover group block p-6">
+            <p class="mono-label text-accent2">{s.data.tags.join(' · ')}</p>
+            <h2 class="mt-2 font-sans text-2xl font-bold transition-colors group-hover:text-accent">
+              {s.data.title}
+            </h2>
+            <p class="mt-2 leading-relaxed text-muted">{s.data.description}</p>
+            <div class="mt-4 flex flex-wrap gap-4 font-mono text-xs text-faint">
+              {s.data.external_links.map((link) => <span>{link.title} ↗</span>)}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

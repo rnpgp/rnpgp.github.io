@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+---
+
+<BaseLayout title="Feedback" description="Feedback and security reports for RNP.">
+  <PageHero
+    eyebrow="Project — Feedback"
+    title="Feedback and security reports"
+    description="We love to hear from you!"
+  />
+
+  <section class="mx-auto w-full max-w-3xl px-6 py-16 md:py-20">
+    <div>
+      <h2 class="font-sans text-2xl font-bold">Reporting bugs</h2>
+      <p class="mt-4 leading-relaxed text-muted">
+        For general issues or bugs, please enter them at the RNP GitHub public issue tracker:
+      </p>
+      <a href="https://github.com/rnpgp/rnp/issues" class="card card-hover mt-4 block p-5">
+        <span class="font-mono text-sm text-accent">github.com/rnpgp/rnp/issues</span>
+      </a>
+      <p
+        class="mt-4 rounded-md border border-line border-l-2 border-l-accent2 bg-surface-dim px-4 py-3 text-sm text-muted"
+      >
+        <span class="font-mono font-bold text-accent2">NOTE:</span> The RNP GitHub issue tracker is
+        publicly viewable. Please report security issues via the dedicated channel below.
+      </p>
+    </div>
+
+    <div class="mt-14">
+      <h2 class="font-sans text-2xl font-bold">Security reporting</h2>
+      <p class="mt-4 leading-relaxed text-muted">
+        For reporting security vulnerabilities, security bugs, or bugs with sensitive content,
+        please use the form below. We will respond within 1 working day. Your report will be kept
+        confidential unless instructed otherwise.
+      </p>
+      <p
+        class="mt-4 rounded-md border border-line border-l-2 border-l-accent2 bg-surface-dim px-4 py-3 text-sm text-muted"
+      >
+        <span class="font-mono font-bold text-accent2">NOTE:</span> We may have to contact you via
+        separate channels in order to verify the report.
+      </p>
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSdyvElDhJcsU2ejV9z7VsdAVHMaVxqEugxeNALLBGOZl98s4g/viewform?embedded=true"
+        width="640"
+        height="1357"
+        frameborder="0"
+        class="card mt-6 w-full"
+        title="Security report form">Loading…</iframe
+      >
+    </div>
+  </section>
+</BaseLayout>
