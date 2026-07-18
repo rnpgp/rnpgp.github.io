@@ -156,10 +156,18 @@ await evaluate(`document.querySelector('.site-logo')?.click(); document.querySel
 await sleep(250);
 check('home: triple-click triggers the ribosome shuffle', (await evaluate(`document.getAnimations().length > 0`)) === true);
 
-await evaluate(`['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'].forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
+await evaluate(`'rnp'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
 await sleep(600);
 check(
-  'home: Konami code triggers the egg (canvas rain, or toast when reduced-motion)',
+  'home: typing "rnp" triggers the egg (canvas rain, or toast when reduced-motion)',
+  (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]') || (document.querySelector('[role="status"]')?.textContent ?? '').includes('Entropy acquired')`)) === true,
+);
+await sleep(3400);
+
+await evaluate(`'pgp'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
+await sleep(600);
+check(
+  'home: typing "pgp" also triggers the egg',
   (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]') || (document.querySelector('[role="status"]')?.textContent ?? '').includes('Entropy acquired')`)) === true,
 );
 await sleep(3400);

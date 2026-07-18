@@ -25,20 +25,7 @@ watch(toastMsg, async (msg) => {
   );
 });
 
-/* ---- Konami code → brand-colored hex rain (WAAPI + canvas) ---- */
-const KONAMI = [
-  'arrowup',
-  'arrowup',
-  'arrowdown',
-  'arrowdown',
-  'arrowleft',
-  'arrowright',
-  'arrowleft',
-  'arrowright',
-  'b',
-  'a',
-];
-let seq: string[] = [];
+/* ---- Secret words: type 'rnp' or 'pgp' → brand hex rain; 'decrypt' → replay hero ---- */
 let word = '';
 
 const hexRain = () => {
@@ -103,22 +90,19 @@ const onKey = (e: KeyboardEvent) => {
   const t = e.target as HTMLElement | null;
   if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
   const k = e.key.toLowerCase();
-
-  seq.push(k);
-  if (seq.length > KONAMI.length) seq.shift();
-  if (seq.join(',') === KONAMI.join(',')) {
-    seq = [];
-    hexRain();
+  if (!/^[a-z]$/.test(k)) {
+    word = '';
     return;
   }
 
-  if (/^[a-z]$/.test(k)) {
-    word = (word + k).slice(-12);
-    if (word.endsWith('decrypt')) {
-      word = '';
-      window.dispatchEvent(new CustomEvent('rnp:replay-hero'));
-      toast('Replaying decryption…');
-    }
+  word = (word + k).slice(-12);
+  if (word.endsWith('decrypt')) {
+    word = '';
+    window.dispatchEvent(new CustomEvent('rnp:replay-hero'));
+    toast('Replaying decryption…');
+  } else if (word.endsWith('rnp') || word.endsWith('pgp')) {
+    word = '';
+    hexRain();
   }
 };
 
