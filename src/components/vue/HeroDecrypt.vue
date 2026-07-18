@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 const props = defineProps<{ text: string }>();
 
 const GLYPHS = '0123456789ABCDEF$#@%&*+=~';
 const display = ref(props.text);
+let raf = 0;
 
-onMounted(() => {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+const run = () => {
+  cancelAnimationFrame(raf);
   const text = props.text;
   const total = text.length;
   const duration = 1400;
   const start = performance.now();
-  let raf = 0;
 
   const tick = (now: number) => {
     const t = Math.min(1, (now - start) / duration);
@@ -28,6 +28,20 @@ onMounted(() => {
     else display.value = text;
   };
   raf = requestAnimationFrame(tick);
+};
+
+const maybeRun = () => {
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) run();
+};
+
+onMounted(() => {
+  maybeRun();
+  window.addEventListener('rnp:replay-hero', maybeRun);
+});
+
+onUnmounted(() => {
+  cancelAnimationFrame(raf);
+  window.removeEventListener('rnp:replay-hero', maybeRun);
 });
 </script>
 

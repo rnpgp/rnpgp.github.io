@@ -145,6 +145,33 @@ check('home: overlay header nav text is white over hero', navColor.startsWith('r
 const logoColor = await evaluate(`getComputedStyle(document.querySelector('.site-logo')).color`);
 check('home: overlay header logo is white over hero', logoColor === 'rgb(255, 255, 255)', logoColor);
 
+// WAAPI easter eggs
+await evaluate(`document.querySelector('.site-logo')?.click()`);
+await sleep(250);
+check(
+  'home: logo click triggers WAAPI animation (no navigation)',
+  (await evaluate(`document.getAnimations().length > 0 && location.pathname === '/'`)) === true,
+);
+await evaluate(`document.querySelector('.site-logo')?.click(); document.querySelector('.site-logo')?.click()`);
+await sleep(250);
+check('home: triple-click triggers the ribosome shuffle', (await evaluate(`document.getAnimations().length > 0`)) === true);
+
+await evaluate(`['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'].forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
+await sleep(600);
+check(
+  'home: Konami code triggers the egg (canvas rain, or toast when reduced-motion)',
+  (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]') || (document.querySelector('[role="status"]')?.textContent ?? '').includes('Entropy acquired')`)) === true,
+);
+await sleep(3400);
+
+await evaluate(`'decrypt'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
+await sleep(500);
+check(
+  'home: typing "decrypt" replays the hero scramble',
+  (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('Replaying decryption')`)) === true,
+);
+await sleep(1500);
+
 // fingerprint widget (scroll into view to trigger client:visible hydration)
 await evaluate(`document.querySelector('#fp-input')?.scrollIntoView({ block: 'center' })`);
 await sleep(1200);

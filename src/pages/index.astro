@@ -36,12 +36,17 @@ const releaseDate = release.publishedAt.slice(0, 10);
   <!-- ============ HERO ============ -->
   <section class="hero-gradient relative overflow-hidden text-white">
     <div class="hero-grid absolute inset-0" aria-hidden="true"></div>
-    <img
-      src="/assets/brand/symbol.svg"
-      alt=""
+    <div
+      class="pointer-events-none absolute -right-40 top-1/2 hidden w-[30rem] -translate-y-1/2 lg:block"
       aria-hidden="true"
-      class="pointer-events-none absolute -right-40 top-1/2 hidden w-[30rem] -translate-y-1/2 opacity-[0.14] blur-[1px] lg:block dark:opacity-[0.09]"
-    />
+    >
+      <img
+        data-hero-watermark
+        src="/assets/brand/symbol.svg"
+        alt=""
+        class="w-full opacity-[0.14] blur-[1px] dark:opacity-[0.09]"
+      />
+    </div>
     <div class="relative mx-auto w-full max-w-6xl px-6 pb-16 pt-28 md:pb-24 md:pt-36">
       <div class="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
         <div>
@@ -269,3 +274,14 @@ const releaseDate = release.publishedAt.slice(0, 10);
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Scroll-driven WAAPI: the hero watermark slowly rotates as you scroll past it.
+  const wm = document.querySelector('[data-hero-watermark]');
+  if (wm && 'ScrollTimeline' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    wm.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(32deg)' }], {
+      timeline: new ScrollTimeline({ source: document.scrollingElement ?? document.documentElement }),
+      fill: 'both',
+    });
+  }
+</script>
