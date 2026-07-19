@@ -167,6 +167,15 @@ check(
   'home: the rain resolves into an ancient quote',
   (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('—')`)) === true,
 );
+check(
+  'home: toast is horizontally centered on entry (no jolt)',
+  await evaluate(`(() => {
+    const el = document.querySelector('[role="status"] > div');
+    if (!el) return false;
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && Math.abs(r.left + r.width / 2 - innerWidth / 2) < 2;
+  })()`),
+);
 await sleep(400);
 
 await evaluate(`'pgp'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
