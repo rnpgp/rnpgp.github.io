@@ -159,24 +159,27 @@ check('home: triple-click triggers the ribosome shuffle', (await evaluate(`docum
 await evaluate(`'rnp'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
 await sleep(600);
 check(
-  'home: typing "rnp" triggers the egg (canvas rain, or toast when reduced-motion)',
-  (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]') || (document.querySelector('[role="status"]')?.textContent ?? '').includes('Entropy acquired')`)) === true,
+  'home: typing "rnp" summons the hex rain canvas (user-triggered, always plays)',
+  (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]')`)) === true,
 );
 await sleep(3400);
 
 await evaluate(`'pgp'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
 await sleep(600);
 check(
-  'home: typing "pgp" also triggers the egg',
-  (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]') || (document.querySelector('[role="status"]')?.textContent ?? '').includes('Entropy acquired')`)) === true,
+  'home: typing "pgp" also summons the hex rain',
+  (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]')`)) === true,
 );
 await sleep(3400);
 
+const heroSpanSel = '.hero-decrypt';
 await evaluate(`'decrypt'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
 await sleep(500);
 check(
-  'home: typing "decrypt" replays the hero scramble',
-  (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('Replaying decryption')`)) === true,
+  'home: typing "decrypt" replays the hero scramble (user-triggered, always plays)',
+  (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('Replaying decryption')`)) === true &&
+    (await evaluate(`document.querySelector('${heroSpanSel}')?.textContent ?? ''`)) !==
+      'Powering end-to-end email encryption in',
 );
 await sleep(1500);
 

@@ -106,8 +106,9 @@ There is no unit test suite; validation is building + link checking.
 - **Imports**: use the `@/` alias (`@/components/...`, `@/layouts/...`).
 - **Islands**: interactivity goes in Vue SFCs under `src/components/vue/`,
   hydrated with `client:visible` (below the fold) or `client:load`; props must
-  be JSON-serializable. Respect `prefers-reduced-motion` — headless Chrome
-  forces it, so test checks must accept both paths.
+  be JSON-serializable. `prefers-reduced-motion` gates **passive** animation
+  only (auto-play, scroll-driven) — never user-triggered animation the
+  visitor explicitly asked for (eggs, logo play, replays).
 - **WAAPI easter eggs** (keep them working, don't spoil them in visible copy):
   header logo on the home page — hover wobble, click pulse, every 3rd click is
   the "ribosome shuffle" (lenses split and snap back); typing `rnp` or `pgp`

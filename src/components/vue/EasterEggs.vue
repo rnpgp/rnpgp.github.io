@@ -5,8 +5,6 @@ const toastMsg = ref('');
 const toastEl = ref<HTMLElement | null>(null);
 let toastTimer: ReturnType<typeof setTimeout> | undefined;
 
-const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 const toast = (msg: string) => {
   toastMsg.value = msg;
   clearTimeout(toastTimer);
@@ -29,10 +27,8 @@ watch(toastMsg, async (msg) => {
 let word = '';
 
 const hexRain = () => {
-  if (reducedMotion()) {
-    toast('Entropy acquired ✓');
-    return;
-  }
+  // User-initiated (typed a secret word): always play — prefers-reduced-motion
+  // only governs passive animation, never something the user asked for.
   const canvas = document.createElement('canvas');
   canvas.className = 'pointer-events-none fixed inset-0 z-[90]';
   canvas.setAttribute('aria-hidden', 'true');
