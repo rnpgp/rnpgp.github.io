@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import Prose from '@/components/Prose.astro';
+import TocNav from '@/components/TocNav.astro';
 
 export async function getStaticPaths() {
   const manpages = await getCollection('manpages');
@@ -21,12 +22,17 @@ const { Content } = await render(entry);
     description={data.description}
   />
 
-  <article class="mx-auto w-full max-w-3xl px-6 py-14">
-    <Prose>
-      <Content />
-    </Prose>
-    <p class="mono-label mt-14 border-t border-line pt-6">
-      Rendered from the RNP v{data.version} release · Source: github.com/rnpgp/rnp
-    </p>
-  </article>
+  <div class="mx-auto w-full max-w-6xl px-6 py-14">
+    <div class="grid gap-10 xl:grid-cols-[minmax(0,1fr)_10.5rem]">
+      <article class="w-full min-w-0 max-w-3xl">
+        <Prose>
+          <Content />
+        </Prose>
+        <p class="mono-label mt-14 border-t border-line pt-6">
+          Rendered from the RNP v{data.version} release · Source: github.com/rnpgp/rnp
+        </p>
+      </article>
+      <TocNav toc={data.toc} />
+    </div>
+  </div>
 </BaseLayout>

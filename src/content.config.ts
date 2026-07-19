@@ -123,10 +123,11 @@ const softwareDocs = defineCollection({
       if (parts[1] === 'README.adoc') return `${product}/README`;
       return `${product}/${parts.slice(1).join('/').replace(/^docs\//, '').replace(/\.adoc$/, '')}`;
     },
-    dataFromEntry: ({ id, frontMatter, docTitle }) => ({
+    dataFromEntry: ({ id, frontMatter, docTitle, toc }) => ({
       ...frontMatter,
       title: frontMatter.title ?? docTitle ?? id.split('/').pop() ?? id,
       product: id.split('/')[0],
+      toc: toc ?? [],
     }),
     transformHtml: (html, { id }) => {
       const product = id.split('/')[0];
@@ -143,6 +144,9 @@ const softwareDocs = defineCollection({
   schema: z.object({
     title: z.string(),
     product: z.string(),
+    toc: z
+      .array(z.object({ id: z.string(), title: z.string(), level: z.number() }))
+      .default([]),
   }),
 });
 
@@ -163,7 +167,7 @@ const manpages = defineCollection({
       const file = rel.split('/').pop()!.replace(/\.adoc$/, ''); // rnp.1 | rnpkeys.1 | librnp.3
       return file.replace(/\./g, '-'); // rnp-1 | rnpkeys-1 | librnp-3
     },
-    dataFromEntry: ({ id, body, docTitle }) => {
+    dataFromEntry: ({ id, body, docTitle, toc }) => {
       const nameSection = body.match(/==\s*NAME\s*\r?\n\r?\n([^\n]+)/);
       const desc = nameSection?.[1]?.split(' - ')[1]?.replace(/[.\s]+$/, '') ?? '';
       return {
@@ -171,6 +175,7 @@ const manpages = defineCollection({
         description: desc,
         section: id.endsWith('-3') ? 3 : 1,
         version: RNP_VERSION,
+        toc: toc ?? [],
       };
     },
   }),
@@ -179,6 +184,9 @@ const manpages = defineCollection({
     description: z.string().default(''),
     section: z.number(),
     version: z.string(),
+    toc: z
+      .array(z.object({ id: z.string(), title: z.string(), level: z.number() }))
+      .default([]),
   }),
 });
 
