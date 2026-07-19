@@ -113,12 +113,52 @@ const jsonLd = {
     <ClientRouter />
   </head>
   <body class="flex min-h-screen flex-col bg-background text-foreground">
+    <a href="#main" class="skip-link btn btn-primary">Skip to content</a>
     <SiteHeader client:load currentPath={Astro.url.pathname} overlay={headerOverlay} />
-    <main class="w-full flex-1" data-pagefind-body>
+    <main id="main" class="w-full flex-1" data-pagefind-body>
       <slot />
     </main>
     <SiteFooter />
     <SiteSearch client:only="vue" />
     <EasterEggs client:load />
+    <script>
+      // Progressive enhancement: copy button on every code block.
+      const enhanceCopy = () => {
+        document
+          .querySelectorAll('.prose pre:not([data-copyable]), .adoc-content pre:not([data-copyable])')
+          .forEach((pre) => {
+            pre.setAttribute('data-copyable', '');
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'copy-btn';
+            btn.textContent = 'Copy';
+            btn.setAttribute('aria-label', 'Copy code to clipboard');
+            btn.addEventListener('click', async () => {
+              const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+              try {
+                await navigator.clipboard.writeText(code);
+              } catch {
+                const ta = document.createElement('textarea');
+                ta.value = code;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                ta.remove();
+              }
+              btn.textContent = 'Copied';
+              btn.classList.add('copied');
+              setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+              }, 1500);
+            });
+            pre.appendChild(btn);
+          });
+      };
+      enhanceCopy();
+      document.addEventListener('astro:after-swap', enhanceCopy);
+    </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import ThemeToggle from './ThemeToggle.vue';
 
 const props = defineProps<{ currentPath: string; overlay?: boolean }>();
@@ -91,9 +91,42 @@ const onScroll = () => {
 
 const openSearch = () => window.dispatchEvent(new CustomEvent('rnp:open-search'));
 
-watch(mobileOpen, (open) => {
+const drawerEl = ref<HTMLElement | null>(null);
+let previouslyFocused: HTMLElement | null = null;
+
+watch(mobileOpen, async (open) => {
   document.documentElement.style.overflow = open ? 'hidden' : '';
+  if (open) {
+    previouslyFocused = document.activeElement as HTMLElement | null;
+    await nextTick();
+    drawerEl.value?.querySelector('button')?.focus();
+  } else {
+    previouslyFocused?.focus?.();
+    previouslyFocused = null;
+  }
 });
+
+/** Focus trap + Escape to close (a11y for the mobile drawer). */
+const onDrawerKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') {
+    mobileOpen.value = false;
+    return;
+  }
+  if (e.key !== 'Tab' || !drawerEl.value) return;
+  const focusables = drawerEl.value.querySelectorAll<HTMLElement>(
+    'a[href], button, [tabindex]:not([tabindex="-1"])',
+  );
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+};
 
 onMounted(() => {
   mounted.value = true;
@@ -199,7 +232,15 @@ const isOverlay = computed(() => !!props.overlay && !scrolled.value);
 
   <Teleport v-if="mounted" to="body">
     <Transition name="fade">
-      <div v-if="mobileOpen" class="fixed inset-0 z-50 flex flex-col bg-background md:hidden">
+      <div
+        v-if="mobileOpen"
+        ref="drawerEl"
+        class="fixed inset-0 z-50 flex flex-col bg-background md:hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        @keydown="onDrawerKeydown"
+      >
         <div class="flex h-16 items-center justify-between border-b border-line px-6">
           <span class="mono-label">Menu</span>
           <button

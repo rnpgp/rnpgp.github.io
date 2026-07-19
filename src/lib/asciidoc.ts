@@ -23,6 +23,33 @@ export function splitFrontMatter(raw: string): SplitAdoc {
   return { frontMatter, body: raw.slice(m[0].length) };
 }
 
+function decodeEntities(s: string): string {
+  return s
+    .replace(/<[^>]+>/g, '')
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .trim();
+}
+
+export interface TocItem {
+  id: string;
+  title: string;
+  level: number;
+}
+
+/** Extract h2/h3 headings (id + text) from rendered HTML for on-page TOCs. */
+export function extractToc(html: string): TocItem[] {
+  const out: TocItem[] = [];
+  for (const m of html.matchAll(/<h([23])[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g)) {
+    out.push({ id: m[2], title: decodeEntities(m[3]), level: Number(m[1]) });
+  }
+  return out;
+}
+
 /** Render an AsciiDoc string to an HTML fragment (embedded mode, no page chrome). */
 export async function renderAdoc(body: string, attributes: Record<string, string> = {}) {
   const doc = await loadAdoc(body, {
@@ -75,6 +102,7 @@ export interface AdocLoaderOptions {
     frontMatter: Record<string, any>;
     body: string;
     docTitle?: string;
+    toc?: TocItem[];
   }) => Record<string, any>;
   /** Post-process rendered HTML per entry (e.g. link rewriting). */
   transformHtml?: (html: string, ctx: { id: string; rel: string }) => string;
@@ -114,7 +142,7 @@ export function adocLoader(options: AdocLoaderOptions): Loader {
         const id = options.idFromRel ? options.idFromRel(rel) : rel.replace(/\.adoc$/, '');
         if (options.transformHtml) html = options.transformHtml(html, { id, rel });
         const extra = options.dataFromEntry
-          ? options.dataFromEntry({ id, rel, frontMatter, body, docTitle })
+          ? options.dataFromEntry({ id, rel, frontMatter, body, docTitle, toc: extractToc(html) })
           : {};
         const data = await parseData({
           id,

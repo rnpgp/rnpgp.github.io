@@ -96,7 +96,7 @@
   --surface-dim: #eef4fa;
   --fg: #23273a;
   --fg-soft: #4f5469;
-  --fg-faint: #7e85a1;
+  --fg-faint: #5f6680; /* ≥4.5:1 on paper (AA for small text) */
   --line: #dfe8f2;
   --accent: #1a7bec;
   --accent-deep: #0f5fc4;
@@ -433,6 +433,58 @@
     font-family: var(--font-mono);
     letter-spacing: 0.08em;
     word-spacing: 0.4em;
+  }
+
+  /* Copy button injected into every code block (scripts in BaseLayout) */
+  pre[data-copyable] {
+    position: relative;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 0.4rem;
+    background: rgb(255 255 255 / 0.06);
+    color: rgb(232 234 242 / 0.65);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 0.2rem 0.55rem;
+    cursor: pointer;
+    transition:
+      color 0.15s,
+      border-color 0.15s,
+      opacity 0.15s;
+    opacity: 0;
+  }
+  pre[data-copyable]:hover .copy-btn,
+  .copy-btn:focus-visible {
+    opacity: 1;
+  }
+  .copy-btn:hover {
+    color: #fff;
+    border-color: rgb(255 255 255 / 0.45);
+  }
+  .copy-btn.copied {
+    color: var(--color-teal);
+    border-color: var(--color-teal);
+    opacity: 1;
+  }
+
+  /* Skip to content (visually hidden until focused) */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-300%);
+    transition: transform 0.18s ease-out;
+  }
+  .skip-link:focus-visible {
+    transform: none;
   }
 
   /* Scroll reveal */
