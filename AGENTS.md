@@ -114,9 +114,9 @@ There is no unit test suite; validation is building + link checking.
   the "ribosome shuffle" (lenses split and snap back); typing `rnp` or `pgp`
   summons the oracle rain — a matrix-style glyph fall in brand colors whose
   characters converge and hover into a random ancient quote (12 MOTD
-  messages, east & west: Heraclitus, Lao Tzu, Pythagoras, Sun Tzu, Zhuangzi,
-  Confucius, Diamond Sutra, Plato, Socrates, Marcus Aurelius…) before
-  dissolving with an attributed toast; typing `decrypt` replays the hero
+  messages, east & west: Heraclitus, Lao Tzu, Pythagoras, Sun Tzu, Zhuangzi
+  (AM I A BUTTERFLY DREAMING OF A MAN?), Confucius, Diamond Sutra, Plato,
+  Socrates, Marcus Aurelius…) before dissolving with an attributed toast; typing `decrypt` replays the hero
   scramble; the hero watermark rotates on scroll via `ScrollTimeline`. All are
   covered by `scripts/e2e-cdp.mjs` (28 checks).
 - **Search**: Pagefind index is generated post-build (`pagefind --site dist`);

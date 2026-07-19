@@ -27,17 +27,33 @@ watch(toastMsg, async (msg) => {
 let word = '';
 
 /** Ancient philosophy about reality, east and west — the messages the rain forms. */
-const ORACLE: { text: string; source: string; script: 'latin' | 'cjk' | 'greek' }[] = [
+const ORACLE: { text: string; source: string; script: 'latin' | 'greek' }[] = [
   { text: 'PANTA RHEI', source: 'Heraclitus · everything flows', script: 'greek' },
   { text: 'NATURE LOVES TO HIDE', source: 'Heraclitus · fragment 123', script: 'latin' },
   { text: 'ALL THINGS ARE NUMBERS', source: 'Pythagoras', script: 'latin' },
-  { text: '道可道非常道', source: 'Lao Tzu · Tao Te Ching §1', script: 'cjk' },
+  {
+    text: 'THE NAMED TAO IS NOT THE ETERNAL TAO',
+    source: 'Lao Tzu · Tao Te Ching §1',
+    script: 'latin',
+  },
   { text: 'I KNOW THAT I KNOW NOTHING', source: 'Socrates', script: 'latin' },
-  { text: 'THE CAVE IS NOT THE WORLD', source: 'Plato · Allegory of the Cave', script: 'latin' },
-  { text: '兵者詭道也', source: 'Sun Tzu · The Art of War', script: 'cjk' },
-  { text: '如夢幻泡影', source: 'Diamond Sutra · like a dream, a shadow', script: 'cjk' },
+  {
+    text: 'THE CAVE IS NOT THE WORLD',
+    source: 'Plato · Allegory of the Cave',
+    script: 'latin',
+  },
+  {
+    text: 'ALL WARFARE IS BASED ON DECEPTION',
+    source: 'Sun Tzu · The Art of War',
+    script: 'latin',
+  },
+  { text: 'A DREAM, A BUBBLE, A SHADOW', source: 'Diamond Sutra', script: 'latin' },
   { text: 'PERSPECTIVE, NOT TRUTH', source: 'Marcus Aurelius · Meditations', script: 'latin' },
-  { text: '莊周夢蝶', source: 'Zhuangzi · the butterfly dream', script: 'cjk' },
+  {
+    text: 'AM I A BUTTERFLY DREAMING OF A MAN?',
+    source: 'Zhuangzi · the butterfly dream',
+    script: 'latin',
+  },
   { text: 'KNOW WHAT YOU KNOW, AND NOT', source: 'Confucius · Analects 2.17', script: 'latin' },
   { text: 'ΠΑΝΤΑ ΑΡΙΘΜΟΣ', source: 'Pythagoras · all is number', script: 'greek' },
 ];
@@ -46,7 +62,6 @@ const POOLS = {
   hex: '0123456789ABCDEF',
   latin: '0123456789ABCDEF$#@%&*+=~',
   greek: 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΠΡΣΤΥΦΧΨΩ0123456789',
-  cjk: '道可非常名天地玄黃萬物觀復化虛靜水月夢蝶兵詭法如泡影陰陽無為心明鏡台',
 };
 
 const hexRain = () => {
@@ -81,7 +96,7 @@ const hexRain = () => {
   let widths: number[] = [];
   let totalW = 0;
   const measure = () => {
-    ctx.font = `${oracle.script === 'cjk' ? 600 : 700} ${msgSize}px "IBM Plex Mono", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", monospace`;
+    ctx.font = `700 ${msgSize}px "IBM Plex Mono", "PingFang SC", "Noto Sans CJK SC", monospace`;
     widths = chars.map((c) => ctx.measureText(c).width);
     totalW = widths.reduce((a, b) => a + b, 0) + (chars.length - 1) * 4;
   };
@@ -128,7 +143,7 @@ const hexRain = () => {
   };
 
   const drawMessage = (t: number) => {
-    ctx.font = `${oracle.script === 'cjk' ? 600 : 700} ${msgSize}px "IBM Plex Mono", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", monospace`;
+    ctx.font = `700 ${msgSize}px "IBM Plex Mono", "PingFang SC", "Noto Sans CJK SC", monospace`;
     ctx.textBaseline = 'middle';
     for (let i = 0; i < targets.length; i++) {
       const reveal = Math.min(1, Math.max(0, (t - (POUR + i * 55)) / 320));
