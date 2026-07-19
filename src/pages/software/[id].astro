@@ -31,7 +31,7 @@ const docs = (await getCollection('softwareDocs'))
   .sort((a, b) => docSort(a.slug, b.slug));
 // Signing keys live on the site's own OpenPGP keys page, not in the repo docs.
 if (entry.id === 'rnp') {
-  docs.push({ slug: '/openpgp_keys/', title: 'PGP keys used for signing source code ↗' });
+  docs.push({ slug: '/openpgp-keys/', title: 'PGP keys used for signing source code ↗' });
 }
 ---
 

@@ -154,7 +154,10 @@ There is no unit test suite; validation is building + link checking.
 - Old blog URLs (`/blog/DD-MM-YYYY/slug/`) are redirect pages generated from
   posts' `redirect_from` front matter — keep that field when touching old posts.
 - The `openpgp_keys/*.asc` files are release-signing keys; treat them as
-  immutable unless a key actually rotates.
+  immutable unless a key actually rotates. The keys *page* is
+  `/openpgp-keys/` (hyphenated); the legacy `/openpgp_keys/` URL redirects
+  there, while the `.asc` files keep the underscore prefix so published
+  key-file URLs stay stable.
 - Man-page/description strings in `src/content.config.ts` are parsed from the
   AsciiDoc `== NAME` sections — if upstream renames sections, descriptions
   fall back to empty.
