@@ -162,7 +162,7 @@ check(
   'home: typing "rnp" summons the oracle rain canvas (user-triggered, always plays)',
   (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]')`)) === true,
 );
-await sleep(4800); // converge + hover + dissolve → toast at ~5.1s
+await sleep(6200); // falls + hover + dissolve → toast at ~6.5s
 check(
   'home: the rain resolves into an ancient quote',
   (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('—')`)) === true,
@@ -184,7 +184,7 @@ check(
   'home: typing "pgp" also summons the oracle rain',
   (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]')`)) === true,
 );
-await sleep(4800);
+await sleep(6200);
 check(
   'home: the second rain resolves into a quote too',
   (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('—')`)) === true,
