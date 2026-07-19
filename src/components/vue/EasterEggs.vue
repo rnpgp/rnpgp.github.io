@@ -8,18 +8,31 @@ let toastTimer: ReturnType<typeof setTimeout> | undefined;
 const toast = (msg: string) => {
   toastMsg.value = msg;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => (toastMsg.value = ''), 2400);
+  toastTimer = setTimeout(async () => {
+    // dissolve: disperses upward, blurring away like steam
+    await toastEl.value
+      ?.animate(
+        [
+          { opacity: 1, filter: 'blur(0px)', transform: 'translateY(0) scale(1)' },
+          { opacity: 0, filter: 'blur(8px)', transform: 'translateY(-8px) scale(1.02)' },
+        ],
+        { duration: 380, easing: 'cubic-bezier(.4, 0, .8, .4)', fill: 'forwards' },
+      )
+      .finished.catch(() => {});
+    toastMsg.value = '';
+  }, 2600);
 };
 
 watch(toastMsg, async (msg) => {
   if (!msg) return;
   await nextTick();
+  // materialize: condenses out of a blur and settles into place
   toastEl.value?.animate(
     [
-      { opacity: 0, transform: 'translate(-50%, 10px)' },
-      { opacity: 1, transform: 'translate(-50%, 0)' },
+      { opacity: 0, filter: 'blur(10px)', transform: 'translateY(10px) scale(0.96)' },
+      { opacity: 1, filter: 'blur(0px)', transform: 'translateY(0) scale(1)' },
     ],
-    { duration: 220, easing: 'cubic-bezier(.22, 1, .36, 1)' },
+    { duration: 340, easing: 'cubic-bezier(.22, 1.1, .36, 1)' },
   );
 });
 
@@ -215,10 +228,11 @@ onUnmounted(() => {
 <template>
   <div
     v-if="toastMsg"
-    ref="toastEl"
-    class="card fixed bottom-6 left-1/2 z-[95] -translate-x-1/2 px-4 py-2 font-mono text-sm text-foreground shadow-lift"
+    class="pointer-events-none fixed inset-x-0 bottom-6 z-[95] flex justify-center"
     role="status"
   >
-    {{ toastMsg }}
+    <div ref="toastEl" class="card px-4 py-2 font-mono text-sm text-foreground shadow-lift">
+      {{ toastMsg }}
+    </div>
   </div>
 </template>
