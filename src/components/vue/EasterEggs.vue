@@ -132,12 +132,20 @@ const hexRain = () => {
     const j = Math.floor(Math.random() * (i + 1));
     [order[i], order[j]] = [order[j], order[i]];
   }
+  // The quote's characters are citizens of the mass rain from the start:
+  // each falls in its own column, and lands in place when its turn comes.
+  const msgs = targets.map((t) => ({
+    ...t,
+    y: Math.random() * -canvas.height,
+    speed: 1.5 + Math.random() * 2,
+  }));
   const POUR = 2400;
   const STEP = Math.max(55, Math.min(150, 1800 / chars.length));
-  const FALL = 550;
-  const lastLand = POUR + STEP * (chars.length - 1) + FALL;
+  const LAND = 420;
+  const lastLand = POUR + STEP * (chars.length - 1) + LAND;
   const LINGER = lastLand + 1300;
   const easeOutCubic = (p: number) => 1 - Math.pow(1 - p, 3);
+  const lerpY = (a: number, b: number, p: number) => a + (b - a) * p;
   const start = performance.now();
   let raf = 0;
   canvas.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, fill: 'forwards' });
@@ -164,27 +172,38 @@ const hexRain = () => {
   };
 
   const drawMessage = (t: number) => {
-    ctx.font = `700 ${msgSize}px "IBM Plex Mono", "PingFang SC", "Noto Sans CJK SC", monospace`;
     ctx.textBaseline = 'middle';
     for (let k = 0; k < order.length; k++) {
       const i = order[k];
-      const startT = POUR + k * STEP;
-      const p = Math.min(1, Math.max(0, (t - startT) / FALL));
-      if (p <= 0) continue;
-      // the character rains down from above to its slot, then stays
-      const y = p < 1 ? lerpY(-40 - ((i * 37) % 180), midY, easeOutCubic(p)) : midY;
-      const hover = p >= 1 && t > lastLand ? Math.sin((t + i * 140) / 420) * 2.5 : 0;
-      ctx.globalAlpha = Math.min(1, p * 1.8);
-      ctx.fillStyle = '#ffdc4a';
-      ctx.shadowColor = '#ffdc4a';
-      ctx.shadowBlur = 14 * p;
-      ctx.fillText(targets[i].c, targets[i].x, y + hover);
+      const m = msgs[i];
+      const landT = POUR + k * STEP;
+      if (t < landT) {
+        // still falling with everyone else, a quiet glint in the stream
+        m.y += m.speed * fontSize * 0.55;
+        if (m.y > canvas.height) m.y = Math.random() * -220;
+        ctx.font = `${fontSize}px "IBM Plex Mono", monospace`;
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = '#ffdc4a';
+        ctx.shadowColor = '#ffdc4a';
+        ctx.shadowBlur = 4;
+        ctx.fillText(m.c, m.x, m.y);
+      } else {
+        // its turn: glides to the middle and stays
+        const p = Math.min(1, (t - landT) / LAND);
+        const y = p < 1 ? lerpY(m.y, midY, easeOutCubic(p)) : midY;
+        const hover = p >= 1 && t > lastLand ? Math.sin((t + i * 140) / 420) * 2.5 : 0;
+        ctx.font = `700 ${msgSize}px "IBM Plex Mono", "PingFang SC", "Noto Sans CJK SC", monospace`;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#ffdc4a';
+        ctx.shadowColor = '#ffdc4a';
+        ctx.shadowBlur = 4 + 10 * p;
+        ctx.fillText(m.c, m.x, y + hover);
+      }
     }
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
     ctx.textBaseline = 'alphabetic';
   };
-  const lerpY = (a: number, b: number, p: number) => a + (b - a) * p;
 
   const tick = (now: number) => {
     const t = now - start;
@@ -196,7 +215,7 @@ const hexRain = () => {
     } else {
       drawRain(t, 0.05, 0.4); // rain gone — the message stands clear
     }
-    if (t >= POUR) drawMessage(t);
+    drawMessage(t); // stream-citizen message chars, from t=0
 
     if (t < LINGER) {
       raf = requestAnimationFrame(tick);
