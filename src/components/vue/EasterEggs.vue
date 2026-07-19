@@ -23,12 +23,36 @@ watch(toastMsg, async (msg) => {
   );
 });
 
-/* ---- Secret words: type 'rnp' or 'pgp' → brand hex rain; 'decrypt' → replay hero ---- */
+/* ---- Secret words: type 'rnp' or 'pgp' → oracle rain; 'decrypt' → replay hero ---- */
 let word = '';
+
+/** Ancient philosophy about reality, east and west — the messages the rain forms. */
+const ORACLE: { text: string; source: string; script: 'latin' | 'cjk' | 'greek' }[] = [
+  { text: 'PANTA RHEI', source: 'Heraclitus · everything flows', script: 'greek' },
+  { text: 'NATURE LOVES TO HIDE', source: 'Heraclitus · fragment 123', script: 'latin' },
+  { text: 'ALL THINGS ARE NUMBERS', source: 'Pythagoras', script: 'latin' },
+  { text: '道可道非常道', source: 'Lao Tzu · Tao Te Ching §1', script: 'cjk' },
+  { text: 'I KNOW THAT I KNOW NOTHING', source: 'Socrates', script: 'latin' },
+  { text: 'THE CAVE IS NOT THE WORLD', source: 'Plato · Allegory of the Cave', script: 'latin' },
+  { text: '兵者詭道也', source: 'Sun Tzu · The Art of War', script: 'cjk' },
+  { text: '如夢幻泡影', source: 'Diamond Sutra · like a dream, a shadow', script: 'cjk' },
+  { text: 'PERSPECTIVE, NOT TRUTH', source: 'Marcus Aurelius · Meditations', script: 'latin' },
+  { text: '莊周夢蝶', source: 'Zhuangzi · the butterfly dream', script: 'cjk' },
+  { text: 'KNOW WHAT YOU KNOW, AND NOT', source: 'Confucius · Analects 2.17', script: 'latin' },
+  { text: 'ΠΑΝΤΑ ΑΡΙΘΜΟΣ', source: 'Pythagoras · all is number', script: 'greek' },
+];
+
+const POOLS = {
+  hex: '0123456789ABCDEF',
+  latin: '0123456789ABCDEF$#@%&*+=~',
+  greek: 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΠΡΣΤΥΦΧΨΩ0123456789',
+  cjk: '道可非常名天地玄黃萬物觀復化虛靜水月夢蝶兵詭法如泡影陰陽無為心明鏡台',
+};
 
 const hexRain = () => {
   // User-initiated (typed a secret word): always play — prefers-reduced-motion
   // only governs passive animation, never something the user asked for.
+  const oracle = ORACLE[Math.floor(Math.random() * ORACLE.length)];
   const canvas = document.createElement('canvas');
   canvas.className = 'pointer-events-none fixed inset-0 z-[90]';
   canvas.setAttribute('aria-hidden', 'true');
@@ -37,45 +61,109 @@ const hexRain = () => {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
 
-  const glyphs = '0123456789ABCDEF';
   const colors = ['#1a7bec', '#00dfb7', '#ffdc4a'];
   const fontSize = 16;
   const cols = Math.ceil(canvas.width / fontSize);
+  const glyphFor = () => {
+    const pool = Math.random() < 0.6 ? POOLS.hex : POOLS[oracle.script];
+    return pool[Math.floor(Math.random() * pool.length)];
+  };
   const drops = Array.from({ length: cols }, () => ({
     y: Math.random() * -canvas.height,
     speed: 1.5 + Math.random() * 3.5,
     color: colors[Math.floor(Math.random() * colors.length)],
+    glyph: glyphFor(),
   }));
 
-  let raf = 0;
-  const DURATION = 3400;
+  /* Message layout: fit to width, centered, drawn per character. */
+  const chars = [...oracle.text];
+  let msgSize = 22;
+  let widths: number[] = [];
+  let totalW = 0;
+  const measure = () => {
+    ctx.font = `${oracle.script === 'cjk' ? 600 : 700} ${msgSize}px "IBM Plex Mono", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", monospace`;
+    widths = chars.map((c) => ctx.measureText(c).width);
+    totalW = widths.reduce((a, b) => a + b, 0) + (chars.length - 1) * 4;
+  };
+  measure();
+  while (totalW > canvas.width * 0.88 && msgSize > 12) {
+    msgSize -= 2;
+    measure();
+  }
+  const targets: { c: string; x: number }[] = [];
+  let pen = (canvas.width - totalW) / 2;
+  chars.forEach((c, i) => {
+    targets.push({ c, x: pen });
+    pen += widths[i] + 4;
+  });
+  const midY = canvas.height / 2;
+
+  /* Phases: pour → converge → hover (linger) → dissolve. */
+  const POUR = 2600;
+  const CONVERGE = 3400;
+  const LINGER = 4600;
   const start = performance.now();
+  let raf = 0;
   canvas.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, fill: 'forwards' });
 
-  const tick = (now: number) => {
-    ctx.fillStyle = 'rgba(8, 10, 22, 0.14)';
+  const drawRain = (t: number, dim: number, trail: number) => {
+    ctx.fillStyle = `rgba(8, 10, 22, ${trail})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.font = `${fontSize}px "IBM Plex Mono", monospace`;
+    ctx.shadowBlur = 0;
     for (let i = 0; i < cols; i++) {
       const d = drops[i];
+      ctx.globalAlpha = dim;
       ctx.fillStyle = d.color;
-      ctx.fillText(glyphs[Math.floor(Math.random() * glyphs.length)], i * fontSize, d.y);
+      ctx.fillText(d.glyph, i * fontSize, d.y);
       d.y += d.speed * fontSize * 0.55;
       if (d.y > canvas.height) {
         d.y = Math.random() * -220;
         d.speed = 1.5 + Math.random() * 3.5;
         d.color = colors[Math.floor(Math.random() * colors.length)];
+        d.glyph = glyphFor();
       }
     }
-    if (now - start < DURATION) {
+    ctx.globalAlpha = 1;
+  };
+
+  const drawMessage = (t: number) => {
+    ctx.font = `${oracle.script === 'cjk' ? 600 : 700} ${msgSize}px "IBM Plex Mono", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", monospace`;
+    ctx.textBaseline = 'middle';
+    for (let i = 0; i < targets.length; i++) {
+      const reveal = Math.min(1, Math.max(0, (t - (POUR + i * 55)) / 320));
+      if (reveal <= 0) continue;
+      // characters hover gently once fully formed
+      const hover = t > CONVERGE ? Math.sin((t + i * 140) / 420) * 2.5 : 0;
+      ctx.globalAlpha = reveal;
+      ctx.fillStyle = '#ffdc4a';
+      ctx.shadowColor = '#ffdc4a';
+      ctx.shadowBlur = 14 * reveal;
+      ctx.fillText(targets[i].c, targets[i].x, midY + hover);
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    ctx.textBaseline = 'alphabetic';
+  };
+
+  const tick = (now: number) => {
+    const t = now - start;
+    if (t < CONVERGE) {
+      drawRain(t, t < POUR ? 1 : 0.22, t < POUR ? 0.14 : 0.3);
+    } else {
+      drawRain(t, 0.09, 0.34);
+    }
+    if (t >= POUR) drawMessage(t);
+
+    if (t < LINGER) {
       raf = requestAnimationFrame(tick);
     } else {
       canvas
-        .animate([{ opacity: 1 }, { opacity: 0 }], { duration: 450, fill: 'forwards' })
+        .animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, fill: 'forwards' })
         .finished.then(() => {
           cancelAnimationFrame(raf);
           canvas.remove();
-          toast('Entropy acquired ✓');
+          toast(`«${oracle.text}» — ${oracle.source}`);
         });
     }
   };

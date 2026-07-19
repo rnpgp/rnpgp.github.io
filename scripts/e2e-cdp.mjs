@@ -159,18 +159,28 @@ check('home: triple-click triggers the ribosome shuffle', (await evaluate(`docum
 await evaluate(`'rnp'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
 await sleep(600);
 check(
-  'home: typing "rnp" summons the hex rain canvas (user-triggered, always plays)',
+  'home: typing "rnp" summons the oracle rain canvas (user-triggered, always plays)',
   (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]')`)) === true,
 );
-await sleep(3400);
+await sleep(4800); // converge + hover + dissolve → toast at ~5.1s
+check(
+  'home: the rain resolves into an ancient quote',
+  (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('—')`)) === true,
+);
+await sleep(400);
 
 await evaluate(`'pgp'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
 await sleep(600);
 check(
-  'home: typing "pgp" also summons the hex rain',
+  'home: typing "pgp" also summons the oracle rain',
   (await evaluate(`!!document.querySelector('canvas[aria-hidden="true"]')`)) === true,
 );
-await sleep(3400);
+await sleep(4800);
+check(
+  'home: the second rain resolves into a quote too',
+  (await evaluate(`(document.querySelector('[role="status"]')?.textContent ?? '').includes('—')`)) === true,
+);
+await sleep(400);
 
 const heroSpanSel = '.hero-decrypt';
 await evaluate(`'decrypt'.split('').forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k })))`);
