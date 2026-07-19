@@ -41,7 +41,7 @@ const { title, description, product, productTitle, docs, currentSlug } = Astro.p
             {
               docs.map((doc) => (
                 <a
-                  href={`/software/${product}/docs/${doc.slug}/`}
+                  href={doc.slug.startsWith('/') ? doc.slug : `/software/${product}/docs/${doc.slug}/`}
                   class:list={[
                     'block rounded-md px-3 py-2 font-sans text-sm transition-colors',
                     doc.slug.includes('/') && 'pl-6',
