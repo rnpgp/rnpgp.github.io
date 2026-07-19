@@ -113,7 +113,10 @@ const UPSTREAM_LINK_FIXES: [string, string][] = [
 const softwareDocs = defineCollection({
   loader: adocLoader({
     base: './vendor',
-    include: (rel) => /^[^/]+\/(README\.adoc|docs\/.+\.adoc)$/.test(rel),
+    // signing-keys.adoc is excluded: signing keys live on our own /openpgp_keys/ page.
+    include: (rel) =>
+      /^[^/]+\/(README\.adoc|docs\/.+\.adoc)$/.test(rel) &&
+      !rel.endsWith('docs/signing-keys.adoc'),
     idFromRel: (rel) => {
       const parts = rel.split('/');
       const product = parts[0];

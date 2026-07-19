@@ -29,6 +29,10 @@ const docs = (await getCollection('softwareDocs'))
   .filter((d) => d.data.product === entry.id)
   .map((d) => ({ slug: d.id.split('/').slice(1).join('/'), title: d.data.title }))
   .sort((a, b) => docSort(a.slug, b.slug));
+// Signing keys live on the site's own OpenPGP keys page, not in the repo docs.
+if (entry.id === 'rnp') {
+  docs.push({ slug: '/openpgp_keys/', title: 'PGP keys used for signing source code ↗' });
+}
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -91,7 +95,7 @@ const docs = (await getCollection('softwareDocs'))
               <nav class="mt-4">
                 {docs.map((doc) => (
                   <a
-                    href={`/software/${entry.id}/docs/${doc.slug}/`}
+                    href={doc.slug.startsWith('/') ? doc.slug : `/software/${entry.id}/docs/${doc.slug}/`}
                     class="block py-1.5 font-sans text-sm text-muted transition-colors hover:text-accent"
                   >
                     {doc.title}
