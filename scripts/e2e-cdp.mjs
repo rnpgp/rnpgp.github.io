@@ -305,7 +305,7 @@ check(
 );
 
 /* ---------- OPENPGP KEYS ---------- */
-await navigate(`${BASE}/openpgp_keys/`);
+await navigate(`${BASE}/openpgp-keys/`);
 await evaluate(`document.querySelector('.fingerprint')?.scrollIntoView({ block: 'center' })`);
 await sleep(1000);
 const keyFp = await evaluate(`document.querySelector('.fingerprint')?.textContent ?? ''`);
