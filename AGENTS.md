@@ -120,8 +120,10 @@ There is no unit test suite; validation is building + link checking.
   scramble; the hero watermark rotates on scroll via `ScrollTimeline`. All are
   covered by `scripts/e2e-cdp.mjs` (28 checks).
 - **Search**: Pagefind index is generated post-build (`pagefind --site dist`);
-  the `SiteSearch` island loads `/pagefind/pagefind.js` at runtime (absent in
-  plain `astro dev`).
+  the `SiteSearch` island loads `/pagefind/pagefind.js` at runtime. In dev,
+  `predev` copies the latest built index to `public/pagefind/` (gitignored) via
+  `scripts/prepare-dev-search.mjs` — run `npm run build` once after checkout
+  for search to work in `astro dev`.
 - **Dead links**: when an external link dies, point it at a Wayback Machine
   snapshot (`https://archive.org/wayback/available?url=<url>&timestamp=<yyyymmdd>`
   finds the closest capture) instead of a substitute page — the snapshot

@@ -3,6 +3,8 @@
 node_modules/
 dist/
 .astro/
+# Dev-only Pagefind index copy (prepare-dev-search.mjs)
+public/pagefind/
 # Pulled-in software sources (fetch-sources.mjs)
 vendor/
 # Legacy Jekyll-era artifacts (never recommit)
