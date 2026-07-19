@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "predev": "node scripts/fetch-sources.mjs",
+    "predev": "node scripts/fetch-sources.mjs && node scripts/prepare-dev-search.mjs",
     "prebuild": "node scripts/fetch-sources.mjs",
     "postbuild": "pagefind --site dist",
     "fetch-sources": "node scripts/fetch-sources.mjs",
