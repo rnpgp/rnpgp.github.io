@@ -23,12 +23,12 @@ let lastY = 0;
 let clickCount = 0;
 let clickTimer: ReturnType<typeof setTimeout> | undefined;
 
-const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const SPRING = 'cubic-bezier(.22, 1.4, .36, 1)';
 
-/** WAAPI logo play: wobble on hover, pulse per click, lens-shuffle every 3rd. */
+/** WAAPI logo play: wobble on hover, pulse per click, lens-shuffle every 3rd.
+ *  User-initiated, so it plays regardless of prefers-reduced-motion. */
 const onLogoEnter = () => {
-  if (!logoSvg.value || reducedMotion()) return;
+  if (!logoSvg.value) return;
   logoSvg.value.animate(
     [
       { transform: 'rotate(0deg)' },
@@ -43,7 +43,7 @@ const onLogoEnter = () => {
 const onLogoClick = (e: MouseEvent) => {
   if (props.currentPath !== '/') return; // normal navigation elsewhere
   e.preventDefault();
-  if (reducedMotion() || !logoSvg.value) return;
+  if (!logoSvg.value) return;
   clickCount++;
   clearTimeout(clickTimer);
   clickTimer = setTimeout(() => (clickCount = 0), 900);

@@ -30,18 +30,18 @@ const run = () => {
   raf = requestAnimationFrame(tick);
 };
 
-const maybeRun = () => {
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) run();
-};
+const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 onMounted(() => {
-  maybeRun();
-  window.addEventListener('rnp:replay-hero', maybeRun);
+  // Passive auto-play respects reduced-motion…
+  if (!reducedMotion()) run();
+  // …but a user explicitly typing 'decrypt' always gets the replay.
+  window.addEventListener('rnp:replay-hero', run);
 });
 
 onUnmounted(() => {
   cancelAnimationFrame(raf);
-  window.removeEventListener('rnp:replay-hero', maybeRun);
+  window.removeEventListener('rnp:replay-hero', run);
 });
 </script>
 
