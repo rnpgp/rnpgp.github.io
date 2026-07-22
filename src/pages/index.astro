@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import ThunderbirdBird from '../components/brand/ThunderbirdBird.astro';
 import HeroDecrypt from '../components/vue/HeroDecrypt.vue';
 import FingerprintPlayground from '../components/vue/FingerprintPlayground.vue';
 import InstallTabs from '../components/vue/InstallTabs.vue';
@@ -67,6 +68,14 @@ const releaseDate = release.publishedAt.slice(0, 10);
           </p>
           <div class="mt-8 flex flex-wrap items-center gap-3">
             <a href="/software/rnp/" class="btn btn-white">Get started</a>
+            <a
+              href="https://www.thunderbird.net/"
+              class="btn bg-white text-[var(--accent-deep)] shadow-[0_10px_30px_-10px_rgb(11_104_203/0.45)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-12px_rgb(11_104_203/0.6)]"
+              aria-label="Get Thunderbird — opens thunderbird.net"
+            >
+              <ThunderbirdBird idPrefix="tbh" class="h-6 w-6 shrink-0 drop-shadow-[0_2px_3px_rgb(11_104_203/0.25)]" />
+              Get Thunderbird
+            </a>
             <a href="/contribute/" class="btn btn-outline-white">Contribute</a>
             <a
               href={release.url}
