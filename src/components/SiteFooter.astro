@@ -1,6 +1,7 @@
 ---
 import SymbolLogo from './brand/SymbolLogo.astro';
 import Wordmark from './brand/Wordmark.astro';
+import ThunderbirdBird from './brand/ThunderbirdBird.astro';
 
 const year = new Date().getFullYear();
 
@@ -50,12 +51,27 @@ const columns = [
         </a>
         <p class="mt-4 max-w-xs text-sm leading-relaxed">
           Powering end-to-end email encryption in
-          <a
-            href="https://www.thunderbird.net/"
-            class="underline decoration-white/40 underline-offset-4 transition-colors hover:text-white"
-            >Mozilla Thunderbird</a
-          >. LibrePGP secure.
+          <strong class="font-semibold text-white">Mozilla Thunderbird</strong>. LibrePGP secure.
         </p>
+        <a
+          href="https://www.thunderbird.net/"
+          class="group mt-5 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 font-sans text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/[0.12]"
+          aria-label="Get Thunderbird"
+        >
+          <ThunderbirdBird idPrefix="tb" class="h-6 w-6 shrink-0" />
+          <span>Get Thunderbird</span>
+          <svg
+            viewBox="0 0 24 24"
+            class="h-3.5 w-3.5 translate-x-0 text-white/70 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-white"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7"></path>
+          </svg>
+        </a>
         <div class="mt-5 flex items-center gap-4">
           <a
             href="https://github.com/rnpgp/rnp"
