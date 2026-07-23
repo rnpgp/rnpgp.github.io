@@ -1,8 +1,8 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
-import { parse as parseYaml } from 'yaml';
 import { load as loadAdoc } from 'asciidoctor';
 import type { Loader } from 'astro/loaders';
+import { parseFrontmatter } from './frontmatter.mjs';
 
 export interface SplitAdoc {
   frontMatter: Record<string, any>;
@@ -11,16 +11,7 @@ export interface SplitAdoc {
 
 /** Split YAML front matter (Jekyll-style) from an AsciiDoc body. */
 export function splitFrontMatter(raw: string): SplitAdoc {
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-  if (!m) return { frontMatter: {}, body: raw };
-  let frontMatter: Record<string, any> = {};
-  try {
-    frontMatter = (parseYaml(m[1]) ?? {}) as Record<string, any>;
-  } catch {
-    // malformed front matter — treat the file as body-only
-    return { frontMatter: {}, body: raw };
-  }
-  return { frontMatter, body: raw.slice(m[0].length) };
+  return parseFrontmatter(raw);
 }
 
 function decodeEntities(s: string): string {
@@ -60,16 +51,7 @@ export async function renderAdoc(body: string, attributes: Record<string, string
     },
   });
   const docTitleRaw = (doc.getDocumentTitle?.() as string | undefined) ?? undefined;
-  // Asciidoctor returns titles with inline markup/entities — flatten to text.
-  const docTitle = docTitleRaw
-    ?.replace(/<[^>]+>/g, '')
-    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .trim();
+  const docTitle = docTitleRaw !== undefined ? decodeEntities(docTitleRaw) : undefined;
   const html = (await doc.convert()) as unknown as string;
   return { html, docTitle };
 }

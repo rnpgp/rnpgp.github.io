@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { RNP_EVENTS } from '@/lib/events';
 
 interface SearchResult {
   url: string;
@@ -106,12 +107,12 @@ const onKeydown = (e: KeyboardEvent) => {
 
 onMounted(() => {
   window.addEventListener('keydown', onKeydown);
-  window.addEventListener('rnp:open-search', openModal as EventListener);
+  window.addEventListener(RNP_EVENTS.openSearch, openModal as EventListener);
 });
 
 onUnmounted(() => {
   window.removeEventListener('keydown', onKeydown);
-  window.removeEventListener('rnp:open-search', openModal as EventListener);
+  window.removeEventListener(RNP_EVENTS.openSearch, openModal as EventListener);
   document.documentElement.style.overflow = '';
 });
 </script>

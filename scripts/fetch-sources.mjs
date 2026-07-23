@@ -12,11 +12,12 @@
  * Existing vendor clones are reused (delete vendor/ to force a refresh).
  * Network failures are warnings, not errors — docs pages degrade gracefully.
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parse as parseYaml } from 'yaml';
+import { parseFrontmatter } from '../src/lib/frontmatter.mjs';
+import { RNP_EXTRA_SPARSE } from '../src/lib/vendor-source.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const vendorDir = join(root, 'vendor');
@@ -24,14 +25,8 @@ const softwareDir = join(root, 'src/content/software');
 
 /** Extra files to check out per product, gitignore-style sparse patterns. */
 const EXTRA_PATHS = {
-  rnp: ['/src/rnp/rnp.1.adoc', '/src/rnpkeys/rnpkeys.1.adoc', '/src/lib/librnp.3.adoc'],
+  rnp: RNP_EXTRA_SPARSE,
 };
-
-function frontMatter(file) {
-  const raw = readFileSync(file, 'utf8');
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  return m ? (parseYaml(m[1]) ?? {}) : {};
-}
 
 function run(args, cwd) {
   execFileSync('git', args, { cwd, stdio: 'pipe' });
@@ -40,7 +35,7 @@ function run(args, cwd) {
 let failures = 0;
 
 for (const file of readdirSync(softwareDir).filter((f) => f.endsWith('.md'))) {
-  const fm = frontMatter(join(softwareDir, file));
+  const fm = parseFrontmatter(join(softwareDir, file)).frontMatter;
   if (!fm.docs_repo) continue;
 
   const name = file.replace(/\.md$/, '');

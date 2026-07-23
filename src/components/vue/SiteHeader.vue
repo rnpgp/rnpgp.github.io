@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import ThemeToggle from './ThemeToggle.vue';
+import { dispatch, RNP_EVENTS } from '@/lib/events';
 
 const props = defineProps<{ currentPath: string; overlay?: boolean }>();
 
@@ -89,7 +90,7 @@ const onScroll = () => {
   lastY = y;
 };
 
-const openSearch = () => window.dispatchEvent(new CustomEvent('rnp:open-search'));
+const openSearch = () => dispatch(RNP_EVENTS.openSearch);
 
 const drawerEl = ref<HTMLElement | null>(null);
 let previouslyFocused: HTMLElement | null = null;

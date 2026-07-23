@@ -2,12 +2,12 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { adocLoader } from './lib/asciidoc';
+import { RNP_VERSION, RNP_MAN_PAGES } from './lib/vendor-source.mjs';
 
 /**
  * Version of the RNP release whose man pages are rendered at /docs/.
- * Bump together with `docs_ref` in src/content/software/rnp.md.
+ * Derived from `docs_ref` in src/content/software/rnp.md via vendor-source.mjs.
  */
-const RNP_VERSION = '0.18.1';
 
 const categories = z
   .union([z.string(), z.array(z.string())])
@@ -157,8 +157,7 @@ const softwareDocs = defineCollection({
 const manpages = defineCollection({
   loader: adocLoader({
     base: './vendor/rnp/src',
-    include: (rel) =>
-      ['rnp/rnp.1.adoc', 'rnpkeys/rnpkeys.1.adoc', 'lib/librnp.3.adoc'].includes(rel),
+    include: (rel) => RNP_MAN_PAGES.includes(rel),
     attributes: {
       'component-version': RNP_VERSION,
       'release-version': RNP_VERSION,

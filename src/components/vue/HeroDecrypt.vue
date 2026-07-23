@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
+import { RNP_EVENTS } from '@/lib/events';
 
 const props = defineProps<{ text: string }>();
 
@@ -64,14 +65,14 @@ onMounted(() => {
   // Passive auto-play respects reduced-motion…
   if (!reducedMotion()) run();
   // …but a user explicitly typing 'decrypt' or 'encrypt' always gets the effect.
-  window.addEventListener('rnp:replay-hero', run);
-  window.addEventListener('rnp:encrypt-hero', runEncrypt);
+  window.addEventListener(RNP_EVENTS.replayHero, run);
+  window.addEventListener(RNP_EVENTS.encryptHero, runEncrypt);
 });
 
 onUnmounted(() => {
   cancelAnimationFrame(raf);
-  window.removeEventListener('rnp:replay-hero', run);
-  window.removeEventListener('rnp:encrypt-hero', runEncrypt);
+  window.removeEventListener(RNP_EVENTS.replayHero, run);
+  window.removeEventListener(RNP_EVENTS.encryptHero, runEncrypt);
 });
 </script>
 
