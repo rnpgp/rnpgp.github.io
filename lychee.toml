@@ -18,7 +18,4 @@ exclude = [
   '^https://docs\.redhat\.com/',
   # Cirrus CI blocks non-browser TLS clients.
   '^https://cirrus-ci\.com/',
-  # autocrypt.org has been intermittently unreachable (times out from CI);
-  # the Autocrypt project itself appears inactive.
-  '^https://autocrypt\.org/',
 ]
