@@ -139,7 +139,7 @@ encountering packets with unknown versions.
 * Automatic backend feature detection during the build process enhances system compatibility and setup.
 
 * Added support for importing and exporting base64-encoded keys, particularly
-useful for https://autocrypt.org/[Autocrypt] headers.
+useful for https://www.autocrypt.org/[Autocrypt] headers.
 
 * Implemented a default 2-year key expiration time for better key lifecycle management.
 
