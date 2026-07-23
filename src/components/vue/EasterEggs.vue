@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { dispatch, RNP_EVENTS, RNP_STORAGE } from '@/lib/events';
 
 const toastMsg = ref('');
 const toastEl = ref<HTMLElement | null>(null);
@@ -244,11 +245,11 @@ const onKey = (e: KeyboardEvent) => {
   word = (word + k).slice(-12);
   if (word.endsWith('decrypt')) {
     word = '';
-    window.dispatchEvent(new CustomEvent('rnp:replay-hero'));
+    dispatch(RNP_EVENTS.replayHero);
     toast('Replaying decryption…');
   } else if (word.endsWith('encrypt')) {
     word = '';
-    window.dispatchEvent(new CustomEvent('rnp:encrypt-hero'));
+    dispatch(RNP_EVENTS.encryptHero);
     toast('Encrypting…');
   } else if (word.endsWith('rnp') || word.endsWith('pgp')) {
     word = '';
@@ -408,16 +409,16 @@ const showEggHelp = () => {
 
 onMounted(() => {
   window.addEventListener('keydown', onKey);
-  window.addEventListener('rnp:hex-rain', onHexRainReq);
-  window.addEventListener('rnp:hal-scene', onHalReq);
-  window.addEventListener('rnp:dave-scene', onDaveReq);
+  window.addEventListener(RNP_EVENTS.hexRain, onHexRainReq);
+  window.addEventListener(RNP_EVENTS.halScene, onHalReq);
+  window.addEventListener(RNP_EVENTS.daveScene, onDaveReq);
 
   window.rnp = window.rnp || {};
   window.rnp.help = showEggHelp;
   if (typeof window.help === 'undefined') window.help = showEggHelp;
 
-  if (!sessionStorage.getItem('rnp:help-hinted')) {
-    sessionStorage.setItem('rnp:help-hinted', '1');
+  if (!sessionStorage.getItem(RNP_STORAGE.helpHinted)) {
+    sessionStorage.setItem(RNP_STORAGE.helpHinted, '1');
     console.log(
       '%c👋 psst — type %chelp()%c to see the easter eggs',
       'color:#888;font-style:italic;',
@@ -428,9 +429,9 @@ onMounted(() => {
 });
 onUnmounted(() => {
   window.removeEventListener('keydown', onKey);
-  window.removeEventListener('rnp:hex-rain', onHexRainReq);
-  window.removeEventListener('rnp:hal-scene', onHalReq);
-  window.removeEventListener('rnp:dave-scene', onDaveReq);
+  window.removeEventListener(RNP_EVENTS.hexRain, onHexRainReq);
+  window.removeEventListener(RNP_EVENTS.halScene, onHalReq);
+  window.removeEventListener(RNP_EVENTS.daveScene, onDaveReq);
   clearTimeout(toastTimer);
   clearHalTimers();
   clearDaveTimers();
