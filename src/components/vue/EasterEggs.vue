@@ -246,6 +246,10 @@ const onKey = (e: KeyboardEvent) => {
     word = '';
     window.dispatchEvent(new CustomEvent('rnp:replay-hero'));
     toast('Replaying decryption…');
+  } else if (word.endsWith('encrypt')) {
+    word = '';
+    window.dispatchEvent(new CustomEvent('rnp:encrypt-hero'));
+    toast('Encrypting…');
   } else if (word.endsWith('rnp') || word.endsWith('pgp')) {
     word = '';
     hexRain();
@@ -370,27 +374,29 @@ const onDaveReq = () => playDaveScene();
 
 /** `help()` in the console — list every egg. */
 const HELP_TEXT = `Type anywhere on the page (not in inputs):
-  rnp · pgp       →  oracle rain (philosophy)
-  decrypt         →  replay hero decryption
+  rnp · pgp            →  oracle rain (philosophy)
+  decrypt              →  replay hero decryption (garbage → text)
+  encrypt              →  scramble the hero text (text → garbage → text)
 
 In the fingerprint box (home page):
-  decrypt         →  also replays hero decryption
-  42              →  DON'T PANIC
-  dave            →  open the pod bay doors (screenwide)
-  dh              →  Diffie–Hellman paint exchange
-  enigma          →  ³-rotor cipher, live stepping
-  hal · 9000      →  HAL 9000 (screenwide)
-  librepgp        →  the open OpenPGP spec
-  matrix          →  wake up, Neo
-  openpgp · 4880  →  ASCII-armored message
-  otp             →  one-time pad (XOR of your input)
-  phil            →  PGP was a munition (1993–1996)
-  pqc · quantum   →  harvest now, decrypt later
-  privacy         →  cypherpunk's manifesto
-  ribose          →  who's behind RNP
-  snowden · nsa   →  classified
-  thunderbird     →  powered by Thunderbird's wings
-  rnp · pgp       →  also triggers oracle rain
+  decrypt              →  same — replay hero decryption
+  encrypt              →  same — scramble the hero text
+  42                   →  DON'T PANIC
+  dave                 →  open the pod bay doors (screenwide)
+  dh                   →  Diffie–Hellman paint exchange
+  enigma               →  ³-rotor cipher, live stepping
+  hal · 9000           →  HAL 9000 (screenwide)
+  librepgp             →  the open OpenPGP spec
+  matrix               →  wake up, Neo
+  openpgp · 4880       →  ASCII-armored message
+  otp                  →  one-time pad (XOR of your input)
+  phil                 →  PGP was a munition (1993–1996)
+  pqc · quantum        →  harvest now, decrypt later
+  privacy              →  cypherpunk's manifesto
+  ribose               →  who's behind RNP
+  snowden · nsa        →  classified
+  thunderbird          →  powered by Thunderbird's wings
+  rnp · pgp            →  also triggers oracle rain
 
 Type help() or rnp.help() to reprint.`;
 
