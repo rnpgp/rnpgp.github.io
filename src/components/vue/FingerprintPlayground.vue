@@ -209,15 +209,21 @@ watch(input, (val) => {
   }
 });
 
-/* Typing 'decrypt' in the input also replays the hero decryption animation. */
-let lastDecryptInput = '';
+/* Typing 'decrypt' or 'encrypt' in the input drives the hero animation:
+   decrypt → garbage settles to readable; encrypt → readable scrambles
+   (then auto-settles back so the page isn't stuck). Substring match so
+   either word fires whether appended to the default seed, typed alone,
+   or part of a longer word. Decrypt wins if both are present. */
+let lastHeroInput = '';
 watch(input, (val) => {
-  const matches = /\bdecrypt\b/i.test(val);
-  if (matches && val !== lastDecryptInput) {
-    lastDecryptInput = val;
-    window.dispatchEvent(new CustomEvent('rnp:replay-hero'));
-  } else if (!matches) {
-    lastDecryptInput = '';
+  let evt: 'rnp:replay-hero' | 'rnp:encrypt-hero' | null = null;
+  if (/decrypt/i.test(val)) evt = 'rnp:replay-hero';
+  else if (/encrypt/i.test(val)) evt = 'rnp:encrypt-hero';
+  if (evt && val !== lastHeroInput) {
+    lastHeroInput = val;
+    window.dispatchEvent(new CustomEvent(evt));
+  } else if (!evt) {
+    lastHeroInput = '';
   }
 });
 
