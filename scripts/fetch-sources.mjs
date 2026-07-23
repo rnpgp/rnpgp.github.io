@@ -12,7 +12,7 @@
  * Existing vendor clones are reused (delete vendor/ to force a refresh).
  * Network failures are warnings, not errors — docs pages degrade gracefully.
  */
-import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -35,7 +35,7 @@ function run(args, cwd) {
 let failures = 0;
 
 for (const file of readdirSync(softwareDir).filter((f) => f.endsWith('.md'))) {
-  const fm = parseFrontmatter(join(softwareDir, file)).frontMatter;
+  const fm = parseFrontmatter(readFileSync(join(softwareDir, file), 'utf8')).frontMatter;
   if (!fm.docs_repo) continue;
 
   const name = file.replace(/\.md$/, '');
