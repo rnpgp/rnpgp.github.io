@@ -151,7 +151,7 @@ const eu = {
             <img
               src={f.logo}
               alt={`${f.name} logo`}
-              class:list={[`${f.logoClass} w-auto`, f.logoDark !== f.logo && 'dark:hidden']}
+              class:list={[f.logoClass, f.logoDark !== f.logo && 'dark:hidden']}
               loading="lazy"
               decoding="async"
             />
@@ -160,7 +160,7 @@ const eu = {
                 src={f.logoDark}
                 alt=""
                 aria-hidden="true"
-                class:list={[`${f.logoClass} w-auto`, 'hidden dark:block']}
+                class:list={[f.logoClass, 'hidden dark:block']}
                 loading="lazy"
                 decoding="async"
               />
