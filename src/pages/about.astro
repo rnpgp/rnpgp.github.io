@@ -105,6 +105,8 @@ const funders = [
     name: 'Ribose',
     desc: 'Creator and primary maintainer of RNP.',
     href: 'https://www.ribose.com',
+    logo: '/assets/sponsors/ribose.svg',
+    logoDark: '/assets/sponsors/ribose-white.svg',
   },
 ];
 ---
@@ -307,19 +309,36 @@ const funders = [
             <div class="mt-3 space-y-3">
               {
                 funders.map((f) => (
-                  <div class="card card-hover p-5">
-                    <h4 class="font-sans text-lg font-bold">
-                      <a
-                        href={f.href}
-                        target="_blank"
-                        rel="noopener"
-                        class="text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent"
-                      >
+                  <a
+                    href={f.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="card card-hover group flex items-center gap-5 p-5"
+                  >
+                    <span class="flex h-14 w-28 shrink-0 items-center justify-center">
+                      <img
+                        src={f.logo}
+                        alt={`${f.name} logo`}
+                        class="h-5 w-auto dark:hidden"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <img
+                        src={f.logoDark}
+                        alt=""
+                        aria-hidden="true"
+                        class="hidden h-5 w-auto dark:block"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
+                    <div class="min-w-0">
+                      <h4 class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
                         {f.name}
-                      </a>
-                    </h4>
-                    <p class="mt-1 text-sm text-muted">{f.desc}</p>
-                  </div>
+                      </h4>
+                      <p class="mt-0.5 text-sm leading-relaxed text-muted">{f.desc}</p>
+                    </div>
+                  </a>
                 ))
               }
             </div>
