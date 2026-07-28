@@ -2,6 +2,7 @@
 import SymbolLogo from './brand/SymbolLogo.astro';
 import Wordmark from './brand/Wordmark.astro';
 import ThunderbirdBird from './brand/ThunderbirdBird.astro';
+import Sponsors from './Sponsors.astro';
 
 const year = new Date().getFullYear();
 
@@ -118,8 +119,11 @@ const columns = [
         ))
       }
     </div>
+    <div class="mt-12">
+      <Sponsors variant="strip" />
+    </div>
     <div
-      class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center"
+      class="mt-6 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center"
     >
       <p>Copyright © {year} Ribose Group Inc. — All rights reserved.</p>
       <p class="font-mono tracking-wide">

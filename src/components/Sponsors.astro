@@ -1,0 +1,143 @@
+---
+interface Props {
+  variant?: 'band' | 'strip' | 'inline';
+  class?: string;
+}
+
+const { variant = 'band', class: className = '' } = Astro.props;
+
+// Single source of truth for RNP's public funder attribution.
+// See memory/project_sponsors.md for verified provenance.
+const funders = [
+  {
+    name: 'NLnet Foundation',
+    href: 'https://nlnet.nl/',
+    logo: '/assets/sponsors/nlnet.svg',
+    logoClass: 'h-14 w-auto md:h-16',
+    blurb: 'Privacy & trust enhancing technology grant.',
+  },
+  {
+    name: 'NGI Zero PET',
+    href: 'https://nlnet.nl/thema/NGIZeroPET.html',
+    logo: '/assets/sponsors/ngi-zero-pet.svg',
+    logoClass: 'h-10 w-auto md:h-12',
+    blurb:
+      'Next Generation Internet — Privacy & Trust Enhancing Technologies. Funded through the European Commission.',
+  },
+  {
+    name: 'Mozilla',
+    href: 'https://github.com/mozilla/moss-directory',
+    logo: '/assets/sponsors/mozilla.svg',
+    logoClass: 'h-7 w-auto md:h-8',
+    blurb:
+      'Mozilla Open Source Support (MOSS) — Foundational Technology & Secure Open Source funds.',
+  },
+];
+
+const eu = {
+  text: 'Funded by the European Union — Next Generation Internet',
+  href: 'https://ngi.eu/',
+  flag: '/assets/sponsors/eu-flag.svg',
+};
+---
+
+{variant === 'band' && (
+  <section class={`band-teal border-b border-line ${className}`}>
+    <div class="mx-auto w-full max-w-6xl px-6 py-12 md:py-14">
+      <p class="mono-label text-center">Supported by</p>
+      <div class="mt-7 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:gap-x-14">
+        {funders.map((f) => (
+          <a
+            href={f.href}
+            target="_blank"
+            rel="noopener"
+            class="group inline-flex flex-col items-center gap-2.5"
+            aria-label={`${f.name} — opens in new tab`}
+          >
+            <img
+              src={f.logo}
+              alt={`${f.name} logo`}
+              class={`${f.logoClass} transition-transform duration-200 group-hover:scale-[1.04]`}
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="font-mono text-[0.7rem] uppercase tracking-wider text-faint">
+              {f.name}
+            </span>
+          </a>
+        ))}
+      </div>
+      <p class="mt-9 flex flex-wrap items-center justify-center gap-2 text-center font-mono text-xs leading-relaxed text-faint">
+        <img src={eu.flag} alt="European Union emblem" class="h-5 w-auto" loading="lazy" decoding="async" />
+        <a
+          href={eu.href}
+          target="_blank"
+          rel="noopener"
+          class="underline decoration-line underline-offset-2 transition-colors hover:text-muted"
+        >
+          {eu.text}
+        </a>
+      </p>
+    </div>
+  </section>
+)}
+
+{variant === 'strip' && (
+  <div
+    class={`flex flex-col items-center gap-2 border-t border-white/10 pt-6 text-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-3 sm:gap-y-1 ${className}`}
+  >
+    <span class="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#5f6788]">
+      Funded by
+    </span>
+    {funders.map((f, i) => (
+      <span class="inline-flex items-center gap-3">
+        <a
+          href={f.href}
+          target="_blank"
+          rel="noopener"
+          class="font-mono text-xs text-[#a8aec9] underline decoration-white/15 underline-offset-2 transition-colors hover:text-white hover:decoration-white/45"
+        >
+          {f.name}
+        </a>
+        {i < funders.length - 1 && <span class="text-[#3a4063]" aria-hidden="true">·</span>}
+      </span>
+    ))}
+    <span class="text-[#3a4063]" aria-hidden="true">·</span>
+    <a
+      href={eu.href}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center gap-1.5 font-mono text-xs text-[#a8aec9] underline decoration-white/15 underline-offset-2 transition-colors hover:text-white hover:decoration-white/45"
+    >
+      <img src={eu.flag} alt="" class="h-3.5 w-auto" loading="lazy" decoding="async" />
+      {eu.text}
+    </a>
+  </div>
+)}
+
+{variant === 'inline' && (
+  <div class={`space-y-3 ${className}`}>
+    {funders.map((f) => (
+      <a
+        href={f.href}
+        target="_blank"
+        rel="noopener"
+        class="card card-hover group flex items-center gap-5 p-5"
+      >
+        <img
+          src={f.logo}
+          alt={`${f.name} logo`}
+          class={`${f.logoClass} w-auto shrink-0`}
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="min-w-0">
+          <h4 class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
+            {f.name}
+          </h4>
+          <p class="mt-0.5 text-sm leading-relaxed text-muted">{f.blurb}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+)}

@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import Sponsors from '../components/Sponsors.astro';
 import ThunderbirdBird from '../components/brand/ThunderbirdBird.astro';
 import HeroDecrypt from '../components/vue/HeroDecrypt.vue';
 import FingerprintPlayground from '../components/vue/FingerprintPlayground.vue';
@@ -121,6 +122,9 @@ const releaseDate = release.publishedAt.slice(0, 10);
       </a>
     </div>
   </section>
+
+  <!-- ============ SPONSORS ============ -->
+  <Sponsors variant="band" />
 
   <!-- ============ SOFTWARE ============ -->
   <section class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
