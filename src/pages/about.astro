@@ -89,11 +89,11 @@ const standards = [
 const partners = [
   {
     name: 'Mozilla',
-    desc: 'RNP powers end-to-end email encryption in <a href="https://www.thunderbird.net/" class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">Thunderbird</a>. The official Mozilla lockup from the Mozilla Logo Library.',
+    desc: 'RNP powers end-to-end email encryption in <a href="https://www.thunderbird.net/" class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">Thunderbird</a>.',
     href: 'https://www.mozilla.org/',
     logo: '/assets/sponsors/mozilla.svg',
     logoDark: '/assets/sponsors/mozilla-white.svg',
-    featured: true,
+    logoClass: 'h-7 w-auto',
   },
   {
     name: 'g10 Code',
@@ -109,7 +109,7 @@ const partners = [
     href: 'https://intevation.de',
     logo: '/assets/sponsors/intevation.svg',
     logoDark: '/assets/sponsors/intevation-white.svg',
-    logoClass: 'h-9 w-auto',
+    logoClass: 'h-7 w-auto',
   },
 ];
 
@@ -309,69 +309,36 @@ const funders = [
             <div class="space-y-3">
               {
                 partners.map((p) => (
-                  p.featured ? (
-                    <a
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener"
-                      class="card card-hover group flex flex-col items-center gap-5 p-6 md:flex-row md:p-8"
-                    >
-                      <div class="flex h-16 w-full max-w-full shrink-0 items-center justify-center md:w-auto md:min-w-72">
-                        <img
-                          src={p.logo}
-                          alt={`${p.name} logo`}
-                          class="h-16 max-w-full dark:hidden"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                        <img
-                          src={p.logoDark}
-                          alt=""
-                          aria-hidden="true"
-                          class="hidden h-16 max-w-full dark:block"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                      <div class="min-w-0 flex-1 md:border-l md:border-line md:pl-6">
-                        <h4 class="font-sans text-xl font-bold transition-colors group-hover:text-accent md:text-2xl">
-                          {p.name}
-                        </h4>
-                        <p class="mt-1 text-sm leading-relaxed text-muted md:text-base" set:html={p.desc} />
-                      </div>
-                    </a>
-                  ) : (
-                    <a
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener"
-                      class="card card-hover group flex items-center gap-5 p-5"
-                    >
-                      <span class="flex h-12 shrink-0 items-center justify-center pr-2">
-                        <img
-                          src={p.logo}
-                          alt={`${p.name} logo`}
-                          class={`${p.logoClass} dark:hidden`}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                        <img
-                          src={p.logoDark}
-                          alt=""
-                          aria-hidden="true"
-                          class={`hidden ${p.logoClass} dark:block`}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </span>
-                      <div class="min-w-0">
-                        <h4 class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
-                          {p.name}
-                        </h4>
-                        <p class="mt-0.5 text-sm leading-relaxed text-muted" set:html={p.desc} />
-                      </div>
-                    </a>
-                  )
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="card card-hover group flex items-center gap-5 p-5"
+                  >
+                    <span class="flex h-12 w-32 shrink-0 items-center justify-center pr-2">
+                      <img
+                        src={p.logo}
+                        alt={`${p.name} logo`}
+                        class={`${p.logoClass} dark:hidden`}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <img
+                        src={p.logoDark}
+                        alt=""
+                        aria-hidden="true"
+                        class={`hidden ${p.logoClass} dark:block`}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
+                    <div class="min-w-0 flex-1">
+                      <h4 class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
+                        {p.name}
+                      </h4>
+                      <p class="mt-0.5 text-sm leading-relaxed text-muted" set:html={p.desc} />
+                    </div>
+                  </a>
                 ))
               }
             </div>
