@@ -16,8 +16,6 @@ const funders = [
     logoDark: '/assets/sponsors/nlnet.svg',
     logoClass: 'h-10 w-auto',
     blurb: 'Privacy & trust enhancing technology grant.',
-    // Multicolor brand mark — keep on a light plate in both themes.
-    plate: true,
   },
   {
     name: 'NGI Zero PET',
@@ -27,7 +25,6 @@ const funders = [
     logoClass: 'h-8 w-auto',
     blurb:
       'Next Generation Internet — Privacy & Trust Enhancing Technologies. Funded through the European Commission.',
-    plate: true,
   },
   {
     name: 'Mozilla',
@@ -37,8 +34,6 @@ const funders = [
     logoClass: 'h-5 w-auto',
     blurb:
       'Mozilla Open Source Support (MOSS) — Foundational Technology & Secure Open Source funds.',
-    // Wordmark is monochrome — sit on the band itself; white in dark mode.
-    plate: false,
   },
 ];
 
@@ -60,12 +55,7 @@ const eu = {
               href={f.href}
               target="_blank"
               rel="noopener"
-              class:list={[
-                'group inline-flex items-center justify-center rounded-lg border border-transparent px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-line hover:bg-surface',
-                // Multicolor marks only need a light plate in dark mode.
-                f.plate && 'dark:border-white/10 dark:bg-white dark:hover:border-white/25',
-                !f.plate && 'dark:hover:border-white/10 dark:hover:bg-white/5',
-              ]}
+              class="group inline-flex items-center justify-center rounded-lg border border-transparent px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-line hover:bg-surface dark:hover:border-white/10 dark:hover:bg-white/5"
               aria-label={`${f.name} — opens in new tab`}
             >
               <img
