@@ -14,7 +14,7 @@ const funders = [
     href: 'https://nlnet.nl/',
     logo: '/assets/sponsors/nlnet.svg',
     logoDark: '/assets/sponsors/nlnet-white.svg',
-    logoClass: 'h-12 w-auto',
+    logoClass: 'h-9 w-auto',
     blurb: 'Privacy & trust enhancing technology grant.',
   },
   {
@@ -22,7 +22,7 @@ const funders = [
     href: 'https://nlnet.nl/thema/NGIZeroPET.html',
     logo: '/assets/sponsors/ngi-zero-pet.svg',
     logoDark: '/assets/sponsors/ngi-zero-pet.svg',
-    logoClass: 'h-10 w-auto',
+    logoClass: 'h-7 w-auto',
     blurb:
       'Next Generation Internet — Privacy & Trust Enhancing Technologies. Funded through the European Commission.',
   },
@@ -31,7 +31,7 @@ const funders = [
     href: 'https://github.com/mozilla/moss-directory',
     logo: '/assets/sponsors/mozilla.svg',
     logoDark: '/assets/sponsors/mozilla-white.svg',
-    logoClass: 'h-12 w-auto',
+    logoClass: 'h-7 w-auto',
     blurb:
       'Mozilla Open Source Support (MOSS) — Foundational Technology & Secure Open Source funds.',
   },
@@ -141,13 +141,14 @@ const eu = {
   variant === 'inline' && (
     <div class={`space-y-3 ${className}`}>
       {funders.map((f) => (
-        <a
-          href={f.href}
-          target="_blank"
-          rel="noopener"
-          class="card card-hover group flex items-center gap-5 p-5"
-        >
-          <span class="flex h-12 shrink-0 items-center justify-center pr-2">
+        <div class="card card-hover group flex items-center gap-5 p-5">
+          <a
+            href={f.href}
+            target="_blank"
+            rel="noopener"
+            class="flex h-12 w-32 shrink-0 items-center justify-center pr-2"
+            aria-label={f.name}
+          >
             <img
               src={f.logo}
               alt={`${f.name} logo`}
@@ -165,14 +166,21 @@ const eu = {
                 decoding="async"
               />
             )}
-          </span>
-          <div class="min-w-0">
-            <h4 class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
-              {f.name}
+          </a>
+          <div class="min-w-0 flex-1">
+            <h4 class="font-sans text-lg font-bold">
+              <a
+                href={f.href}
+                target="_blank"
+                rel="noopener"
+                class="transition-colors group-hover:text-accent"
+              >
+                {f.name}
+              </a>
             </h4>
             <p class="mt-0.5 text-sm leading-relaxed text-muted">{f.blurb}</p>
           </div>
-        </a>
+        </div>
       ))}
     </div>
   )

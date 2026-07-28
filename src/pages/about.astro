@@ -309,13 +309,14 @@ const funders = [
             <div class="space-y-3">
               {
                 partners.map((p) => (
-                  <a
-                    href={p.href}
-                    target="_blank"
-                    rel="noopener"
-                    class="card card-hover group flex items-center gap-5 p-5"
-                  >
-                    <span class="flex h-12 w-32 shrink-0 items-center justify-center pr-2">
+                  <div class="card card-hover group flex items-center gap-5 p-5">
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener"
+                      class="flex h-12 w-32 shrink-0 items-center justify-center pr-2"
+                      aria-label={p.name}
+                    >
                       <img
                         src={p.logo}
                         alt={`${p.name} logo`}
@@ -331,14 +332,21 @@ const funders = [
                         loading="lazy"
                         decoding="async"
                       />
-                    </span>
+                    </a>
                     <div class="min-w-0 flex-1">
-                      <h4 class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
-                        {p.name}
+                      <h4 class="font-sans text-lg font-bold">
+                        <a
+                          href={p.href}
+                          target="_blank"
+                          rel="noopener"
+                          class="transition-colors group-hover:text-accent"
+                        >
+                          {p.name}
+                        </a>
                       </h4>
                       <p class="mt-0.5 text-sm leading-relaxed text-muted" set:html={p.desc} />
                     </div>
-                  </a>
+                  </div>
                 ))
               }
             </div>
@@ -349,17 +357,18 @@ const funders = [
             <div class="mt-3 space-y-3">
               {
                 funders.map((f) => (
-                  <a
-                    href={f.href}
-                    target="_blank"
-                    rel="noopener"
-                    class="card card-hover group flex items-center gap-5 p-5"
-                  >
-                    <span class="flex h-12 shrink-0 items-center justify-center pr-2">
+                  <div class="card card-hover group flex items-center gap-5 p-5">
+                    <a
+                      href={f.href}
+                      target="_blank"
+                      rel="noopener"
+                      class="flex h-12 w-32 shrink-0 items-center justify-center pr-2"
+                      aria-label={f.name}
+                    >
                       <img
                         src={f.logo}
                         alt={`${f.name} logo`}
-                        class="h-5 w-auto dark:hidden"
+                        class="h-7 w-auto dark:hidden"
                         loading="lazy"
                         decoding="async"
                       />
@@ -367,18 +376,25 @@ const funders = [
                         src={f.logoDark}
                         alt=""
                         aria-hidden="true"
-                        class="hidden h-5 w-auto dark:block"
+                        class="hidden h-7 w-auto dark:block"
                         loading="lazy"
                         decoding="async"
                       />
-                    </span>
-                    <div class="min-w-0">
-                      <h4 class="font-sans text-lg font-bold transition-colors group-hover:text-accent">
-                        {f.name}
+                    </a>
+                    <div class="min-w-0 flex-1">
+                      <h4 class="font-sans text-lg font-bold">
+                        <a
+                          href={f.href}
+                          target="_blank"
+                          rel="noopener"
+                          class="transition-colors group-hover:text-accent"
+                        >
+                          {f.name}
+                        </a>
                       </h4>
                       <p class="mt-0.5 text-sm leading-relaxed text-muted">{f.desc}</p>
                     </div>
-                  </a>
+                  </div>
                 ))
               }
             </div>
