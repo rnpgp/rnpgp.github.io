@@ -61,11 +61,10 @@ const eu = {
               target="_blank"
               rel="noopener"
               class:list={[
-                'group inline-flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5',
-                f.plate &&
-                  'rounded-lg border border-line bg-white px-4 py-2 shadow-[0_1px_2px_rgb(26_60_120/0.04)] hover:border-accent/40 dark:border-white/10 dark:bg-white dark:hover:border-white/25',
-                !f.plate &&
-                  'rounded-lg border border-transparent px-3 py-2 hover:border-line hover:bg-surface dark:hover:border-white/10 dark:hover:bg-white/5',
+                'group inline-flex items-center justify-center rounded-lg border border-transparent px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-line hover:bg-surface',
+                // Multicolor marks only need a light plate in dark mode.
+                f.plate && 'dark:border-white/10 dark:bg-white dark:hover:border-white/25',
+                !f.plate && 'dark:hover:border-white/10 dark:hover:bg-white/5',
               ]}
               aria-label={`${f.name} — opens in new tab`}
             >
