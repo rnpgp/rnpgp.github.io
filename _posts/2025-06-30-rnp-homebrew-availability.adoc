@@ -1,0 +1,166 @@
+---
+layout: post
+title: "RNP now brewing in Homebrew: Installation just got easier"
+categories: news
+authors:
+  - name: Ronald Tse
+    email: ronald.tse@ribose.com
+    social_links:
+      - https://github.com/ronaldtse
+excerpt: >-
+  RNP is now officially available in Homebrew core, bringing one-command installation
+  to both macOS and Linux users. No more custom taps, no more complexity—just pure,
+  simple brewing goodness.
+---
+= RNP now brewing in Homebrew: Installation just got easier
+
+We're excited to announce that RNP has officially joined the ranks of Homebrew's
+core formulae! 🍺
+
+Whether you're brewing on macOS or Linux, installing RNP is now as simple as a
+single command. Gone are the days of managing custom taps or wrestling with
+complex installation procedures
+
+RNP is now part of the official Homebrew ecosystem.
+
+NOTE: Since becoming available in Homebrew core, we're pleased to see steady
+adoption!
+
+
+== What this means for you
+
+The inclusion of RNP in https://brew.sh[Homebrew] core represents a significant
+milestone for our project and a major convenience upgrade for our users.
+
+Here's what's changed:
+
+**Before**:: `brew tap rnpgp/rnp && brew install rnp`
+
+**Now**:: `brew install rnp`
+
+That's it. One command, universal compatibility, and you're ready to go.
+
+
+== Cross-platform brewing excellence
+
+One of the most exciting aspects of this development is that RNP now supports
+both macOS Homebrew and Linux Homebrew (Linuxbrew), making it accessible across
+the most popular development platforms.
+
+
+== macOS Support
+
+RNP is now available with full bottle (binary package) support for:
+
+* **Apple Silicon Macs** (M1, M2, M3 series): macOS Sequoia, Sonoma, and Ventura
+
+* **Intel Macs**: macOS Sonoma and Ventura
+
+Whether you're running the latest MacBook Pro with Apple Silicon or maintaining
+legacy Intel hardware, RNP installation is now seamless.
+
+== Linux Support
+
+Linux users haven't been forgotten! RNP is also available through Homebrew on
+Linux with support for:
+
+* **ARM64 architecture**: Perfect for Raspberry Pi deployments, ARM-based
+servers, and the growing ecosystem of ARM development machines
+
+* **x86_64 architecture**: Standard support for traditional Linux desktops,
+servers, and development environments
+
+This cross-platform consistency means that development teams can use the same
+installation method regardless of their operating system preferences.
+
+== Technical background: From custom tap to core
+
+For those curious about the technical journey, RNP previously required users to
+add our custom Homebrew tap (`rnpgp/rnp`) before installation. While this worked
+well, it added an extra step and wasn't as discoverable as packages in the core
+repository.
+
+The migration to Homebrew core involved:
+
+* Meeting Homebrew's strict quality and maintenance standards
+* Ensuring robust cross-platform compatibility
+* Implementing proper bottle (binary package) distribution
+* Setting up automated testing across all supported platforms
+
+Our custom tap (`rnpgp/rnp`) has been gracefully deprecated with a migration
+configuration that automatically redirects users to the core formula.
+
+This means that even if someone runs the old `brew install rnpgp/rnp/rnp`
+command, they'll get the official core version.
+
+== Why Homebrew core matters
+
+Being included in Homebrew core brings several advantages:
+
+**Discoverability**: RNP is now easily discoverable through `brew search` and
+appears in official Homebrew documentation.
+
+**Reliability**: Core formulae undergo rigorous testing and maintenance,
+ensuring consistent installation experiences.
+
+**Performance**: Binary bottles are automatically built and distributed, meaning
+faster installations without compilation delays.
+
+**Trust**: Homebrew core inclusion signals that RNP meets the high standards
+expected of production-ready software.
+
+**Maintenance**: The Homebrew community helps maintain the formula, reducing the
+burden on our development team.
+
+== Dependencies and requirements
+
+The Homebrew formula automatically handles RNP's dependencies:
+
+* https://botan.randombit.net/[**Botan**] (3.8.1): Our primary cryptographic backend
+* https://github.com/json-c/json-c[**JSON-C**] (0.18): For JSON parsing capabilities
+* https://cmake.org/[**CMake**] (4.0.3): Build system (when building from source)
+
+All dependencies are automatically resolved and installed, so you don't need to
+worry about manual dependency management.
+
+
+== What's next?
+
+This Homebrew integration is just the beginning.
+
+We're committed to:
+
+* Maintaining high-quality Homebrew support
+* Ensuring timely updates when new RNP versions are released
+* Expanding platform support as Homebrew evolves
+* Continuing to improve the installation and user experience
+
+== Try it today
+
+Ready to experience the new simplified installation?
+
+Here's all you need:
+
+[source,bash]
+----
+brew install rnp
+----
+
+That's it! Whether you're on macOS or Linux, Intel or ARM, the command is the
+same.
+
+For existing users who previously used our custom Homebrew tap, don't worry --
+your installation will automatically migrate to use the core formula on your
+next `brew update && brew upgrade`.
+
+Let's brew 🍻 -- cheers to simpler installations!
+
+== About RNP
+
+RNP is a high-performance C++ OpenPGP library that powers secure communication
+in applications like Mozilla Thunderbird. Our commitment to cross-platform
+compatibility, security, and ease of use has made RNP a trusted choice for
+developers and organizations worldwide.
+
+Visit our https://github.com/rnpgp/rnp[GitHub repository] for documentation,
+examples, and community support.
